@@ -54,3 +54,4 @@ dkms.conf
 *.pbxproj
 *.pbxproj
 *.plist
+*.xcworkspacedata
