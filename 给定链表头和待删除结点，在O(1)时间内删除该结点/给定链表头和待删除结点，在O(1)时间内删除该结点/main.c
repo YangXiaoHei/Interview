@@ -55,16 +55,18 @@ void _printForward(Node h) {
 /**
  *  假定待删除的结点一定在以 header 为头结点的链表中，函数内部不作这项检查
  */
-int delete(Node header, Node del) {
+Node delete(Node header, Node del) {
     if (header == NULL || del == NULL) {
         printf("参数不合法!");
-        return -1;
-    }
-    if (header == del) {
-        printf("此种方式无法删除头结点!");
-        return -1;
+        return header;
     }
     printf("在链表中删除 %c \n", *(char *)(del->item));
+    if (header == del)  {
+        Node h = header->next;
+        free(header->item);
+        free(header);
+        return h;
+    }
     if (del->next == NULL) { // 尾结点
         Node h = header;
         while (h->next != del) h = h->next;
@@ -78,10 +80,11 @@ int delete(Node header, Node del) {
         del->next = del->next->next;
         free(h);
     }
-    return 0;
+    return header;
 }
 Node selectInList(Node header, int k) {
-    while (k--) {
+    int kk = k;
+    while (kk--) {
         header = header->next;
         if (header == NULL) {
             printf("%d 所指定的索引越界\n", k);
@@ -109,19 +112,25 @@ int main(int argc, const char * argv[]) {
     Node header = initList(10);
     printForward(header);
     
-    delete(header, selectInList(header, 4));
+    header = delete(header, selectInList(header, 4));
+    printForward(header);
+
+    header = delete(header, selectInList(header, 8));
+    printForward(header);
+
+    header = delete(header, selectInList(header, 2));
+    printForward(header);
+
+    header = delete(header, selectInList(header, 3));
     printForward(header);
     
-    delete(header, selectInList(header, 8));
+    header = delete(header, selectInList(header, 0));
     printForward(header);
     
-    delete(header, selectInList(header, 2));
+    header = delete(header, selectInList(header, 4));
     printForward(header);
-    
-    delete(header, selectInList(header, 3));
-    printForward(header);
-    
-    delete(header, selectInList(header, 5));
+
+    header = delete(header, selectInList(header, 0));
     printForward(header);
     
     destoryList(&header);
@@ -137,6 +146,10 @@ int main(int argc, const char * argv[]) {
      A B D F G H I
      在链表中删除 F
      A B D G H I
+     在链表中删除 A
+     B D G H I
      在链表中删除 I
-     A B D G H
+     B D G H
+     在链表中删除 B
+     D G H
  */
