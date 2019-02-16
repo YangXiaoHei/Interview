@@ -9,6 +9,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <fcntl.h>
+#include <sys/resource.h>
+#include <unistd.h>
+#include <limits.h>
+#include <netinet/in.h>
 
 typedef void(*Imp)(void *);
 struct Node_ {
@@ -125,10 +130,13 @@ void _destoryList(Node n) {
 }
 
 int main(int argc, const char * argv[]) {
-    Node n = initList(26);
-    printForward(n);
-    printBackward(n);
-    destoryList(&n);
+    
+    
+    
+//    Node n = initList(26);
+//    printForward(n);
+//    printBackward(n);
+//    destoryList(&n);
 }
 /**
  *   正向打印链表 :

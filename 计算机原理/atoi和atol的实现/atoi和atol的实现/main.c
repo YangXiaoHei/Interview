@@ -7,6 +7,7 @@
 //
 
 #include <stdio.h>
+#include "fcntl.h"
 #include <stdlib.h>
 
 /**
@@ -141,6 +142,7 @@ void test_atol(const char *s) {
 }
 
 int main(int argc, const char * argv[]) {
+    
     test_atoi("+1234");
     test_atoi("-1234");
     test_atoi("4321");
