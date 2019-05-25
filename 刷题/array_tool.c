@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <sys/time.h>
 
 void printArray(int *array, int size)
 {
@@ -11,7 +12,9 @@ void printArray(int *array, int size)
 
 int *arrayWithRange(int size, int lo, int hi)
 {
-    srand(time(NULL));
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    srand(tv.tv_usec);
     int *array = malloc(sizeof(int) * size);
     if (!array) {
         printf("memory alloc fail!\n");
