@@ -6,9 +6,12 @@ void shift(int *input, int len, int dist)
 {
     if (!input || len <= 0 || dist < 0 || dist % len == 0)
         return;
+
     dist %= len;
+
     int *tmp = malloc(sizeof(int) * dist);
     if (!tmp) return;
+
     memcpy(tmp, input + len - dist, sizeof(int) * dist);
     memcpy(input + dist, input, sizeof(int) * (len - dist));
     memcpy(input, tmp, sizeof(int) * dist);

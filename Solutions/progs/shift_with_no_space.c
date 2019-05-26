@@ -13,6 +13,7 @@ void shift(int *input, int len, int dist)
 {
     if (!input || len <= 0 || dist < 0 || dist % len == 0)
         return;
+
     dist %= len;
     while (dist--) 
         shift_one(input, len);

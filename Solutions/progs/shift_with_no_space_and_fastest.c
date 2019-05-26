@@ -12,13 +12,16 @@ void shift(int *input, int len, int dist)
 {
     if (!input || len <= 0 || dist < 0 || dist % len == 0)
         return;
+
     dist %= len;
     int i = 0, j = len - 1;
     while (i < j) 
         swap(&input[i++], &input[j--]);
+
     i = 0; j = dist - 1;
     while (i < j)
         swap(&input[i++], &input[j--]);
+
     i = dist; j = len - 1;
     while (i < j)
         swap(&input[i++], &input[j--]);
