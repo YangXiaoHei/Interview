@@ -4,6 +4,9 @@
 
 int replace_space(char *s, char *buf, size_t buflen)
 {
+    if (!s || !buf || buflen <= 0)
+        return -1;
+
     int nspace = 0;
     size_t len = strlen(s);
     for (int i = 0; i < len; i++)

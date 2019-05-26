@@ -14,6 +14,9 @@ int count(int *a, int size, int lo, int mid)
 
 int find_duplicate(int *a, int size)
 {
+    if (!a || size <= 1)
+        return -1;
+
     int n = size - 1;
     int lo = 1, hi = n;
     while (1) {

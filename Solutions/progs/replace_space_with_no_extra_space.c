@@ -3,10 +3,14 @@
 
 void replace_space(char *s, size_t len)
 {
+    if (!s || len == 0)
+        return;
+
     int nspace = 0;
     for (int i = 0; i < len; i++)
         if (s[i] == ' ')
             nspace++;
+
     size_t newlen = len + 2 * nspace + 1;
     char *oldp = s, *newp = s;
     oldp += len;

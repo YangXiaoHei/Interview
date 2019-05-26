@@ -12,6 +12,9 @@ void swap(int *a, int *b)
 
 int find_duplicate(int *a, int size)
 {
+    if (!a || size <= 1)
+        return -1;
+
     int result = -1;
     for (int i = 0; i < size; i++) {
         if (a[i] == i)

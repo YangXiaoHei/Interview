@@ -4,6 +4,9 @@
 
 int find_key_in_2d_array(int array[][4], int row, int col, int key)
 {
+    if (row <= 0 || col <= 0)
+        return 0;
+
     int i = 0, j = col - 1;
     int find = 0;
     while (i < row && j > 0) {
