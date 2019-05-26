@@ -30,7 +30,7 @@ void replace_space(char *s, size_t len)
 
 int main(int argc, char *argv[])
 {
-    char s[128] = "1 2 3 4 ";
+    char s[128] = "1 2 3   4 ";
     replace_space(s, strlen(s));
     printf("%s\n", s);
 }

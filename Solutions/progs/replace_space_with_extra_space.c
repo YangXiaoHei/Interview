@@ -35,7 +35,7 @@ int replace_space(char *s, char *buf, size_t buflen)
 
 int main(int argc, char *argv[])
 {
-    char *s = "1 2 3 4 ";
+    char *s = "1 2   3 4 ";
     char buf[128];
     replace_space(s, buf, 128);
     printf("%s\n", buf);
