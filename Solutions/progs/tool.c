@@ -3,6 +3,14 @@
 #include <time.h>
 #include <sys/time.h>
 
+int randWithRange(int lo, int hi)
+{
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    srand(tv.tv_usec);
+    return rand() % (hi - lo) + lo;
+}
+
 void printArray(int *array, int size)
 {
     for (int i = 0; i < size; i++) 

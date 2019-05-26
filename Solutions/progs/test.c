@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "array_tool.h"
+#include "tool.h"
 
 int main(int argc, char *argv[])
 {

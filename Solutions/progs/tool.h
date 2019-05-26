@@ -4,5 +4,6 @@
 int *arrayWithSize(int size);
 int *arrayWithRange(int size, int lo, int hi);
 void printArray(int *array, int size);
+int randWithRange(int lo, int hi);
 
 #endif

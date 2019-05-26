@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "array_tool.h"
+#include "tool.h"
 #include <time.h>
 
 int count(int *a, int size, int lo, int mid)

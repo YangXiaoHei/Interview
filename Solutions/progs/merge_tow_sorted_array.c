@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "array_tool.h"
+#include "tool.h"
 
 void merge_two_sorted_array(int *a1, int a1size, int *a2, int a2size)
 {
