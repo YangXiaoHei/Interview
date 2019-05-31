@@ -7,7 +7,7 @@ int randWithRange(int lo, int hi)
 {
     struct timeval tv;
     gettimeofday(&tv, NULL);
-    srand(tv.tv_usec);
+    srand(tv.tv_usec + tv.tv_sec * 1000000 );
     return rand() % (hi - lo) + lo;
 }
 
