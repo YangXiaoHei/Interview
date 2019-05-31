@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-void incr(char *num, size_t len, int k)
+int incr(char *num, size_t len, int k)
 {
     int i = len - 1;
     int carry = k;
@@ -14,6 +14,13 @@ void incr(char *num, size_t len, int k)
         num[i] = (carry ? 0 : digit) + '0';
         i--;
     }
+    return i < 0 && carry;
+}
+
+void print_num(char *num)
+{
+    while (*num && *num == '0') num++;
+    printf("%s\n", num);
 }
 
 void print_max_n_num(int n)
@@ -22,29 +29,22 @@ void print_max_n_num(int n)
     if (!num) exit(1);
     num[n] = 0;
 
-    char *max = malloc(n + 1);
-    if (!max) exit(1);
-    max[n] = 0;
-
     memset(num, '0', n);
-    memset(max, '9', n);
-    while (strcmp(max, num) != 0)  {
-        incr(num, n, 1);
-        printf("%s\n", num);
-    }
+    while (!incr(num, n, 1)) 
+        print_num(num);
     free(num);
 }
 
 void test(void)
 {
-    char num[] = "00000";
-    for (int i = 0; i < 1000; i++) {
-        incr(num, strlen(num), 1);
-        printf("%s\n", num);
+    char num[] = "0000";
+    for (int i = 0; i < 10000; i++) {
+        int t = incr(num, strlen(num), 1);
+        printf("%d  %s\n", t, num);
     }
 }
 
 int main(int argc, char *argv[])
 {
-    print_max_n_num(5);
+    print_max_n_num(10);
 }
