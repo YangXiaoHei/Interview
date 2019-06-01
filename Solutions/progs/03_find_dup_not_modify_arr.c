@@ -12,7 +12,7 @@ int count(int *a, int size, int lo, int mid)
     return cnt;
 }
 
-int find_duplicate(int *a, int size)
+int find_dup(int *a, int size)
 {
     if (!a || size <= 1)
         return -1;
@@ -36,10 +36,9 @@ int find_duplicate(int *a, int size)
 
 int main(int argc, char *argv[])
 {
-    srand(time(NULL));
     int n = 5;
     int size = n + 1;
     int *array = arrayWithRange(size, 1, n);
     printArray(array, size);
-    printf("%d\n", find_duplicate(array, size));
+    printf("%d\n", find_dup(array, size));
 }
