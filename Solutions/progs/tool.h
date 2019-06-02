@@ -3,6 +3,7 @@
 
 #define ___ printf("\n");
 
+void parseArray(int *arr, int *len, char *str);
 int *arrayWithSize(int size);
 int *arrayWithRange(int size, int lo, int hi);
 void printArray(int *array, int size);

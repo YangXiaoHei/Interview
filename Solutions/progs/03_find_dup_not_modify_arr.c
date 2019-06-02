@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "tool.h"
 #include <time.h>
+#include <sys/time.h>
 
 int count(int *a, int size, int lo, int mid)
 {
@@ -12,33 +13,34 @@ int count(int *a, int size, int lo, int mid)
     return cnt;
 }
 
-int find_dup(int *a, int size)
+int find_dup(int *a, int size, int lo, int hi)
 {
-    if (!a || size <= 1)
+    if (!a || size <= 1 || lo >= hi)
         return -1;
 
-    int n = size - 1;
-    int lo = 1, hi = n;
-    while (1) {
+    while (lo <= hi) {
         int mid = (lo + hi) >> 1;
         int cnt = count(a, size, lo, mid);
-        int should = mid - lo + 1;
-        if (cnt <= should) {
-            lo = mid + 1;
-        } else if (lo == mid) {
-            return lo;
-        } else {
-            hi = mid;
+        printf("lo=%d mid=%d hi=%d cnt=%d\n", lo, mid, hi, cnt);
+        if (lo == hi) {
+            if (cnt > 1)
+                return lo;
+            break;
         }
+
+        if (cnt <= mid - lo + 1) 
+            lo = mid + 1;
+        else 
+            hi = mid;
     }
-    exit(1);
+    return -1;
 }
 
 int main(int argc, char *argv[])
 {
-    int n = 5;
-    int size = n + 1;
-    int *array = arrayWithRange(size, 1, n);
+    int array[100];
+    int size = 100;
+    parseArray(array, &size, "4 4 4 4 4");
     printArray(array, size);
-    printf("%d\n", find_dup(array, size));
+    printf("%d\n", find_dup(array, size, 1, 4));
 }

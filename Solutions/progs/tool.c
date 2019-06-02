@@ -3,6 +3,22 @@
 #include <time.h>
 #include <sys/time.h>
 
+void parseArray(int *arr, int *len, char *str)
+{
+    if (!arr || !len || *len <= 0 || !str) return;
+    char *p = str, *q = p;
+    int i = 0, n = 0;
+    while (*p && *p >= '0' && *p <= '9' && i < *len) {
+        n = strtol(q, &p, 10);
+        arr[i++] = n;
+        while (*p && (*p < '0' || *p > '9')) p++;
+        if (!*p) break;
+        q = p;
+    }
+    *len = i;
+}
+
+
 int randWithRange(int lo, int hi)
 {
     struct timeval tv;
@@ -13,6 +29,7 @@ int randWithRange(int lo, int hi)
 
 void printArray(int *array, int size)
 {
+    printf("size=%d\n", size);
     for (int i = 0; i < size; i++) 
         printf("%-4d", array[i]);
     printf("\n");
