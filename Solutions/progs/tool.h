@@ -3,6 +3,7 @@
 
 #define ___ printf("\n");
 
+void swap(int *a, int *b);
 void parseArray(int *arr, int *len, char *str);
 int *arrayWithSize(int size);
 int *arrayWithRange(int size, int lo, int hi);

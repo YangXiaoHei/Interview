@@ -3,6 +3,13 @@
 #include <time.h>
 #include <sys/time.h>
 
+void swap(int *a, int *b)
+{
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
 void parseArray(int *arr, int *len, char *str)
 {
     if (!arr || !len || *len <= 0 || !str) return;

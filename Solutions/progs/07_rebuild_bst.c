@@ -18,14 +18,16 @@ bstnode *bstnode_create(int val)
 
 bstnode *_bst_rebuild(int *pre, int ps, int pe, int *in, int is, int ie)
 {
-    if (ps > pe) return NULL;
+    printf("ps=%d pe=%d is=%d ie=%d\n", ps, pe, is, ie);
+    if (ps > pe) {
+        printf("return\n");
+        return NULL;
+    }
 
     int root_idx = is;
     int root_val = pre[ps];
     while (root_idx <= ie  && in[root_idx] != root_val)
         root_idx++;
-
-    /* printf("ps=%d pe=%d is=%d ie=%d root_idx=%d root_val=%d\n", ps, pe, is, ie, root_idx, root_val); */
 
     if (root_idx > ie) {
         printf("invalid input\n");
