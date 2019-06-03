@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include "tool.h"
 
 typedef enum dir {
     right, down, left, up
@@ -51,8 +53,14 @@ void clockwise_print_matrix(int *matrix, int row, int col)
 
 int main(int argc, char *argv[])
 {
-    int a[] = {
-        1, 2
-    };
-    clockwise_print_matrix(a, 1, 2);
+    int row = randWithRange(1, 8);
+    int col = randWithRange(5, 10);
+    int *arr = arrayWithRange(row * col, 1, 100);
+    for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++)
+            printf("%-4d", arr[i * col + j]);
+        printf("\n");
+    }
+    printf("clockwise print matrix result : \n");
+    clockwise_print_matrix(arr, row, col);
 }
