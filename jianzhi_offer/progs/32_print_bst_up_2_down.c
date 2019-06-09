@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef int val_type;
+typedef void * val_type;
 
 typedef struct qnode {
     val_type val;
     struct qnode *next;
 } qnode;
 
-qnode *qnode_create(int val)
+qnode *qnode_create(val_type val)
 {
     qnode *n = malloc(sizeof(qnode));
     if (!n) exit(1);
@@ -71,16 +71,49 @@ val_type dequeue(queue* q)
     return val;
 }
 
-typedef struct 
+typedef struct bstnode {
+    int val;
+    struct bstnode *left;
+    struct bstnode *right;
+} bstnode;
+
+bstnode *bstnode_create(int val)
+{
+    bstnode *n = malloc(sizeof(bstnode));
+    if (!n) exit(1);
+    n->val = val;
+    n->left = n->right = NULL;
+    return n;
+}
+
+void bst_level_traverse(bstnode *root)
+{
+    queue *q = queue_create();
+    enqueue(q, root);
+    while (!empty(q)) {
+        bstnode *bn = dequeue(q);
+        printf("%-3d", bn->val);
+        if (bn->left)
+            enqueue(q, bn->left);
+        if (bn->right)
+            enqueue(q, bn->right);
+    }
+    printf("\n");
+}
 
 int main(int argc, char *argv[])
 {
-    queue *q = queue_create();
-    for (int i = 0; i < 10; i++)
-        enqueue(q, i);
-    while (!empty(q))
-        printf("%-3d", dequeue(q));
-    printf("\n");
+    bstnode *root = bstnode_create(10);
+    root->left = bstnode_create(8);
+    root->right = bstnode_create(7);
+    root->left->left = bstnode_create(1);
+    root->left->right = bstnode_create(12);
+    root->left->left->left = NULL;
+    root->left->left->right = bstnode_create(9);
+    root->right->left = bstnode_create(5);
+    root->right->left->left = bstnode_create(4);
+
+    bst_level_traverse(root);
 }
 
 
