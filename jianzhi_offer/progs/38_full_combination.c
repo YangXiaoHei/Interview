@@ -4,33 +4,31 @@
 #include <assert.h>
 
 char buf[8192] = { 0 };
-int n = 0;
+int cur = 0;
 
-void full_combination_core(const char *str, int len, int l, int idx)
+void full_combination_core(const char *str, int len, int idx, int n)
 {
-    if (l > len) 
-        return;
-
-    if (idx == 0) {
+    if (cur == n) {
         printf("%s\n", buf);
         return;
     }
 
-    buf[n++] = str[l];
-    full_combination_core(str, len, l + 1, idx - 1);
-    buf[--n] = 0;
-    full_combination_core(str, len, l + 1, idx);
+    for (int i = idx; i < len; i++) {
+        buf[cur++] = str[i];
+        full_combination_core(str, len, i + 1, n);
+        buf[--cur] = 0;
+    }
 }
 
 void full_combination(const char *str, int n)
 {
     int len = strlen(str);
     assert(len < sizeof(buf));
-    for (int i = 1; i <= n; i++)
-        full_combination_core(str, len, 0, i);
+    full_combination_core(str, len, 0, n);
 }
 
 int main(int argc, char *argv[])
 {
-    full_combination("abcde", 5);    
+    for (int i = 1; i <= 5; i++)
+        full_combination("abcde", i);    
 }
