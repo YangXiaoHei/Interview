@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 #include <sys/time.h>
 
 void swap(int *a, int *b)
@@ -28,9 +29,12 @@ void parseArray(int *arr, int *len, char *str)
 
 int randWithRange(int lo, int hi)
 {
+    if (lo == hi)
+        return 0;
+    usleep(19);
     struct timeval tv;
     gettimeofday(&tv, NULL);
-    srand(tv.tv_usec + tv.tv_sec * 1000000 );
+    srand(tv.tv_usec + tv.tv_sec * 1000000);
     return rand() % (hi - lo) + lo;
 }
 
