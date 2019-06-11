@@ -17,24 +17,26 @@ bstnode *bstnode_create(int val)
     return n;
 }
 
-bstnode* bst_mirror(bstnode *root)
+void bst_mirror_core(bstnode *root)
 {
-    if (!root) return NULL;
+    if (!root) 
+        return;
 
     if (!root->left && !root->right)
-        return root;
+        return;
 
     bstnode *tmp = root->left;
     root->left = root->right;
     root->right = tmp;
 
-    if (root->left)
-        bst_mirror(root->left);
+    bst_mirror_core(root->left);
+    bst_mirror_core(root->right);
+}
 
-    if (root->right)
-        bst_mirror(root->right);
-
-    return root;
+bstnode *bst_mirror(bstnode *root)
+{
+    bst_mirror_core(root);
+    return root; 
 }
 
 bstnode *bst_mirror_faster(bstnode *root)
@@ -47,9 +49,12 @@ bstnode *bst_mirror_faster(bstnode *root)
     stack[size++] = root;
     while (size) {
         bstnode *n = stack[--size];
-        bstnode *tmp = n->left;
-        n->left = n->right;
-        n->right = tmp;
+
+        if (n->left || n->right) {
+            bstnode *tmp = n->left;
+            n->left = n->right;
+            n->right = tmp;
+        }
 
         if (n->right)
             stack[size++] = n->right;
