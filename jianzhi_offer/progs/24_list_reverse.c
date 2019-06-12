@@ -48,14 +48,16 @@ void list_print(node *list)
     printf("\n");
 }
 
-node *list_reverse(node **list)
+void list_reverse(node **list)
 {
-    if (!list) return NULL;
-    if (!*list) return NULL;
-    if (!(*list)->next) return NULL;
+    if (!list) 
+        return;
+    if (!*list) 
+        return;
+    if (!(*list)->next) 
+        return;
 
-    node *p = *list, *q = p->next, *tmp = NULL;
-    p->next = NULL;
+    node *p = NULL, *q = *list, *tmp = NULL;
     while (q) {
         tmp = q->next; 
         q->next = p;
@@ -63,7 +65,6 @@ node *list_reverse(node **list)
         q = tmp;
     }
     *list = p;
-    return p;
 }
 
 

@@ -11,7 +11,7 @@ void reorder(int *arr, int size)
         while (i < hi && (arr[++i] & 1));
         while (j > lo && !(arr[--j] & 1));
         if (i >= j) break;
-        swap(&arr[i], &arr[j]);
+        swap(arr + i, arr + j);
     }
 }
 

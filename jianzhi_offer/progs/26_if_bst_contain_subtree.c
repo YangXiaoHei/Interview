@@ -25,47 +25,51 @@ void bst_in_traverse(bstnode *root)
     bst_in_traverse(root->right);
 }
 
-int is_contain(bstnode *root1, bstnode *root2)
+void bst_print(bstnode *root)
 {
-    if (!root2) return 1;
-    if (!root1) return 0;
-    if (root1->val != root2->val)
-        return 0;
-    return is_contain(root1->left, root2->left) && is_contain(root1->right, root2->right);
+    bst_in_traverse(root);
+    printf("\n");
 }
 
-int bigtree_contain_smalltree(bstnode *root1, bstnode *root2)
+int is_contain(bstnode *big, bstnode *small)
 {
-    if (!root1 || !root2)
+    if (!small) return 1;
+    if (!big) return 0;
+    if (big->val != small->val)
+        return 0;
+    return is_contain(big->left, small->left) && is_contain(big->right, small->right);
+}
+
+int bigtree_contain_smalltree(bstnode *big, bstnode *small)
+{
+    if (!big || !small)
         return 0;
 
     int result = 0;
-    if (root1->val == root2->val) 
-        result = is_contain(root1, root2);
+    if (big->val == small->val) 
+        result = is_contain(big, small);
 
-    return result || bigtree_contain_smalltree(root1->left, root2)
-                  || bigtree_contain_smalltree(root1->right, root2);
+    return result || bigtree_contain_smalltree(big->left, small)
+                  || bigtree_contain_smalltree(big->right, small);
 }
 
 int main(int argc, char *argv[])
 {
-    bstnode *root1 = bstnode_create(8);
-    root1->left = bstnode_create(8);
-    root1->right = bstnode_create(7);
-    root1->left->left = bstnode_create(9);
-    root1->left->right = bstnode_create(2);
-    root1->left->right->left = bstnode_create(4);
-    root1->left->right->right = bstnode_create(7);
-    bst_in_traverse(root1);
-    printf("\n");
+    bstnode *big = bstnode_create(8);
+    big->left = bstnode_create(8);
+    big->right = bstnode_create(7);
+    big->left->left = bstnode_create(9);
+    big->left->right = bstnode_create(2);
+    big->left->right->left = bstnode_create(4);
+    big->left->right->right = bstnode_create(7);
+    bst_print(big);
 
-    bstnode *root2 = bstnode_create(8);
-    root2->left = bstnode_create(9);
-    root2->right = bstnode_create(2);
-    root2->right->left = bstnode_create(4);
-    root2->right->right = bstnode_create(7);
-    bst_in_traverse(root2);
-    printf("\n");
+    bstnode *small = bstnode_create(8);
+    small->left = bstnode_create(9);
+    small->right = bstnode_create(2);
+    small->right->left = bstnode_create(4);
+    small->right->right = bstnode_create(7);
+    bst_print(small);
 
-    printf("%d\n", bigtree_contain_smalltree(root1, root2));
+    printf("%d\n", bigtree_contain_smalltree(big, small));
 }

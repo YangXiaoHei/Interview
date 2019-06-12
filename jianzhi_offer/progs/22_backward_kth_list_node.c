@@ -49,7 +49,18 @@ void list_print(node *list)
 
 int backward_kth_node(node *list, unsigned k)
 {
-    if (k == 0 || !list) return -1;
+    /*
+     * N 个节点的链表，k 代表倒数第几个节点，k = {1, 2, 3, 4, ...}
+     * 若指针 s 指向链表头节点, s 移动到指向倒数第 k 个节点，需要走 N - k 步
+     * 我们的方案是：让一个快指针 f 先走 x 步，然后以快指针 f->next == NULL 作为终止条件让 s 和 f
+     * 一起走，当 f 指向最后一个节点，s 便指向倒数第 k 个节点。
+     * 现在来反推 x 是多少 ? 
+     * 因为 f 走 N - 1 就会指向最后一个节点，而 s 指向倒数第 k 个节点需要走 N - k 步，
+     * 这 N - k 步是 s 和 f 一起走的，而 f 需要额外先走的步数为 N - 1 - N + k = k - 1 步
+     */
+
+    if (k == 0 || !list) 
+        return -1;
     node *fast = list;
     while (--k && fast) 
         fast = fast->next;
