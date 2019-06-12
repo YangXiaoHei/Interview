@@ -3,6 +3,20 @@
 
 int count = 0;
 
+void draw_queen(int *a, int size)
+{
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            if (a[i] == j)
+                printf("%-3c", 'O');
+            else
+                printf("%-3c", '.');
+        }
+        printf("\n");
+    }
+    printf("--------------------------\n");
+}
+
 void check_condition(int *a, int size, int idx)
 {
     if (idx == size) {
@@ -12,6 +26,7 @@ void check_condition(int *a, int size, int idx)
                     j - i == a[i] - a[j])
                     return;
         count++;
+        draw_queen(a, size);
         return;
     }
     for (int i = idx; i < size; i++) {
