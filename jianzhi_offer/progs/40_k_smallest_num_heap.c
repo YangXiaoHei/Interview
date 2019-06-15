@@ -137,7 +137,37 @@ void heap_test(void)
         printf("%-3d\n", heap_pop(h));
 }
 
+void print_k_smallest(int *arr, int size, int k)
+{
+    if (!arr)
+        return;
+
+    if (k < 0 || size < 0)
+        return;
+
+    if (k > size)
+        return;
+
+    heap *h = heap_create(max);
+    for (int i = 0; i < k; i++)
+        heap_insert(h, arr[i]);
+    for (int i = k; i < size; i++) {
+        if (arr[i] < heap_peek(h)) {
+            heap_pop(h);
+            heap_insert(h, arr[i]);
+        }
+    }
+    printf("%d smallest num is:\n", k);
+    while (!empty(h)) 
+        printf("%-3d", heap_pop(h));
+    printf("\n");
+}
+
 int main(int argc, char *argv[])
 {
-    heap_test(); 
+    int size = 20;
+    int *arr = arrayWithRange(size, 0, 100);
+    printArray(arr, size);
+    int k = randWithRange(0, size);
+    print_k_smallest(arr, size, k);
 }
