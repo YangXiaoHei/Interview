@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include <string.h>
 #include <sys/time.h>
 
 void swap(int *a, int *b)
@@ -44,6 +45,13 @@ void printArray(int *array, int size)
     for (int i = 0; i < size; i++) 
         printf("%-4d", array[i]);
     printf("\n");
+}
+
+int *copyArray(int *arr, int size)
+{
+    int *copy = malloc(sizeof(int) * size);
+    memcpy(copy, arr, sizeof(int) * size);
+    return copy;
 }
 
 int *array(int size)

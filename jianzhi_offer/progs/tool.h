@@ -6,6 +6,7 @@
 void swap(int *a, int *b);
 void parseArray(int *arr, int *len, char *str);
 int *array(int size);
+int *copyArray(int *arr, int size);
 int *arrayWithSize(int size);
 int *arrayWithRange(int size, int lo, int hi);
 void printArray(int *array, int size);
