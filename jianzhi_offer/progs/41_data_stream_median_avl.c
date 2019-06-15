@@ -188,7 +188,7 @@ void avl_in_traverse(avlnode *root)
 void avl_print(avlnode *root)
 {
     avl_in_traverse(root);
-    printf(" height=%-3d\n", height(root));
+    printf(" height=%-3d size=%-3d\n", height(root), size(root));
 }
 
 avlnode *avl_create(int sz)
@@ -221,8 +221,17 @@ void avl_test(void)
     }
 }
 
+void shuffle(int *arr, int size)
+{
+    for (int i = 0; i < size; i++) {
+        int r = randWithRange(0, size - i) + i;
+        swap(arr + r, arr + i);
+    }
+}
+
 int main(int argc, char *argv[])
 {
+    avl_test();
 }
 
 

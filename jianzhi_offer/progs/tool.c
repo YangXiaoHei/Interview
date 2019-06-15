@@ -46,6 +46,18 @@ void printArray(int *array, int size)
     printf("\n");
 }
 
+int *array(int size)
+{
+    int *array = malloc(sizeof(int) * size);
+    if (!array) {
+        printf("memory alloc fail!\n");
+        exit(1);
+    }
+    for (int i = 0; i < size; i++) 
+        array[i] = i;
+    return array;
+}
+
 int *arrayWithRange(int size, int lo, int hi)
 {
     struct timeval tv;
