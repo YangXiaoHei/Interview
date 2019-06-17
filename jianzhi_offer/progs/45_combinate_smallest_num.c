@@ -3,8 +3,8 @@
 #include <string.h>
 #include "tool.h"
 
-char last_buf[8192];
-char cur_buf[8192];
+char last_buf[1024];
+char cur_buf[1024];
 void combinate_smallest_num_core(int *arr, int size, int idx)
 {
     if (idx == size) {
