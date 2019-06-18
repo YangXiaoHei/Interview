@@ -27,5 +27,7 @@ int main(int argc, char *argv[])
     printf("%d\n", translate_num_to_str(123));
     printf("%d\n", translate_num_to_str(126));
     printf("%d\n", translate_num_to_str(9999));
+    printf("%d\n", translate_num_to_str(1234));
+    printf("%d\n", translate_num_to_str(12211));
 }
 
