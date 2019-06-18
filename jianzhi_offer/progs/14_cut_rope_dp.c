@@ -10,8 +10,8 @@ long cut_rope(int len)
     
     dp[0] = 0;
     dp[1] = 1;
-    dp[2] = 1;
-    dp[3] = 2;
+    dp[2] = 2;
+    dp[3] = 3;
 
     long rel = 0;
     if (len < 4) {
