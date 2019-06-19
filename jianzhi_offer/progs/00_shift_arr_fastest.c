@@ -1,12 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-
-void swap(int *a, int *b)
-{
-    int tmp = *a;
-    *a = *b;
-    *b = tmp;
-}
+#include "tool.h"
 
 void shift(int *input, int len, int dist)
 {
@@ -16,27 +10,24 @@ void shift(int *input, int len, int dist)
     dist %= len;
     int i = 0, j = len - 1;
     while (i < j) 
-        swap(&input[i++], &input[j--]);
+        swap(input + i++, input + j--);
 
     i = 0; j = dist - 1;
     while (i < j)
-        swap(&input[i++], &input[j--]);
+        swap(input + i++, input + j--);
 
     i = dist; j = len - 1;
     while (i < j)
-        swap(&input[i++], &input[j--]);
+        swap(input + i++, input + j--);
 }
 
 int main(int argc, char *argv[])
 {
-    if (argc != 2) {
-        printf("usage : %s <shift>\n", argv[0]);
-        exit(1);
-    }
-    int a[] = {1, 2, 3, 4, 5, 6, 7};
-    shift(a, 7, atoi(argv[1]));
-
-    for (int i = 0; i < 7; i++)
-        printf("%2d", a[i]);
-    printf("\n");
+    int r = randWithRange(1, 50);
+    printf("right shift %-3d\n", r);
+    int size = 10;
+    int *arr = array(size);
+    printArray(arr, size);
+    shift(arr, size, r);
+    printArray(arr, size);
 }
