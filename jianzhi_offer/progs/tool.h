@@ -3,6 +3,7 @@
 
 #define ___ printf("\n");
 
+long getCurTime(void);
 void swap(int *a, int *b);
 void parseArray(int *arr, int *len, char *str);
 int *array(int size);

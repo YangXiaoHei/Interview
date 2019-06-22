@@ -12,6 +12,13 @@ void swap(int *a, int *b)
     *b = tmp;
 }
 
+long getCurTime(void)
+{
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    return tv.tv_sec * 1000000 + tv.tv_usec;
+}
+
 void parseArray(int *arr, int *len, char *str)
 {
     if (!arr || !len || *len <= 0 || !str) return;
