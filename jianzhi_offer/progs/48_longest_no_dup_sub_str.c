@@ -56,5 +56,5 @@ int main(int argc, char *argv[])
     str[size] = 0;
     printf("%s\n", str);
 
-    printf("%-3d\n", longest_no_dup_length(str, size));
+    longest_no_dup_length(str, size);
 }
