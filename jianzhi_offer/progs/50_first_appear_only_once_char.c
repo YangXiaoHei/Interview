@@ -9,16 +9,13 @@ char find_only_one(const char *str, int len)
     int arr[256] = { 0 };
     for (int i = 0; i < len; i++)
         arr[str[i]]++;
-
+    
     int i = 0;
-    for (; i < 256; i++)
-        if (arr[i] == 1)
+    for (; i < len; i++)
+        if (arr[str[i]] == 1)
             break;
 
-    if (i == 256)
-        return 0;
-
-    return i;
+    return str[i];
 }
 
 int main(int argc, char *argv[])
