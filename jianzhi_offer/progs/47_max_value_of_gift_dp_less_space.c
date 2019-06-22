@@ -12,8 +12,7 @@ int max_value_of_gift(int *matrix, int row, int col)
 {
     if (!matrix || row <= 0 || col <= 0)
         return 0;
-
-    int *tmp = malloc(sizeof(int) * row * col);
+    int *tmp = malloc(sizeof(int) * col);
 
     int left = 0, up = 0;
     for (int i = 0; i < row; i++) {
@@ -22,15 +21,16 @@ int max_value_of_gift(int *matrix, int row, int col)
             up = 0;
 
             if (i > 0)
-                up = tmp[(i - 1) * col + j];
+                up = tmp[j];
 
             if (j > 0)
-                left = tmp[i * col + j - 1];
+                left = tmp[j - 1];
 
-            tmp[i * col + j] = max(up, left) + matrix[i * col + j];
+            tmp[j] = max(up, left) + matrix[i * col + j];
         }
     }
-    int max_val = tmp[(row - 1) * col + col - 1];
+
+    int max_val = tmp[col - 1];
     free(tmp);
     return max_val;
 }
@@ -38,7 +38,7 @@ int max_value_of_gift(int *matrix, int row, int col)
 void print_matrix(int *arr, int row, int col)
 {
     for (int i = 0; i < row; i++) {
-        for (int j = 0; j < col; j++) 
+        for (int j = 0; j < col; j++)
             printf("%-4d", arr[i * col + j]);
         printf("\n");
     }
@@ -46,8 +46,8 @@ void print_matrix(int *arr, int row, int col)
 
 int main(int argc, char *argv[])
 {
-    int row = 20;
-    int col = 20;
+    int row = 10;
+    int col = 10;
     int size = row * col;
     int *arr = arrayWithRange(size, 0, 100);
     print_matrix(arr, row, col);
