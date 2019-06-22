@@ -8,7 +8,7 @@ char find_only_one(const char *str, int len)
 
     int arr[256] = { 0 };
     for (int i = 0; i < len; i++)
-        arr[str[i] - 'a']++;
+        arr[str[i]]++;
 
     int i = 0;
     for (; i < 256; i++)
@@ -18,7 +18,7 @@ char find_only_one(const char *str, int len)
     if (i == 256)
         return 0;
 
-    return i + 'a';
+    return i;
 }
 
 int main(int argc, char *argv[])
