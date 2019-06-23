@@ -70,8 +70,32 @@ void test_rightmost(void)
     free(arr);
 }
 
+void test(void)
+{
+    for (int loop = 0; loop < 100000; loop++)
+        test_rightmost(), test_leftmost();
+}
+
+int appear_times_in_sorted_arr(int *arr, int size, int key)
+{
+    if (!arr || size <= 0)
+        return 0;
+
+    int left_idx = -1, right_idx = -1;
+    if ((left_idx = binary_search_leftmost(arr, size, key)) < 0)
+        return 0;
+    if ((right_idx = binary_search_rightmost(arr, size, key)) < 0)
+        return 0;
+    return right_idx - left_idx + 1;
+}
+
 int main(int argc, char *argv[])
 {
-    /* test_rightmost(); */
-    /* test_leftmost(); */
+    int size = 30;
+    int lo = 0, hi = 10;
+    int *arr = arrayWithRange(size, lo, hi);
+    tool_sort(arr, size);
+    printArray(arr, size);
+    int key = randWithRange(lo, hi);
+    printf("%d appear %-3d times\n", key, appear_times_in_sorted_arr(arr, size, key));
 }
