@@ -21,7 +21,8 @@ int binary_search_rightmost(int *arr, int size, int key)
 {
     int lo = 0, hi = size - 1;
     while (lo < hi) {
-        int mid = ceil((hi - lo) / 2.0) + lo;
+        /* int mid = ceil((hi - lo) / 2.0) + lo; */
+        int mid =  lo - ((lo - hi) >> 1);
         if (key < arr[mid])
             hi = mid - 1;
         else
