@@ -4,6 +4,49 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/time.h>
+#include "tool.h"
+
+void tool_sort_core(int *arr, int size, int lo, int hi)
+{
+    if (hi - lo + 1 < 30) {
+        for (int i = lo; i <= hi; i++) {
+            int t = arr[i], j;
+            for (j = i - 1; j >= lo && t < arr[j]; j--)
+                arr[j + 1] = arr[j];
+            arr[j + 1] = t;
+        }
+        return;
+    }
+
+    int pivot = arr[lo];
+    int i = lo, j = hi + 1;
+    while (1) {
+        while (i < hi && arr[++i] < pivot);
+        while (j > lo && arr[--j] > pivot);
+        if (i >= j) break;
+        swap(arr + i, arr + j);
+    }
+    swap(arr + lo, arr + j);
+
+    tool_sort_core(arr, size, lo, j - 1);
+    tool_sort_core(arr, size, j + 1, hi);
+}
+
+void tool_sort(int *arr, int size)
+{
+    if (!arr || size <= 1)
+       return; 
+
+    tool_sort_core(arr, size, 0, size - 1);
+}
+
+int tool_is_sorted(int *arr, int size)
+{
+    for (int i = 1; i < size; i++)
+        if (arr[i] < arr[i - 1])
+            return 0;
+    return 1;
+}
 
 void swap(int *a, int *b)
 {
