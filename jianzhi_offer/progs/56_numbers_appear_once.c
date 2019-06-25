@@ -28,10 +28,32 @@ void shuffle(int *arr, int size)
     }
 }
 
+void find_appear_once_two_num(int *arr, int size)
+{
+    if (!arr || size <= 0)
+        return;
+
+    int sum = 0;
+    for (int i = 0; i < size; i++)
+        sum ^= arr[i];
+
+    int rightmost_one = sum & -sum;
+
+    int num1 = 0, num2 = 0;
+    for (int i = 0; i < size; i++) {
+        if (arr[i] & rightmost_one)
+            num1 ^= arr[i];
+        else
+            num2 ^= arr[i];
+    }
+    printf("num1 = %d num2 = %d\n", num1, num2);
+}
+
 int main(int argc, char *argv[])
 {
     int size = 5;
     int *arr = gen_arr(&size);
     shuffle(arr, size);
     printArray(arr, size); 
+    find_appear_once_two_num(arr, size);
 }
