@@ -2,43 +2,40 @@
 #include <string.h>
 #include <stdlib.h>
 
-void print_num(char *n)
+void print_no_leading_zero(const char *str)
 {
-    while (*n && *n == '0') n++;
-    printf("%s\n", n);
+    while (*str && *str == '0') str++;
+    if (!*str)
+        --str;
+    printf("%s\n", str);
 }
 
-void print_core(char *num, int n, int idx)
+void print_max_n_core(char *str, int n, int idx)
 {
-    if (idx == n - 1) {
-        print_num(num);
+    if (idx == n) {
+        print_no_leading_zero(str);
         return;
     }
 
     for (int i = 0; i < 10; i++) {
-        num[idx + 1] = i + '0';
-        print_core(num, n, idx + 1);
+        str[idx] = i + '0';
+        print_max_n_core(str, n, idx + 1);
     }
 }
 
-void print_max_n_num(int n)
+void print_max_n(int n)
 {
     if (n <= 0)
         return;
 
-    char *num = malloc(n + 1);
-    if (!num) exit(1);
-    num[n] = 0;
-
-    for (int i = 0; i < 10; i++) {
-        num[0] = i + '0';
-        print_core(num, n, 0);
-    }
-
-    free(num);
+    char *str = malloc(n + 1);
+    str[n] = 0;
+    print_max_n_core(str, n, 0);
+    free(str);
 }
+
 
 int main(int argc, char *argv[])
 {
-    print_max_n_num(4);
+    print_max_n(6);
 }
