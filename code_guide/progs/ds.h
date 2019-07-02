@@ -23,10 +23,8 @@ int stack_empty(stack *s);
 int stack_pop(stack *s);
 int stack_peek(stack *s);
 void stack_print(stack *s);
-void stack_test(void);
 /**********************************/
 
-void sort_core(int *arr, int size, int lo, int hi);
 void sort(int *arr, int size);
 int is_sorted(int *arr, int size);
 void swap(int *a, int *b);

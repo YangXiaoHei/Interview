@@ -70,7 +70,7 @@ void stack_print(stack *s)
     printf("-----------------------------\n");
 }
 
-void stack_test(void)
+static void stack_test(void)
 {
     stack *s = stack_create();
     for (int i = 0; i < 10; i++)
@@ -85,8 +85,7 @@ void stack_test(void)
     printf("\n");
 }
 
-
-void sort_core(int *arr, int size, int lo, int hi)
+static void sort_core(int *arr, int size, int lo, int hi)
 {
     if (hi - lo + 1 < 30) {
         for (int i = lo; i <= hi; i++) {
@@ -156,7 +155,6 @@ void parseArray(int *arr, int *len, char *str)
     }
     *len = i;
 }
-
 
 int randWithRange(int lo, int hi)
 {
