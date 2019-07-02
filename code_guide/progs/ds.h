@@ -9,19 +9,19 @@
 
 /*********** stack ****************/
 typedef struct stknode {
-    int val;
+    long val;
     struct stknode *next;
 } stknode;
-stknode *stknode_create(int val);
+stknode *stknode_create(long val);
 typedef struct stack {
-    int size;
+    long size;
     stknode *top;
 } stack;
 stack *stack_create(void);
-void stack_push(stack *s, int val);
+void stack_push(stack *s, long val);
 int stack_empty(stack *s);
-int stack_pop(stack *s);
-int stack_peek(stack *s);
+long stack_pop(stack *s);
+long stack_peek(stack *s);
 void stack_print(stack *s);
 /**********************************/
 

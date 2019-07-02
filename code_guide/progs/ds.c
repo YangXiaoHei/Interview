@@ -1,6 +1,6 @@
 #include "ds.h"
 
-stknode *stknode_create(int val)
+stknode *stknode_create(long val)
 {
     stknode *n = malloc(sizeof(stknode));
     if (!n) exit(1);
@@ -18,7 +18,7 @@ stack *stack_create(void)
     return s;
 }
 
-void stack_push(stack *s, int val)
+void stack_push(stack *s, long val)
 {
     if (!s)
         return;
@@ -36,19 +36,19 @@ int stack_empty(stack *s)
     return s->size <= 0;
 }
 
-int stack_peek(stack *s)
+long stack_peek(stack *s)
 {
     if (stack_empty(s))
         return -1;
     return s->top->val;
 }
 
-int stack_pop(stack *s)
+long stack_pop(stack *s)
 {
     if (stack_empty(s))
         return -1;
 
-    int tmp = s->top->val;
+    long tmp = s->top->val;
     stknode *todel = s->top;
     s->top = s->top->next;
     s->size--;
@@ -62,10 +62,10 @@ void stack_print(stack *s)
         return;
 
     printf("-----------------------------\n");
-    printf("stack size = %d\n", s->size);
+    printf("stack size = %ld\n", s->size);
     printf("top -> ");
     for (stknode *cur = s->top; cur; cur = cur->next)
-        printf("%-3d", cur->val);
+        printf("%-3ld", cur->val);
     printf("\n");
     printf("-----------------------------\n");
 }
@@ -79,8 +79,8 @@ static void stack_test(void)
     stack_print(s);
 
     while (!stack_empty(s)) {
-        printf("peed %-3d\n", stack_peek(s));
-        printf("pop %-3d\n", stack_pop(s));
+        printf("peed %-3ld\n", stack_peek(s));
+        printf("pop %-3ld\n", stack_pop(s));
     }
     printf("\n");
 }
