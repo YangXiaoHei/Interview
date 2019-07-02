@@ -1,5 +1,83 @@
 #include "ds.h"
 
+deque_node *deque_node_create(long val)
+{
+    deque_node *n = malloc(sizeof(deque_node));
+    if (!n) exit(1);
+    n->val = val;
+    n->next = NULL;
+    n->prev = NULL;
+    return n;
+}
+
+queue *queue_create(void)
+{
+    queue *q = malloc(sizeof(queue));
+    if (!q) exit(1);
+    q->size = 0;
+    q->header = q->tailer = NULL;
+    return q;
+}
+
+int queue_empty(queue *q)
+{
+    return q->size <= 0 && !q->header && !q->tailer;
+}
+
+void queue_enqueue(queue *q, long val)
+{
+    deque_node *n = deque_node_create(val);
+    if (q->tailer)
+        q->tailer->next = n;
+    q->tailer = n;
+    if (!q->header)
+        q->header = n;
+    q->size++;
+}
+
+long queue_dequeue(queue *q)
+{
+    if (queue_empty(q))
+        return -1;
+
+    long tmp = q->header->val;
+    deque_node *todel = q->header;
+    q->header = q->header->next;
+    if (!q->header)
+        q->tailer = NULL;
+    q->size--;
+    free(todel);
+    return tmp;
+}
+
+void queue_print(queue *q)
+{
+    if (!q)
+        return;
+
+    printf("-----------------------------\n");
+    printf("queue size = %d\n", q->size);
+    printf("header -> ");
+    for (deque_node *cur = q->header; cur; cur = cur->next)
+        printf("%-3ld", cur->val);
+    printf("<- tailer");
+    printf("\n");
+    printf("-----------------------------\n");
+}
+
+static void queue_test(void)
+{
+    queue *q = queue_create();
+    for (int i = 0; i < 10; i++)
+        queue_enqueue(q, i);
+
+    queue_print(q);
+
+    while (!queue_empty(q))
+        printf("%-3ld", queue_dequeue(q));
+    printf("\n");
+}
+
 stknode *stknode_create(long val)
 {
     stknode *n = malloc(sizeof(stknode));

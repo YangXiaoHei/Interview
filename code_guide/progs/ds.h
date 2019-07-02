@@ -7,16 +7,37 @@
 #include <string.h>
 #include <sys/time.h>
 
+/*********** queue ****************/
+typedef struct deque_node {
+    long val;
+    struct deque_node *next;
+    struct deque_node *prev;
+} deque_node;
+typedef struct queue {
+    int size;
+    deque_node *header;
+    deque_node *tailer;
+} queue;
+
+deque_node *deque_node_create(long val);
+queue *queue_create(void);
+int queue_empty(queue *q);
+void queue_enqueue(queue *q, long val);
+long queue_dequeue(queue *q);
+void queue_print(queue *q);
+/*********************************/
+
 /*********** stack ****************/
 typedef struct stknode {
     long val;
     struct stknode *next;
 } stknode;
-stknode *stknode_create(long val);
 typedef struct stack {
     long size;
     stknode *top;
 } stack;
+
+stknode *stknode_create(long val);
 stack *stack_create(void);
 void stack_push(stack *s, long val);
 int stack_empty(stack *s);
