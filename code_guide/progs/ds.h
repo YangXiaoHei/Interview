@@ -44,6 +44,7 @@ int stack_empty(stack *s);
 long stack_pop(stack *s);
 long stack_peek(stack *s);
 void stack_print(stack *s);
+void stack_release(stack **s);
 /**********************************/
 
 void sort(int *arr, int size);

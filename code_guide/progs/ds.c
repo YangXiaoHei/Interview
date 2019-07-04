@@ -148,6 +148,19 @@ void stack_print(stack *s)
     printf("-----------------------------\n");
 }
 
+void stack_release(stack **s)
+{
+    if (!s || !*s)
+        return;
+
+    stack *ss = *s;
+    while (!stack_empty(ss))
+        stack_pop(ss);
+
+    free(ss);
+    *s = NULL;
+}
+
 static void stack_test(void)
 {
     stack *s = stack_create();
