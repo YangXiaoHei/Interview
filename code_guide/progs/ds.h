@@ -7,6 +7,31 @@
 #include <string.h>
 #include <sys/time.h>
 
+
+typedef struct htnode {
+    long key;
+    long val;
+    struct htnode *prev;
+    struct htnode *next;
+} htnode;
+htnode* htnode_create(long key, long val);
+
+typedef struct ht {
+    int size;
+    int bucket;
+    htnode **slot;
+    long (*hash)(struct ht *, void *);
+} ht;
+
+ht *ht_create(long (*hash)(ht *, void *));
+void ht_insert(ht *h, long key, long val);
+int ht_need_resize(ht *h);
+void ht_resize(ht *h);
+long ht_get(ht *h, long key);
+int ht_empty(ht *h);
+void ht_print(ht *h);
+
+
 /*********** deque ****************/
 typedef struct deque_node {
     long val;

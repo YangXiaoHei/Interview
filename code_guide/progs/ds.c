@@ -1,5 +1,137 @@
 #include "ds.h"
 
+htnode *htnode_create(long key, long val)
+{
+    htnode *n = malloc(sizeof(htnode));
+    if (!n) exit(1);
+    n->key = key;
+    n->val = val;
+    n->prev = n->next = NULL;
+    return n;
+}
+
+ht *ht_create(long (*hash)(ht *, void *))
+{
+    ht *h = malloc(sizeof(ht));
+    if (!h) exit(1);
+    h->size = 0;
+    h->bucket = 4;
+    h->slot = malloc(sizeof(htnode *) * h->bucket);
+    for (int i = 0; i < h->bucket; i++)
+        h->slot[i] = NULL;
+    h->hash = hash;
+    return h;
+}
+
+int ht_need_resize(ht *h)
+{
+    if (!h)
+        return 0;
+    
+    return h->size * 1.0 / h->bucket > 8;    
+}
+
+static void ht_insert_not_resize(ht *h, long key, long val)
+{
+    int idx = h->hash(h, (void *)key);
+
+    htnode *head = h->slot[idx];
+    if (!head) {
+        h->slot[idx] = htnode_create(key, val);
+        h->size++;
+        return;
+    }
+    
+    htnode *n = htnode_create(key, val);
+    n->next = head;
+    head->prev = n;
+    h->slot[idx] = n;
+    h->size++;
+}
+
+void ht_resize(ht *h)
+{
+    if (!h)
+        return;
+
+    int old_bucket = h->bucket;
+    /* h->bucket = ht_next_prim(h); */
+    h->bucket *= 2;
+    h->size = 0;
+    htnode **new = malloc(sizeof(htnode *) * h->bucket);
+    for (int i = 0; i < h->bucket; i++)
+        new[i] = NULL;
+    htnode **old = h->slot;
+    h->slot = new;
+
+    htnode *head = NULL;;
+    for (int i = 0; i < old_bucket; i++) {
+        if (!(head = old[i]))
+            continue;
+
+        for (htnode *cur = head; cur; cur = cur->next)  {
+            ht_insert_not_resize(h, cur->key, cur->val);
+            if (cur->prev)
+                free(cur->prev);
+        }
+    }
+    free(old);
+}
+
+
+void ht_insert(ht *h, long key, long val)
+{
+    if (ht_need_resize(h)) 
+        ht_resize(h);
+
+    int idx = h->hash(h, (void *)key);
+
+    htnode *head = h->slot[idx];
+    if (!head) {
+        h->slot[idx] = htnode_create(key, val);
+        h->size++;
+        return;
+    }
+    
+    htnode *n = htnode_create(key, val);
+    n->next = head;
+    head->prev = n;
+    h->slot[idx] = n;
+    h->size++;
+}
+
+long ht_get(ht *h, long key)
+{
+    if (!h || ht_empty(h))
+        return -1;
+
+    int idx = h->hash(h, (void *)key);
+    for (htnode *cur = h->slot[idx]; cur; cur = cur->next)
+        if (cur->key == key)
+            return cur->val;
+    return -1;
+}
+int ht_empty(ht *h)
+{
+    return !h || h->size <= 0;
+}
+
+void ht_print(ht *h)
+{
+    printf("--------------------------\n");
+    printf("size = %d bucket = %d\n", h->size, h->bucket);
+    for (int i = 0; i < h->bucket; i++)  {
+        if (!h->slot[i]) {
+            printf("-\n");
+            continue;
+        }
+        for (htnode *cur = h->slot[i]; cur; cur = cur->next)
+            printf("{%ld %ld} ", cur->key, cur->val);
+        printf("\n");
+    }
+    printf("--------------------------\n");
+}
+
 deque *deque_create(void)
 {
     deque *d = malloc(sizeof(deque));
@@ -477,19 +609,38 @@ int *arrayWithSize(int size)
     return arrayWithRange(size, 0, size);
 }
 
-/*
- * int main(int argc, char *argv[])
- * {
- *     deque *d = deque_create();
- *     for (int i = 0; i < 10; i++)
- *         deque_push_back(d, i);
- * 
- *     deque_print_front(d);
- *     deque_print_back(d);
- * 
- *     while (!deque_empty(d))
- *         deque_pop_back(d);
- * 
- *     deque_release(&d);
- * }
- */
+void deque_test(void)
+{
+    deque *d = deque_create();
+    for (int i = 0; i < 10; i++)
+        deque_push_back(d, i);
+
+    deque_print_front(d);
+    deque_print_back(d);
+
+    while (!deque_empty(d))
+        deque_pop_back(d);
+
+    deque_release(&d);
+}
+
+
+long ht_hash(ht *h, void *key)
+{
+    long k = (long)key;
+    return k % h->bucket;
+}
+void ht_test(void)
+{
+    setbuf(stdout, NULL);
+    ht *h = ht_create(ht_hash);
+    int size = 300;
+    for (int i = 0; i < size; i++)
+        ht_insert(h, randWithRange(1, 100), 0);
+    ht_print(h);
+}
+
+int main(int argc, char *argv[])
+{
+    ht_test();
+}
