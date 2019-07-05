@@ -31,7 +31,6 @@ long ht_get(ht *h, long key);
 int ht_empty(ht *h);
 void ht_print(ht *h);
 
-
 /*********** deque ****************/
 typedef struct deque_node {
     long val;

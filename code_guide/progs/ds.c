@@ -43,7 +43,7 @@ int ht_need_resize(ht *h)
     if (!h)
         return 0;
     
-    return h->size * 1.0 / h->bucket > 8;    
+    return h->size * 1.0 / h->bucket > 10;    
 }
 
 static void ht_insert_not_resize(ht *h, long key, long val)
@@ -645,20 +645,32 @@ void deque_test(void)
     deque_release(&d);
 }
 
-
 long ht_hash(ht *h, void *key)
 {
     long k = (long)key;
     return k % h->bucket;
 }
+
 void ht_test(void)
 {
     setbuf(stdout, NULL);
     ht *h = ht_create(ht_hash);
-    int size = 1600;
+
+    int size = 1000000;
+    int lo = 1, hi = 100000;
     for (int i = 0; i < size; i++)
-        ht_insert(h, randWithRange(1, 10000), 0);
-    ht_print(h);
+        ht_insert(h, randWithRange(lo, hi), 0);
+    printf("insert all elem finished!\n");
+
+    int not_found = 0;
+    srand((unsigned)time(NULL));
+    int search_times = 100000;
+    long beg = getCurTime();
+    for (int i = 0; i < search_times; i++)
+        if (ht_get(h, rand() % (hi * 2)) < 0)
+            not_found++;
+    long end = getCurTime();
+    printf("not_found = %.3f%%, cost %.3f us\n", not_found * 1.0 / search_times * 100, (end - beg) * 1.0 / search_times); 
 }
 
 int main(int argc, char *argv[])
