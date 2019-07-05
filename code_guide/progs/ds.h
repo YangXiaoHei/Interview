@@ -25,7 +25,6 @@ typedef struct ht {
 
 ht *ht_create(long (*hash)(ht *, void *));
 void ht_insert(ht *h, long key, long val);
-int ht_need_resize(ht *h);
 long ht_get(ht *h, long key);
 void ht_remove(ht *h, long key);
 int ht_empty(ht *h);

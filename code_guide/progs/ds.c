@@ -4,7 +4,7 @@
 #define HT_EXPAND_BOUND 7
 #define HT_SHRINK_BOUND 3
 
-int ht_is_prime(long num)
+static int ht_is_prime(long num)
 {
     if (num <= 3) 
         return num > 1;
@@ -17,6 +17,22 @@ int ht_is_prime(long num)
         if (num % i == 0 || num % (i + 2) == 0) 
             return 0; return 1;
 } 
+
+static int ht_need_expand(ht *h)
+{
+    if (!h)
+        return 0;
+    
+    return h->size / h->bucket > HT_EXPAND_BOUND;
+}
+
+static int ht_need_shrink(ht *h)
+{
+    if (!h)
+        return 0;
+    
+    return h->bucket > HT_MIN_BUCKET && h->size / h->bucket < HT_SHRINK_BOUND;
+}
 
 static void ht_insert_internal(ht *h, long key, long val)
 {
@@ -102,22 +118,6 @@ ht *ht_create(long (*hash)(ht *, void *))
         h->slot[i] = NULL;
     h->hash = hash;
     return h;
-}
-
-int ht_need_expand(ht *h)
-{
-    if (!h)
-        return 0;
-    
-    return h->size / h->bucket > HT_EXPAND_BOUND;
-}
-
-int ht_need_shrink(ht *h)
-{
-    if (!h)
-        return 0;
-    
-    return h->bucket > HT_MIN_BUCKET && h->size / h->bucket < HT_SHRINK_BOUND;
 }
 
 void ht_insert(ht *h, long key, long val)
