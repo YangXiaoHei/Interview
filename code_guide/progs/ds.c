@@ -1,5 +1,20 @@
 #include "ds.h"
 
+int ht_is_prime(long num)
+{
+    if (num <= 3) 
+        return num > 1;
+
+    if (num % 6 != 1 && num % 6 != 5) 
+        return 0;
+
+    int s = (int)sqrt(num);
+    for (int i = 5; i <= s; i += 6) 
+        if (num % i == 0 || num % (i + 2) == 0) 
+            return 0;
+    return 1;
+}
+
 htnode *htnode_create(long key, long val)
 {
     htnode *n = malloc(sizeof(htnode));
@@ -55,8 +70,14 @@ void ht_resize(ht *h)
         return;
 
     int old_bucket = h->bucket;
-    /* h->bucket = ht_next_prim(h); */
+
     h->bucket *= 2;
+    
+    int i = h->bucket;
+    while (!ht_is_prime(i))
+        i++;
+    h->bucket = i;
+
     h->size = 0;
     htnode **new = malloc(sizeof(htnode *) * h->bucket);
     for (int i = 0; i < h->bucket; i++)
@@ -634,9 +655,9 @@ void ht_test(void)
 {
     setbuf(stdout, NULL);
     ht *h = ht_create(ht_hash);
-    int size = 300;
+    int size = 1600;
     for (int i = 0; i < size; i++)
-        ht_insert(h, randWithRange(1, 100), 0);
+        ht_insert(h, randWithRange(1, 10000), 0);
     ht_print(h);
 }
 
