@@ -69,6 +69,8 @@ int pop_back(deque *d)
     free(n);
     if (--d->size == 0)
         d->header = d->tailer = NULL;
+    if (d->tailer)
+        d->tailer->next = NULL;
     return val;
 }
 
@@ -83,6 +85,8 @@ int pop_front(deque *d)
     free(n);
     if (--d->size == 0)
         d->header = d->tailer = NULL;
+    if (d->header)
+        d->header->prev = NULL;
     return val;
 
 }
