@@ -4,6 +4,66 @@
 #define HT_EXPAND_BOUND 7
 #define HT_SHRINK_BOUND 3
 
+treenode *treenode_create(long val)
+{
+    treenode *n = malloc(sizeof(treenode));
+    if (!n) exit(1);
+    n->val = val;
+    n->left = n->right = NULL;
+    return n;
+}
+
+void in_traverse(treenode *root)
+{
+    if (!root)
+        return;
+
+    in_traverse(root->left);
+    printf("%-3ld", root->val);
+    in_traverse(root->right);
+}
+
+void pre_traverse(treenode *root)
+{
+    if (!root)
+        return;
+
+    printf("%-3ld", root->val);
+    pre_traverse(root->left);
+    pre_traverse(root->right);
+}
+
+void post_traverse(treenode *root)
+{
+    if (!root)
+        return;
+
+    post_traverse(root->left);
+    post_traverse(root->right);
+    printf("%-3ld", root->val);
+}
+
+void in_print(treenode *root)
+{
+    printf("in   -> ");
+    in_traverse(root);
+    printf("\n");
+}
+
+void pre_print(treenode *root)
+{
+    printf("prev -> ");
+    pre_traverse(root);
+    printf("\n");
+}
+
+void post_print(treenode *root)
+{
+    printf("post -> ");
+    post_traverse(root);
+    printf("\n");
+}
+
 static int ht_is_prime(long num)
 {
     if (num <= 3) 
@@ -36,7 +96,7 @@ static int ht_need_shrink(ht *h)
 
 static void ht_insert_internal(ht *h, long key, long val)
 {
-    int idx = h->hash(h, (void *)key);
+    int idx = h->hash(key);
     idx %= h->bucket;
 
     htnode *head = h->slot[idx];
@@ -107,7 +167,7 @@ htnode *htnode_create(long key, long val)
     return n;
 }
 
-ht *ht_create(long (*hash)(ht *, void *))
+ht *ht_create(long (*hash)(long))
 {
     ht *h = malloc(sizeof(ht));
     if (!h) exit(1);
@@ -125,7 +185,7 @@ void ht_insert(ht *h, long key, long val)
     if (ht_need_expand(h)) 
         ht_resize(h, 0);
 
-    int idx = h->hash(h, (void *)key);
+    int idx = h->hash(key);
     idx %= h->bucket;
 
     htnode *head = h->slot[idx];
@@ -154,7 +214,7 @@ void ht_remove(ht *h, long key)
     if (!h || ht_empty(h))
         return;
 
-    int idx = h->hash(h, (void *)key);
+    int idx = h->hash(key);
     idx %= h->bucket;
     int find = 0;
     for (htnode *cur = h->slot[idx]; cur; cur = cur->next) {
@@ -186,7 +246,7 @@ long ht_get(ht *h, long key)
     if (!h || ht_empty(h))
         return -1;
 
-    int idx = h->hash(h, (void *)key);
+    int idx = h->hash(key);
     idx %= h->bucket;
     for (htnode *cur = h->slot[idx]; cur; cur = cur->next)
         if (cur->key == key)
@@ -212,6 +272,26 @@ void ht_print(ht *h)
         printf("\n");
     }
     printf("--------------------------\n");
+}
+
+void ht_release(ht **hh)
+{
+    if (!hh || !*hh)
+        return;
+    ht *h = *hh;
+    for (int i = 0; i < h->bucket; i++) {
+        htnode *n = h->slot[i];
+        if (!n) continue;
+        while (1) {
+            if (!n->next) {
+                free(n);
+                break;
+            }
+            free((n = n->next)->prev);
+        }
+    }
+    free(h->slot);
+    *hh = NULL;
 }
 
 deque *deque_create(void)
@@ -706,10 +786,9 @@ void deque_test(void)
     deque_release(&d);
 }
 
-long ht_hash(ht *h, void *key)
+long ht_hash(long key)
 {
-    long k = (long)key;
-    return k;
+    return key;
 }
 
 void ht_test(void)
@@ -744,7 +823,9 @@ void ht_test(void)
     printf("remove all elem finished, each remove cost %.3f us\n", (end - beg) * 1.0 / size); 
 }
 
-int main(int argc, char *argv[])
-{
-    ht_test();
-}
+/*
+ * int main(int argc, char *argv[])
+ * {
+ *     ht_test();
+ * }
+ */

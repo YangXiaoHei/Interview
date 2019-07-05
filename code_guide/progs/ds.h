@@ -8,6 +8,19 @@
 #include <sys/time.h>
 #include <math.h>
 
+typedef struct treenode {
+    long val;
+    struct treenode *left;
+    struct treenode *right;
+} treenode;
+treenode *treenode_create(long val);
+void in_traverse(treenode *root);
+void pre_traverse(treenode *root);
+void post_traverse(treenode *root);
+void in_print(treenode *root);
+void pre_print(treenode *root);
+void post_print(treenode *root);
+
 typedef struct htnode {
     long key;
     long val;
@@ -20,15 +33,16 @@ typedef struct ht {
     int size;
     int bucket;
     htnode **slot;
-    long (*hash)(struct ht *, void *);
+    long (*hash)(long);
 } ht;
 
-ht *ht_create(long (*hash)(ht *, void *));
+ht *ht_create(long (*hash)(long));
 void ht_insert(ht *h, long key, long val);
 long ht_get(ht *h, long key);
 void ht_remove(ht *h, long key);
 int ht_empty(ht *h);
 void ht_print(ht *h);
+void ht_release(ht **h);
 
 /*********** deque ****************/
 typedef struct deque_node {
@@ -102,6 +116,5 @@ int *copyArray(int *arr, int size);
 int *array(int size);
 int *arrayWithRange(int size, int lo, int hi);
 int *arrayWithSize(int size);
-
 
 #endif
