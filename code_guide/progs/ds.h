@@ -7,19 +7,40 @@
 #include <string.h>
 #include <sys/time.h>
 
-/*********** queue ****************/
+/*********** deque ****************/
 typedef struct deque_node {
     long val;
     struct deque_node *next;
     struct deque_node *prev;
 } deque_node;
+deque_node *deque_node_create(long val);
+typedef struct deque {
+    deque_node *header;
+    deque_node *tailer;
+    int size;
+} deque;
+deque *deque_create(void);
+void deque_push_back(deque *d, long val);
+void deque_push_front(deque *d, long val);
+long deque_pop_back(deque *d);
+long deque_pop_front(deque *d);
+long deque_front(deque *d);
+long deque_back(deque *d);
+int deque_empty(deque *d);
+void deque_print_front(deque *d);
+void deque_print_back(deque *d);
+void deque_print_front_funptr(deque *d, void(*fun)(long));
+void deque_print_back_funptr(deque *d, void(*fun)(long));
+void deque_release(deque **d);
+/**********************************/
+
+/*********** queue ****************/
 typedef struct queue {
     int size;
     deque_node *header;
     deque_node *tailer;
 } queue;
 
-deque_node *deque_node_create(long val);
 queue *queue_create(void);
 int queue_empty(queue *q);
 void queue_enqueue(queue *q, long val);

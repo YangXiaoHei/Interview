@@ -1,5 +1,171 @@
 #include "ds.h"
 
+deque *deque_create(void)
+{
+    deque *d = malloc(sizeof(deque));
+    if (!d) exit(1);
+    d->size = 0;
+    d->header = d->tailer = NULL;
+    return d; 
+}
+void deque_push_back(deque *d, long val)
+{
+    if (!d) 
+        return;
+
+    deque_node *n = deque_node_create(val);
+    if (d->tailer) {
+        d->tailer->next = n;
+        n->prev = d->tailer;
+    }
+    d->tailer = n;
+    if (!d->header)
+        d->header = n;
+    d->size++;
+}
+void deque_push_front(deque *d, long val)
+{
+    if (!d)
+        return;
+
+    deque_node *n = deque_node_create(val);
+    if (d->header) {
+        n->next = d->header;
+        d->header->prev = n;
+    }
+    d->header = n;
+    if (!d->tailer)
+        d->tailer = n;
+    d->size++;
+}
+long deque_pop_back(deque *d)
+{
+   if (!d)
+      return -1;
+
+   if (deque_empty(d))
+       return -1;
+
+   long tmp = d->tailer->val;
+   deque_node *todel = d->tailer;
+   d->tailer = d->tailer->prev;
+   free(todel);
+   if (!d->tailer)
+       d->header = NULL;
+    d->size--;
+    return tmp;
+}
+long deque_pop_front(deque *d)
+{
+    if (!d)
+        return -1;
+
+    if (deque_empty(d))
+        return -1;
+
+   long tmp = d->header->val;
+   deque_node *todel = d->header;
+   d->header = d->header->next;
+   free(todel);
+   if (!d->header)
+       d->tailer = NULL;
+    d->size--;
+    return tmp;
+
+}
+long deque_front(deque *d)
+{
+    if (!d)
+        return -1;
+
+    if (deque_empty(d))
+        return -1;
+
+    return d->header->val;
+}
+long deque_back(deque *d)
+{
+    if (!d)
+        return -1;
+
+    if (deque_empty(d))
+        return -1;
+
+    return d->tailer->val;
+}
+int deque_empty(deque *d)
+{
+    return !d || d->size <= 0;
+}
+void deque_print_front(deque *d)
+{
+    if (!d || deque_empty(d))
+        return;     
+
+    printf("----------------------------\n");
+    printf("size = %d\n", d->size);
+    printf("header -> ");
+    for (deque_node *cur = d->header; cur; cur = cur->next)
+        printf("%-3ld", cur->val);
+    printf(" <- tailer\n");
+    printf("----------------------------\n");
+}
+void deque_print_back(deque *d)
+{
+    if (!d || deque_empty(d))
+        return;     
+
+    printf("----------------------------\n");
+    printf("size = %d\n", d->size);
+    printf("tailer -> ");
+    for (deque_node *cur = d->tailer; cur; cur = cur->prev)
+        printf("%-3ld", cur->val);
+    printf(" <- header\n");
+    printf("----------------------------\n");
+}
+
+void deque_print_front_funptr(deque *d, void(*fun)(long))
+{
+    if (!d || deque_empty(d))
+        return;     
+
+    printf("----------------------------\n");
+    printf("size = %d\n", d->size);
+    printf("header -> ");
+    for (deque_node *cur = d->header; cur; cur = cur->next)
+        fun(cur->val);
+    printf(" <- tailer\n");
+    printf("----------------------------\n");
+}
+
+void deque_print_back_funptr(deque *d, void(*fun)(long))
+{
+    if (!d || deque_empty(d))
+        return;     
+
+    printf("----------------------------\n");
+    printf("size = %d\n", d->size);
+    printf("tailer -> ");
+    for (deque_node *cur = d->tailer; cur; cur = cur->prev)
+        fun(cur->val);
+    printf(" <- header\n");
+    printf("----------------------------\n");
+}
+
+void deque_release(deque **dd)
+{
+    if (!dd || !*dd)
+        return;
+
+    deque *d = *dd;
+
+    while (!deque_empty(d))
+        deque_pop_back(d);
+
+    free(d);
+    *dd = NULL;
+}
+
 deque_node *deque_node_create(long val)
 {
     deque_node *n = malloc(sizeof(deque_node));
@@ -306,3 +472,17 @@ int *arrayWithSize(int size)
 {
     return arrayWithRange(size, 0, size);
 }
+
+/*
+ * int main(int argc, char *argv[])
+ * {
+ *     deque *d = deque_create();
+ *     for (int i = 0; i < 10; i++)
+ *         deque_push_back(d, i);
+ * 
+ *     deque_print_front(d);
+ *     deque_print_back(d);
+ * 
+ *     deque_release(&d);
+ * }
+ */
