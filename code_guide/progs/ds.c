@@ -34,7 +34,7 @@ void deque_push_front(deque *d, long val)
         d->header->prev = n;
     }
     d->header = n;
-    if (!d->tailer)
+    if (!d->tailer) 
         d->tailer = n;
     d->size++;
 }
@@ -52,6 +52,8 @@ long deque_pop_back(deque *d)
    free(todel);
    if (!d->tailer)
        d->header = NULL;
+   else
+       d->tailer->next = NULL;
     d->size--;
     return tmp;
 }
@@ -69,6 +71,8 @@ long deque_pop_front(deque *d)
    free(todel);
    if (!d->header)
        d->tailer = NULL;
+   else
+       d->header->prev = NULL;
     d->size--;
     return tmp;
 
@@ -482,6 +486,9 @@ int *arrayWithSize(int size)
  * 
  *     deque_print_front(d);
  *     deque_print_back(d);
+ * 
+ *     while (!deque_empty(d))
+ *         deque_pop_back(d);
  * 
  *     deque_release(&d);
  * }
