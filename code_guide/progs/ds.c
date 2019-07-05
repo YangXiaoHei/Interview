@@ -1,4 +1,8 @@
-#include "ds.h"
+#include "ds.h" 
+
+#define HT_MIN_BUCKET 31
+#define HT_EXPAND_BOUND 7
+#define HT_SHRINK_BOUND 3
 
 int ht_is_prime(long num)
 {
@@ -11,8 +15,70 @@ int ht_is_prime(long num)
     int s = (int)sqrt(num);
     for (int i = 5; i <= s; i += 6) 
         if (num % i == 0 || num % (i + 2) == 0) 
-            return 0;
-    return 1;
+            return 0; return 1;
+} 
+
+static void ht_insert_internal(ht *h, long key, long val)
+{
+    int idx = h->hash(h, (void *)key);
+    idx %= h->bucket;
+
+    htnode *head = h->slot[idx];
+    if (!head) {
+        h->slot[idx] = htnode_create(key, val);
+        h->size++;
+        return;
+    }
+    
+    htnode *n = htnode_create(key, val);
+    n->next = head;
+    head->prev = n;
+    h->slot[idx] = n;
+    h->size++;
+}
+
+static void ht_resize(ht *h, int shrink)
+{
+    if (!h)
+        return;
+
+    int old_bucket = h->bucket;
+
+    if (shrink) {
+        h->bucket >>= 1;
+        int i = h->bucket;
+        while (!ht_is_prime(i))
+            i--;
+        h->bucket = i;
+        if (h->bucket < HT_MIN_BUCKET)
+            h->bucket = HT_MIN_BUCKET;
+    } else {
+        h->bucket <<= 1;
+        int i = h->bucket;
+        while (!ht_is_prime(i))
+            i++;
+        h->bucket = i;
+    }
+
+    h->size = 0;
+    htnode **new = malloc(sizeof(htnode *) * h->bucket);
+    for (int i = 0; i < h->bucket; i++)
+        new[i] = NULL;
+    htnode **old = h->slot;
+    h->slot = new;
+
+    htnode *head = NULL;;
+    for (int i = 0; i < old_bucket; i++) {
+        if (!(head = old[i]))
+            continue;
+
+        for (htnode *cur = head; cur; cur = cur->next)  {
+            ht_insert_internal(h, cur->key, cur->val);
+            if (cur->prev)
+                free(cur->prev);
+        }
+    }
+    free(old);
 }
 
 htnode *htnode_create(long key, long val)
@@ -30,7 +96,7 @@ ht *ht_create(long (*hash)(ht *, void *))
     ht *h = malloc(sizeof(ht));
     if (!h) exit(1);
     h->size = 0;
-    h->bucket = 4;
+    h->bucket = HT_MIN_BUCKET;
     h->slot = malloc(sizeof(htnode *) * h->bucket);
     for (int i = 0; i < h->bucket; i++)
         h->slot[i] = NULL;
@@ -38,74 +104,29 @@ ht *ht_create(long (*hash)(ht *, void *))
     return h;
 }
 
-int ht_need_resize(ht *h)
+int ht_need_expand(ht *h)
 {
     if (!h)
         return 0;
     
-    return h->size * 1.0 / h->bucket > 10;    
+    return h->size / h->bucket > HT_EXPAND_BOUND;
 }
 
-static void ht_insert_not_resize(ht *h, long key, long val)
-{
-    int idx = h->hash(h, (void *)key);
-
-    htnode *head = h->slot[idx];
-    if (!head) {
-        h->slot[idx] = htnode_create(key, val);
-        h->size++;
-        return;
-    }
-    
-    htnode *n = htnode_create(key, val);
-    n->next = head;
-    head->prev = n;
-    h->slot[idx] = n;
-    h->size++;
-}
-
-void ht_resize(ht *h)
+int ht_need_shrink(ht *h)
 {
     if (!h)
-        return;
-
-    int old_bucket = h->bucket;
-
-    h->bucket *= 2;
+        return 0;
     
-    int i = h->bucket;
-    while (!ht_is_prime(i))
-        i++;
-    h->bucket = i;
-
-    h->size = 0;
-    htnode **new = malloc(sizeof(htnode *) * h->bucket);
-    for (int i = 0; i < h->bucket; i++)
-        new[i] = NULL;
-    htnode **old = h->slot;
-    h->slot = new;
-
-    htnode *head = NULL;;
-    for (int i = 0; i < old_bucket; i++) {
-        if (!(head = old[i]))
-            continue;
-
-        for (htnode *cur = head; cur; cur = cur->next)  {
-            ht_insert_not_resize(h, cur->key, cur->val);
-            if (cur->prev)
-                free(cur->prev);
-        }
-    }
-    free(old);
+    return h->bucket > HT_MIN_BUCKET && h->size / h->bucket < HT_SHRINK_BOUND;
 }
-
 
 void ht_insert(ht *h, long key, long val)
 {
-    if (ht_need_resize(h)) 
-        ht_resize(h);
+    if (ht_need_expand(h)) 
+        ht_resize(h, 0);
 
     int idx = h->hash(h, (void *)key);
+    idx %= h->bucket;
 
     htnode *head = h->slot[idx];
     if (!head) {
@@ -113,12 +134,51 @@ void ht_insert(ht *h, long key, long val)
         h->size++;
         return;
     }
-    
+
+    for (htnode *cur = head; cur; cur = cur->next) {
+        if (cur->key == key)  {
+            cur->val = val;
+            return;
+        }
+    }
+
     htnode *n = htnode_create(key, val);
     n->next = head;
     head->prev = n;
     h->slot[idx] = n;
     h->size++;
+}
+
+void ht_remove(ht *h, long key)
+{
+    if (!h || ht_empty(h))
+        return;
+
+    int idx = h->hash(h, (void *)key);
+    idx %= h->bucket;
+    int find = 0;
+    for (htnode *cur = h->slot[idx]; cur; cur = cur->next) {
+        if (cur->key == key) {
+            find = 1;
+            if (cur->prev) {
+                cur->prev->next = cur->next;
+                if (cur->next)
+                    cur->next->prev = cur->prev;
+                free(cur);
+                h->size--;
+            } else {
+                h->slot[idx] = cur->next;
+                if (cur->next) 
+                    cur->next->prev = NULL;
+                h->size--;
+            }
+            break;
+        }
+    }
+
+    if (find && ht_need_shrink(h))
+        ht_resize(h, 1);
+    return;
 }
 
 long ht_get(ht *h, long key)
@@ -127,6 +187,7 @@ long ht_get(ht *h, long key)
         return -1;
 
     int idx = h->hash(h, (void *)key);
+    idx %= h->bucket;
     for (htnode *cur = h->slot[idx]; cur; cur = cur->next)
         if (cur->key == key)
             return cur->val;
@@ -648,7 +709,7 @@ void deque_test(void)
 long ht_hash(ht *h, void *key)
 {
     long k = (long)key;
-    return k % h->bucket;
+    return k;
 }
 
 void ht_test(void)
@@ -656,21 +717,31 @@ void ht_test(void)
     setbuf(stdout, NULL);
     ht *h = ht_create(ht_hash);
 
-    int size = 1000000;
-    int lo = 1, hi = 100000;
+    int size = 10000000;
+    int lo = 1, hi = 10000000;
+
+    srand((unsigned)time(NULL));
+
+    long beg = getCurTime();
     for (int i = 0; i < size; i++)
-        ht_insert(h, randWithRange(lo, hi), 0);
-    printf("insert all elem finished!\n");
+        ht_insert(h, rand() % (hi - lo) + lo, 0);
+    long end = getCurTime();
+    printf("insert all elem finished, each insert cost %.3f us\n", (end - beg) * 1.0 / size); 
 
     int not_found = 0;
-    srand((unsigned)time(NULL));
     int search_times = 100000;
-    long beg = getCurTime();
+    beg = getCurTime();
     for (int i = 0; i < search_times; i++)
         if (ht_get(h, rand() % (hi * 2)) < 0)
             not_found++;
-    long end = getCurTime();
-    printf("not_found = %.3f%%, cost %.3f us\n", not_found * 1.0 / search_times * 100, (end - beg) * 1.0 / search_times); 
+    end = getCurTime();
+    printf("not_found = %.3f%%, each get cost %.3f us\n", not_found * 1.0 / search_times * 100, (end - beg) * 1.0 / search_times); 
+
+    beg = getCurTime();
+    for (int i = lo; i < hi; i++)
+        ht_remove(h, i);
+    end = getCurTime();
+    printf("remove all elem finished, each remove cost %.3f us\n", (end - beg) * 1.0 / size); 
 }
 
 int main(int argc, char *argv[])
