@@ -707,8 +707,9 @@ lnode *list_create(int size)
         return NULL;
 
     lnode *head = NULL;
+    int t = size;
     while (size--)
-        list_insert(&head, randWithRange(0, size));
+        list_insert(&head, randWithRange(0, t));
     return head;
 }
 void list_print(lnode *head)
@@ -812,7 +813,7 @@ int randWithRange(int lo, int hi)
 {
     if (lo == hi)
         return 0;
-    usleep(2);
+    usleep(7);
     struct timeval tv;
     gettimeofday(&tv, NULL);
     srand(tv.tv_usec + tv.tv_sec * 1000000);
