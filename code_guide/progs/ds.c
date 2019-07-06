@@ -813,7 +813,7 @@ int randWithRange(int lo, int hi)
 {
     if (lo == hi)
         return 0;
-    usleep(7);
+    usleep(17);
     struct timeval tv;
     gettimeofday(&tv, NULL);
     srand(tv.tv_usec + tv.tv_sec * 1000000);

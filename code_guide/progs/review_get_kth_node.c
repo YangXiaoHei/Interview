@@ -6,10 +6,10 @@ int get_kth_node(lnode *list, int k)
         return -1;
     
     lnode *fast = list;
-    while (fast && k--)
-        fast = fast->next;
+    while (fast && k)
+        fast = fast->next, k--;
 
-    if (!fast)
+    if (!fast && k >= 1)
         return -1;
 
     lnode *slow = list;
@@ -21,8 +21,8 @@ int get_kth_node(lnode *list, int k)
 
 int main(int argc, char *argv[])
 {
-    lnode *list = list_create(11);
+    lnode *list = list_create(5);
     list_print(list);
-    int k = randWithRange(1, 13);
+    int k = randWithRange(1, 7);
     printf("k = %-3d val = %-3d\n", k, get_kth_node(list, k));    
 }
