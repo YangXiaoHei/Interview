@@ -99,9 +99,11 @@ stknode *stknode_create(long val);
 stack *stack_create(void);
 void stack_push(stack *s, long val);
 int stack_empty(stack *s);
+int stack_size(stack *s);
 long stack_pop(stack *s);
 long stack_peek(stack *s);
 void stack_print(stack *s);
+void stack_print_s(stack *s);
 void stack_release(stack **s);
 /**********************************/
 

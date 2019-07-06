@@ -578,6 +578,13 @@ int stack_empty(stack *s)
     return s->size <= 0;
 }
 
+int stack_size(stack *s)
+{
+    if (!s)
+        return 0;
+    return s->size;
+}
+
 long stack_peek(stack *s)
 {
     if (stack_empty(s))
@@ -610,6 +617,16 @@ void stack_print(stack *s)
         printf("%-3ld", cur->val);
     printf("\n");
     printf("-----------------------------\n");
+}
+
+void stack_print_s(stack *s)
+{
+    if (!s)
+        return;
+
+    for (stknode *cur = s->top; cur; cur = cur->next)
+        printf("%-3ld", cur->val);
+    printf("\n");
 }
 
 void stack_release(stack **s)
