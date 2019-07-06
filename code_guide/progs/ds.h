@@ -107,6 +107,20 @@ void stack_print_s(stack *s);
 void stack_release(stack **s);
 /**********************************/
 
+/**********************************/
+typedef struct lnode {
+    long val;
+    struct lnode *next;
+} lnode;
+
+lnode *lnode_create(long val);
+void list_insert(lnode **head, long val);
+lnode *list_create(int size);
+lnode *list_create_with_arr(int *arr, int size);
+void list_print(lnode *head);
+void list_release(lnode **head);
+/**********************************/
+
 void sort(int *arr, int size);
 int is_sorted(int *arr, int size);
 void swap(int *a, int *b);

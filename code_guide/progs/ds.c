@@ -657,6 +657,86 @@ static void stack_test(void)
     printf("\n");
 }
 
+lnode *lnode_create(long val)
+{
+    lnode *n = malloc(sizeof(lnode));
+    if (!n) exit(1);
+    n->next = NULL;
+    n->val = val;
+    return n;
+}
+void list_insert(lnode **head, long val)
+{
+    if (!head)
+        return;
+
+    lnode *n = lnode_create(val);
+    if (!*head) {
+        *head = n;
+        return;
+    }
+    lnode *last = *head;
+    while (last->next)
+        last = last->next;
+    last->next = n;
+}
+
+lnode *list_create_with_arr(int *arr, int size)
+{
+    if (!arr || size <= 0)
+        return NULL;
+
+    lnode *head = NULL;
+    lnode *last = NULL;
+    for (int i = 0; i < size; i++) {
+        lnode *n = lnode_create(arr[i]);
+        if (!head) {
+            head = n;
+            last = n;
+        } else {
+            last->next = n;
+            last = n;
+        }
+    }  
+    return head;
+}
+
+lnode *list_create(int size)
+{
+    if (size <= 0)
+        return NULL;
+
+    lnode *head = NULL;
+    while (size--)
+        list_insert(&head, randWithRange(0, size));
+    return head;
+}
+void list_print(lnode *head)
+{
+    if (!head)
+        return;
+
+    while (head)
+        printf("%-3ld", head->val), head = head->next;
+    printf("\n");
+}
+void list_release(lnode **head)
+{
+    if (!head || !*head)
+        return;
+
+    lnode *sentinel = lnode_create(1);
+    sentinel->next = *head;
+    while (sentinel->next) {
+        lnode *tmp = sentinel->next;
+        sentinel = sentinel->next;
+        free(tmp);
+    }
+
+    free(sentinel);
+    *head = NULL;
+}
+
 static void sort_core(int *arr, int size, int lo, int hi)
 {
     if (hi - lo + 1 < 30) {
