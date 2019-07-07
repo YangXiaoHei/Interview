@@ -117,9 +117,26 @@ typedef struct lnode {
 lnode *lnode_create(long val);
 void list_insert(lnode **head, long val);
 lnode *list_create(int size);
+lnode *list_loop_create(int size);
 lnode *list_create_with_arr(int *arr, int size);
 void list_print(lnode *head);
 void list_release(lnode **head);
+/**********************************/
+
+/**********************************/
+typedef struct dlnode {
+    long val;
+    struct dlnode *prev;
+    struct dlnode *next;
+} dlnode;
+
+dlnode *dlnode_create(long val);
+void dlist_insert(dlnode **head, long val);
+dlnode *dlist_create(int size);
+dlnode *dlist_create_with_arr(int *arr, int size);
+void dlist_print_front(dlnode *head);
+void dlist_print_back(dlnode *head);
+void dlist_release(dlnode **head);
 /**********************************/
 
 void sort(int *arr, int size);

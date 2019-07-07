@@ -711,13 +711,32 @@ lnode *list_create(int size)
         list_insert(&head, randWithRange(0, 20));
     return head;
 }
+lnode *list_loop_create(int size)
+{
+    if (size <= 0)
+        return NULL;
+
+    lnode *head = NULL;
+    while (size--)
+        list_insert(&head, randWithRange(0, 20));
+    lnode *last = head;
+    while (last->next)
+        last = last->next;
+    last->next = head;
+    return head;
+}
 void list_print(lnode *head)
 {
     if (!head)
         return;
 
-    while (head)
-        printf("%-3ld", head->val), head = head->next;
+    lnode *rawhead = head;
+    while (head) {
+        printf("%-3ld", head->val);
+        head = head->next;
+        if (head == rawhead)
+            break;
+    }
     printf("\n");
 }
 void list_release(lnode **head)
@@ -734,6 +753,97 @@ void list_release(lnode **head)
     }
 
     free(sentinel);
+    *head = NULL;
+}
+
+dlnode *dlnode_create(long val)
+{
+    dlnode *n = malloc(sizeof(dlnode));
+    if (!n) exit(1);
+    n->next = n->prev = NULL;
+    n->val = val;
+    return n;
+}
+void dlist_insert(dlnode **head, long val)
+{
+    if (!head)
+        return;
+
+    dlnode *n = dlnode_create(val);
+    if (!*head) {
+        *head = n;
+        return;
+    }
+    dlnode *last = *head;
+    while (last->next)
+        last = last->next;
+    last->next = n;
+    n->prev = last;
+}
+
+dlnode *dlist_create(int size)
+{
+    if (size <= 0)
+        return NULL;
+
+    dlnode *head = NULL;
+    while (size--)
+        dlist_insert(&head, randWithRange(0, 20));
+    return head;
+}
+
+dlnode *dlist_create_with_arr(int *arr, int size)
+{
+    if (!arr || size <= 0)
+        return NULL;
+
+    dlnode *head = NULL;
+    dlnode *last = NULL;
+    for (int i = 0; i < size; i++) {
+        dlnode *n = dlnode_create(arr[i]);
+        if (!head) {
+            head = n;
+            last = n;
+        } else {
+            last->next = n;
+            n->prev = last;
+            last = n;
+        }
+    }  
+    return head;
+    
+}
+
+void dlist_print_front(dlnode *head)
+{
+    for (dlnode *cur = head; cur; cur = cur->next)
+        printf("%-3ld", cur->val);
+    printf("\n");
+}
+
+void dlist_print_back(dlnode *head)
+{
+    dlnode *tail = head;
+    while (tail->next)
+       tail = tail->next;
+   for (dlnode *cur = tail; cur; cur = cur->prev)
+        printf("%-3ld", cur->val);
+    printf("\n");
+}
+
+void dlist_release(dlnode **head)
+{
+    if (!head || !*head)
+        return;
+
+    dlnode *cur = *head;
+    while (1) {
+        if (!cur->next) {
+            free(cur);
+            break;
+        }
+        free((cur = cur->next)->prev);
+    }
     *head = NULL;
 }
 
