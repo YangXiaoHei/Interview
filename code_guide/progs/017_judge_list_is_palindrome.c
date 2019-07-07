@@ -44,13 +44,16 @@ int is_list_palindrome(lnode *list)
     }
 
     lnode *head = list;
+    int result = 1;
     while (!stack_empty(s)) {
-        if (head->val != STACK_POP(s)->val)
-            return 0;
+        if (head->val != STACK_POP(s)->val) {
+            result = 0;
+            break;
+        }
         head = head->next;
     }
     stack_release(&s);
-    return 1;
+    return result;
 }
 
 int main(int argc, char *argv[])
