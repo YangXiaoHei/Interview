@@ -707,9 +707,8 @@ lnode *list_create(int size)
         return NULL;
 
     lnode *head = NULL;
-    int t = size;
     while (size--)
-        list_insert(&head, randWithRange(0, t));
+        list_insert(&head, randWithRange(0, 20));
     return head;
 }
 void list_print(lnode *head)
