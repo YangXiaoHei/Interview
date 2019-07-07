@@ -6,36 +6,27 @@ void remove_mid_node(lnode **listptr)
         return;
 
     lnode *list = *listptr;
-    if (!list->next) {
+    lnode *mid = list, *fast = list;
+    lnode *midprev = NULL;
+    while (fast->next && fast->next->next) {
+        midprev = mid;
+        mid = mid->next;
+        fast = fast->next->next;
+    }
+
+    if (!midprev) {
+        *listptr = (*listptr)->next;
         free(list);
-        *listptr = NULL;
         return;
     }
 
-    lnode *slow = list, *fast = list->next->next;
-    if (!fast) {
-        *listptr = slow->next;
-        free(slow);
-        return;
-    }
-
-    lnode *slowprev = NULL;
-    while (1) {
-        slowprev = slow;
-        slow = slow->next;
-        if (!(fast = fast->next))
-            break;
-        if (!(fast = fast->next))
-            break;
-    }
-
-    slowprev->next = slowprev->next->next;
-    free(slow);
+    midprev->next = midprev->next->next;
+    free(mid);
 }
 
 int main(int argc, char *argv[])
 {
-    int size = randWithRange(1, 6);
+    int size = randWithRange(1, 5);
     lnode *list = list_create(size);
     list_print(list);
     remove_mid_node(&list);
