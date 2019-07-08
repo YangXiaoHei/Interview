@@ -1,6 +1,6 @@
 #include "ds.h" 
 
-#define HT_MIN_BUCKET 31
+#define HT_MIN_BUCKET 5
 #define HT_EXPAND_BOUND 7
 #define HT_SHRINK_BOUND 3
 
@@ -96,7 +96,7 @@ static int ht_need_shrink(ht *h)
 
 static void ht_insert_internal(ht *h, long key, long val)
 {
-    int idx = h->hash(key);
+    unsigned long idx = h->hash(key);
     idx %= h->bucket;
 
     htnode *head = h->slot[idx];
@@ -185,7 +185,7 @@ void ht_insert(ht *h, long key, long val)
     if (ht_need_expand(h)) 
         ht_resize(h, 0);
 
-    int idx = h->hash(key);
+    unsigned long idx = h->hash(key);
     idx %= h->bucket;
 
     htnode *head = h->slot[idx];
@@ -214,7 +214,7 @@ void ht_remove(ht *h, long key)
     if (!h || ht_empty(h))
         return;
 
-    int idx = h->hash(key);
+    unsigned long idx = h->hash(key);
     idx %= h->bucket;
     int find = 0;
     for (htnode *cur = h->slot[idx]; cur; cur = cur->next) {
@@ -246,7 +246,7 @@ long ht_get(ht *h, long key)
     if (!h || ht_empty(h))
         return -1;
 
-    int idx = h->hash(key);
+    unsigned long idx = h->hash(key);
     idx %= h->bucket;
     for (htnode *cur = h->slot[idx]; cur; cur = cur->next)
         if (cur->key == key)
@@ -258,6 +258,21 @@ int ht_empty(ht *h)
     return !h || h->size <= 0;
 }
 
+void ht_print_funptr(ht *h, void (*print_ptr)(htnode *))
+{
+    printf("--------------------------\n");
+    printf("size = %d bucket = %d\n", h->size, h->bucket);
+    for (int i = 0; i < h->bucket; i++)  {
+        if (!h->slot[i]) {
+            printf("-\n");
+            continue;
+        }
+        for (htnode *cur = h->slot[i]; cur; cur = cur->next)
+            print_ptr(cur);
+        printf("\n");
+    }
+    printf("--------------------------\n");
+}
 void ht_print(ht *h)
 {
     printf("--------------------------\n");
