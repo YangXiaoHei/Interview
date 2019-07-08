@@ -6,10 +6,10 @@ int get_kth_node(lnode *list, int k)
         return -1;
     
     lnode *fast = list;
-    while (fast && k)
+    while (fast && k > 0)
         fast = fast->next, k--;
 
-    if (!fast && k >= 1)
+    if (k > 0)
         return -1;
 
     lnode *slow = list;
