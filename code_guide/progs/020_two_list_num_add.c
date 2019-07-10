@@ -19,7 +19,7 @@ lnode *two_list_add(lnode *list1, lnode *list2)
 
     lnode *new = NULL;
     int carry = 0;
-    do {
+    while (carry || (!stack_empty(s1) && !stack_empty(s2))) {
         lnode *n1 = STACK_POP(s1);
         lnode *n2 = STACK_POP(s2);
         long v1 = n1 ? n1->val : 0;
@@ -30,7 +30,7 @@ lnode *two_list_add(lnode *list1, lnode *list2)
         lnode *n = lnode_create(val);
         n->next = new;
         new = n;
-    } while (carry || (!stack_empty(s1) && !stack_empty(s2)));
+    }
 
     stack *left = stack_empty(s1) ? s2 : s1;
     while (!stack_empty(left)) {
