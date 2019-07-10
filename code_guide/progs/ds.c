@@ -244,14 +244,14 @@ void ht_remove(ht *h, long key)
 long ht_get(ht *h, long key)
 {
     if (!h || ht_empty(h))
-        return -1;
+        return 0;
 
     unsigned long idx = h->hash(key);
     idx %= h->bucket;
     for (htnode *cur = h->slot[idx]; cur; cur = cur->next)
         if (cur->key == key)
             return cur->val;
-    return -1;
+    return 0;
 }
 int ht_empty(ht *h)
 {
@@ -350,10 +350,10 @@ void deque_push_front(deque *d, long val)
 long deque_pop_back(deque *d)
 {
    if (!d)
-      return -1;
+      return 0;
 
    if (deque_empty(d))
-       return -1;
+       return 0;
 
    long tmp = d->tailer->val;
    deque_node *todel = d->tailer;
@@ -369,10 +369,10 @@ long deque_pop_back(deque *d)
 long deque_pop_front(deque *d)
 {
     if (!d)
-        return -1;
+        return 0;
 
     if (deque_empty(d))
-        return -1;
+        return 0;
 
    long tmp = d->header->val;
    deque_node *todel = d->header;
@@ -389,20 +389,20 @@ long deque_pop_front(deque *d)
 long deque_front(deque *d)
 {
     if (!d)
-        return -1;
+        return 0;
 
     if (deque_empty(d))
-        return -1;
+        return 0;
 
     return d->header->val;
 }
 long deque_back(deque *d)
 {
     if (!d)
-        return -1;
+        return 0;
 
     if (deque_empty(d))
-        return -1;
+        return 0;
 
     return d->tailer->val;
 }
@@ -517,7 +517,7 @@ void queue_enqueue(queue *q, long val)
 long queue_dequeue(queue *q)
 {
     if (queue_empty(q))
-        return -1;
+        return 0;
 
     long tmp = q->header->val;
     deque_node *todel = q->header;
@@ -603,14 +603,14 @@ int stack_size(stack *s)
 long stack_peek(stack *s)
 {
     if (stack_empty(s))
-        return -1;
+        return 0;
     return s->top->val;
 }
 
 long stack_pop(stack *s)
 {
     if (stack_empty(s))
-        return -1;
+        return 0;
 
     long tmp = s->top->val;
     stknode *todel = s->top;
