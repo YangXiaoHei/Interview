@@ -118,9 +118,11 @@ typedef struct lnode {
 lnode *lnode_create(long val);
 void list_insert(lnode **head, long val);
 lnode *list_create(int size);
+lnode *list_circle_create(int size);
 lnode *list_loop_create(int size);
 lnode *list_create_with_arr(int *arr, int size);
 void list_print(lnode *head);
+void list_print_with_size(lnode *head, int size);
 void list_release(lnode **head);
 /**********************************/
 

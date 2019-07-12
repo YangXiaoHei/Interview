@@ -731,6 +731,28 @@ lnode *list_loop_create(int size)
     if (size <= 0)
         return NULL;
 
+    int sz = size;
+    lnode *head = NULL;
+    while (size--)
+        list_insert(&head, randWithRange(0, 20));
+
+    lnode *last = head;
+    while (last->next)
+        last = last->next;
+
+    lnode *tail = head;
+    int r = randWithRange(0, sz);
+    while (r--)
+        tail = tail->next;
+
+    last->next = tail;
+    return head;
+}
+lnode *list_circle_create(int size)
+{
+    if (size <= 0)
+        return NULL;
+
     lnode *head = NULL;
     while (size--)
         list_insert(&head, randWithRange(0, 20));
@@ -740,6 +762,20 @@ lnode *list_loop_create(int size)
     last->next = head;
     return head;
 }
+
+void list_print_with_size(lnode *head, int size)
+{
+    if (!head || size <= 0)
+        return;
+
+    while (head && size > 0) {
+        printf("%-3ld", head->val);
+        head = head->next;
+        size--;
+    }
+    printf("\n");
+}
+
 void list_print(lnode *head)
 {
     if (!head)
