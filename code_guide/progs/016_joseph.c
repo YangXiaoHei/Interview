@@ -21,7 +21,7 @@ int joseph(lnode *list, int k)
 
 int main(int argc, char *argv[])
 {
-    lnode *list = list_loop_create(7);
+    lnode *list = list_circle_create(7);
     list_print(list);
     printf("%d\n", joseph(list, 3));
 }
