@@ -29,12 +29,17 @@ void gen_intersect_list(lnode **list1, lnode **list2)
 int list_intersect(lnode *l1, lnode *l2)
 {
     int n1 = 0;
-    for (lnode *cur = l1; cur; cur = cur->next)
+    lnode *cur1 = NULL;
+    for (cur1 = l1; cur1; cur1 = cur1->next)
         n1++;
 
     int n2 = 0;
-    for (lnode *cur = l2; cur; cur = cur->next)
+    lnode *cur2 = NULL;
+    for (lnode *cur2 = l2; cur2; cur2 = cur2->next)
         n2++;
+
+    if (cur1 != cur2)
+        return 0;
 
     int diff = n1 - n2;
     diff = diff < 0 ? -diff : diff;
