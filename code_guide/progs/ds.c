@@ -4,10 +4,72 @@
 #define HT_EXPAND_BOUND 7
 #define HT_SHRINK_BOUND 3
 
+treenode* bst_create(int size)
+{
+    if (size <= 0)
+        return NULL;
+
+    int *arr = NULL;
+    while (1) {
+        arr = arrayWithRange(size, 0, size * 2);
+        if (!arrayHasDup(arr, size)) 
+            break;
+        free(arr);
+    }
+    treenode *root = NULL;
+    for (int i = 0; i < size; i++)
+        bst_insert(&root, arr[i]);
+    free(arr);
+    return root;
+}
+
+void bst_insert(treenode **root, long val)
+{
+    treenode *n = treenode_create(val);
+    if (!*root) {
+        *root = n;
+        return;
+    }
+
+    treenode *parent = NULL, *cur = *root;
+    while (cur) {
+        if (cur->val == val) {
+            free(n);
+            return;
+        }
+        parent = cur;
+        if (val < cur->val)
+            cur = cur->left;
+        else
+            cur = cur->right;
+    }
+    if (val < parent->val)
+        parent->left = n;
+    else
+        parent->right = n;
+}
+
+void bst_remove(treenode **root, long val)
+{
+    
+}
+
+void bst_test(void)
+{
+    int size = randWithRange(1, 10);
+    printf("size=%d\n", size);
+    treenode *root = bst_create(size);
+    pre_print(root);
+    in_print(root);
+    post_print(root);
+}
+
 treenode *treenode_create(long val)
 {
     treenode *n = malloc(sizeof(treenode));
     if (!n) exit(1);
+    n->height = 0;
+    n->size = 1;
     n->val = val;
     n->left = n->right = NULL;
     return n;
@@ -1095,6 +1157,27 @@ int *arrayWithRange(int size, int lo, int hi)
     return array;
 }
 
+static long __normal_hash(long key)
+{
+    return key;
+}
+int arrayHasDup(int *arr, int size)
+{
+    if (!arr || size <= 1)
+        return 0;
+    int has_dup = 0;
+    ht *h = ht_create(__normal_hash);
+    for (int i = 0; i < size; i++) {
+        if (ht_get(h, arr[i])) {
+            has_dup = 1;
+            break;
+        } 
+        ht_insert(h, arr[i], 1);
+    }
+    ht_release(&h);
+    return has_dup;
+}
+
 int *arrayWithSize(int size)
 {
     return arrayWithRange(size, 0, size);
@@ -1155,6 +1238,6 @@ void ht_test(void)
 /*
  * int main(int argc, char *argv[])
  * {
- *     ht_test();
+ *     bst_test();
  * }
  */

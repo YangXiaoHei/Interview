@@ -11,6 +11,9 @@
 
 typedef struct treenode {
     long val;
+    int size;
+    int height;
+    struct treenode *parent;
     struct treenode *left;
     struct treenode *right;
 } treenode;
@@ -21,6 +24,10 @@ void post_traverse(treenode *root);
 void in_print(treenode *root);
 void pre_print(treenode *root);
 void post_print(treenode *root);
+
+treenode* bst_create(int size);
+void bst_insert(treenode **root, long val);
+void bst_remove(treenode **root, long val);
 
 typedef struct htnode {
     long key;
@@ -153,5 +160,6 @@ int *copyArray(int *arr, int size);
 int *array(int size);
 int *arrayWithRange(int size, int lo, int hi);
 int *arrayWithSize(int size);
+int arrayHasDup(int *arr, int size);
 
 #endif
