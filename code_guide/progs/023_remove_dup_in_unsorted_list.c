@@ -5,19 +5,19 @@ long normal_hash(long key)
     return key;
 }
 
-void remove_dup(lnode **listptr)
+void remove_dup(lnode *list)
 {
-    if (!listptr || !*listptr)
+    if (!list)
         return;
 
-    lnode *list = *listptr;
-
-    lnode *sentinel = lnode_create(10);
-    sentinel->next = list;
+    if (!list->next)
+        return;
 
     ht *h = ht_create(normal_hash);
 
-    lnode *prev = sentinel, *cur = sentinel->next;
+    lnode *prev = list, *cur = list->next;
+    ht_insert(h, prev->val, 1);
+
     while (cur) {
         if (ht_get(h, cur->val)) {
             prev->next = cur->next;
@@ -29,8 +29,6 @@ void remove_dup(lnode **listptr)
             cur = cur->next;
         }
     }
-    *listptr = sentinel->next;
-    free(sentinel);
     ht_release(&h);
 }
 
@@ -38,6 +36,6 @@ int main(int argc, char *argv[])
 {
     lnode *list = list_create(10);
     list_print(list);
-    remove_dup(&list);
+    remove_dup(list);
     list_print(list);
 }
