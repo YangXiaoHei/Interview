@@ -45,6 +45,10 @@ void post_traverse(treenode *root)
 
 void in_print(treenode *root)
 {
+    if (!root) {
+        printf("null\n");
+        return;
+    }
     printf("in   -> ");
     in_traverse(root);
     printf("\n");
@@ -52,6 +56,10 @@ void in_print(treenode *root)
 
 void pre_print(treenode *root)
 {
+    if (!root) {
+        printf("null\n");
+        return;
+    }
     printf("prev -> ");
     pre_traverse(root);
     printf("\n");
@@ -59,6 +67,10 @@ void pre_print(treenode *root)
 
 void post_print(treenode *root)
 {
+    if (!root) {
+        printf("null\n");
+        return;
+    }
     printf("post -> ");
     post_traverse(root);
     printf("\n");
@@ -260,6 +272,10 @@ int ht_empty(ht *h)
 
 void ht_print_funptr(ht *h, void (*print_ptr)(htnode *))
 {
+    if (!h) {
+        printf("null\n");
+        return;
+    }
     printf("--------------------------\n");
     printf("size = %d bucket = %d\n", h->size, h->bucket);
     for (int i = 0; i < h->bucket; i++)  {
@@ -275,6 +291,10 @@ void ht_print_funptr(ht *h, void (*print_ptr)(htnode *))
 }
 void ht_print(ht *h)
 {
+    if (!h) {
+        printf("null\n");
+        return;
+    }
     printf("--------------------------\n");
     printf("size = %d bucket = %d\n", h->size, h->bucket);
     for (int i = 0; i < h->bucket; i++)  {
@@ -412,8 +432,14 @@ int deque_empty(deque *d)
 }
 void deque_print_front(deque *d)
 {
-    if (!d || deque_empty(d))
-        return;     
+    if (!d) {
+        printf("null\n");
+        return;
+    }
+    if (deque_empty(d)) {
+        printf("empty\n");
+        return;
+    }
 
     printf("----------------------------\n");
     printf("size = %d\n", d->size);
@@ -425,8 +451,14 @@ void deque_print_front(deque *d)
 }
 void deque_print_back(deque *d)
 {
-    if (!d || deque_empty(d))
-        return;     
+    if (!d) {
+        printf("null\n");
+        return;
+    }
+    if (deque_empty(d)) {
+        printf("empty\n");
+        return;
+    }
 
     printf("----------------------------\n");
     printf("size = %d\n", d->size);
@@ -439,8 +471,14 @@ void deque_print_back(deque *d)
 
 void deque_print_front_funptr(deque *d, void(*fun)(long))
 {
-    if (!d || deque_empty(d))
-        return;     
+    if (!d) {
+        printf("null\n");
+        return;
+    }
+    if (deque_empty(d)) {
+        printf("empty\n");
+        return;
+    }
 
     printf("----------------------------\n");
     printf("size = %d\n", d->size);
@@ -453,8 +491,14 @@ void deque_print_front_funptr(deque *d, void(*fun)(long))
 
 void deque_print_back_funptr(deque *d, void(*fun)(long))
 {
-    if (!d || deque_empty(d))
-        return;     
+    if (!d) {
+        printf("null\n");
+        return;
+    }
+    if (deque_empty(d)) {
+        printf("empty\n");
+        return;
+    }
 
     printf("----------------------------\n");
     printf("size = %d\n", d->size);
@@ -531,8 +575,15 @@ long queue_dequeue(queue *q)
 
 void queue_print(queue *q)
 {
-    if (!q)
+    if (!q) {
+        printf("null\n");
         return;
+    }
+
+    if (queue_empty(q)) {
+        printf("empty\n");
+        return;
+    }
 
     printf("-----------------------------\n");
     printf("queue size = %d\n", q->size);
@@ -622,8 +673,15 @@ long stack_pop(stack *s)
 
 void stack_print(stack *s)
 {
-    if (!s)
+    if (!s) {
+        printf("null\n");
         return;
+    }
+
+    if (stack_empty(s)) {
+        printf("empty\n");
+        return;
+    }
 
     printf("-----------------------------\n");
     printf("stack size = %ld\n", s->size);
@@ -765,8 +823,10 @@ lnode *list_circle_create(int size)
 
 void list_print_with_size(lnode *head, int size)
 {
-    if (!head || size <= 0)
+    if (!head || size <= 0) {
+        printf("null\n");
         return;
+    }
 
     while (head && size > 0) {
         printf("%-3ld", head->val);
@@ -778,8 +838,10 @@ void list_print_with_size(lnode *head, int size)
 
 void list_print(lnode *head)
 {
-    if (!head)
+    if (!head) {
+        printf("null\n");
         return;
+    }
 
     lnode *rawhead = head;
     while (head) {
@@ -867,6 +929,11 @@ dlnode *dlist_create_with_arr(int *arr, int size)
 
 void dlist_print_front(dlnode *head)
 {
+    if (!head) {
+        printf("null\n");
+        return;
+    }
+
     for (dlnode *cur = head; cur; cur = cur->next)
         printf("%-3ld", cur->val);
     printf("\n");
@@ -874,6 +941,10 @@ void dlist_print_front(dlnode *head)
 
 void dlist_print_back(dlnode *head)
 {
+    if (!head) {
+        printf("null\n");
+        return;
+    }
     dlnode *tail = head;
     while (tail->next)
        tail = tail->next;
