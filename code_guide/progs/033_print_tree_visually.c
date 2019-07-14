@@ -131,7 +131,6 @@ void print_tree_visually(treenode *root)
 
 int main(int argc, char *argv[])
 {
-#define N(x) treenode_create(x)
     treenode *root = bst_create(10);
     print_tree_visually(root);
 }
