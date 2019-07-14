@@ -1,18 +1,5 @@
 #include "ds.h"
 
-int max(int a, int b)
-{
-    return a > b ? a : b;
-}
-
-int height(treenode *root)
-{
-    if (!root)
-        return 0;
-
-    return 1 + max(height(root->left), height(root->right));
-}
-
 void set_edge_map(treenode *root, int level, treenode **map)
 {
     if (!root)
@@ -43,7 +30,7 @@ void print_edge_node(treenode *root)
     if (!root)
         return;
 
-    int h = height(root);
+    int h = tree_height(root);
     treenode **map = malloc(sizeof(treenode **) * (h * 2));
     for (int i = 0; i < h; i++) {
         map[i * 2 + 0] = NULL;
