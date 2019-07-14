@@ -9,6 +9,7 @@ int read_cursor = 0;
 
 void serialize(treenode *root)
 {
+    write_cursor = 0;
     queue *q = queue_create();
 
     ENQUEUE(q, root);
@@ -22,6 +23,7 @@ void serialize(treenode *root)
             write_cursor += snprintf(buf + write_cursor, sizeof(buf), "#!");
     }
     queue_release(&q);
+    buf[write_cursor] = 0;
 }
 
 treenode* deserialize()
