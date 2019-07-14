@@ -1,42 +1,5 @@
 #include "ds.h"
 
-int max(int a, int b)
-{
-    return a > b ? a : b;
-}
-
-int tree_height(treenode *root)
-{
-    if (!root) 
-        return 0;
-
-    return 1 + max(tree_height(root->left), tree_height(root->right));
-}
-
-int tree_size(treenode *root)
-{
-    if (!root) 
-        return 0;
-
-    return 1 + tree_size(root->left) + tree_size(root->right);
-}
-
-int get_num_width(int num)
-{
-    int width = 1;
-    while (num /= 10)
-        width++;
-    return width;
-}
-
-int get_width_num(int w)
-{
-    int i = 0;
-    while (w--)
-        i = i * 10 + 9;
-    return i;
-}
-
 void print_tree_visually(treenode *root)
 {
     if (!root) {
@@ -127,6 +90,7 @@ void print_tree_visually(treenode *root)
         }
     }
     printf("---------------------------------------------------------------\n");
+    queue_release(&q);
 }
 
 int main(int argc, char *argv[])
