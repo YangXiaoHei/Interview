@@ -24,10 +24,15 @@ void post_traverse(treenode *root);
 void in_print(treenode *root);
 void pre_print(treenode *root);
 void post_print(treenode *root);
+int tree_size(treenode *root);
+int tree_height(treenode *root);
+void tree_draw(treenode *root);
 
 treenode* bst_create(int size);
 void bst_insert(treenode **root, long val);
 void bst_remove(treenode **root, long val);
+int get_num_width(int num);
+int get_width_num(int w);
 
 typedef struct htnode {
     long key;
@@ -92,6 +97,7 @@ int queue_empty(queue *q);
 void queue_enqueue(queue *q, long val);
 long queue_dequeue(queue *q);
 void queue_print(queue *q);
+void queue_release(queue **q);
 /*********************************/
 
 /*********** stack ****************/
