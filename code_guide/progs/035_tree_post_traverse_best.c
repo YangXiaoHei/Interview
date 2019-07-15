@@ -1,6 +1,5 @@
 #include "ds.h"
 
-
 treenode *reverse_edge(treenode *root)
 {
     treenode *prev = NULL, *next = NULL;
