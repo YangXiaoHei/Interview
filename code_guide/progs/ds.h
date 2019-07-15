@@ -29,6 +29,7 @@ int tree_height(treenode *root);
 void tree_draw(treenode *root);
 
 treenode* bst_create(int size);
+treenode* bst_create_with_arr(int *arr, int size);
 void bst_insert(treenode **root, long val);
 void bst_remove(treenode **root, long val);
 int get_num_width(int num);
@@ -169,6 +170,9 @@ int *copyArray(int *arr, int size);
 int *array(int size);
 int *arrayWithRange(int size, int lo, int hi);
 int *arrayWithSize(int size);
+int *arrayNoDup(int size);
+int *arrayNoDupWithRange(int size, int lo, int hi);
 int arrayHasDup(int *arr, int size);
+void shuffle(int *arr, int size);
 
 #endif

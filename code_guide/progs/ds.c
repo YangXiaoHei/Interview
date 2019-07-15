@@ -4,6 +4,17 @@
 #define HT_EXPAND_BOUND 7
 #define HT_SHRINK_BOUND 3
 
+treenode *bst_create_with_arr(int *arr, int size)
+{
+    if (size <= 0 || !arr)
+        return NULL;
+
+    treenode *root = NULL;
+    for (int i = 0; i < size; i++)
+        bst_insert(&root, arr[i]);
+    return root;
+}
+
 treenode* bst_create(int size)
 {
     if (size <= 0)
@@ -74,10 +85,11 @@ int tree_height(treenode *root)
 
 int get_num_width(int num)
 {
+    int sign = num < 0;
     int width = 1;
     while (num /= 10)
         width++;
-    return width;
+    return width + sign;
 }
 
 int get_width_num(int w)
@@ -103,7 +115,7 @@ void tree_draw(treenode *root)
 #define CHAR_NULL ' ' /* null 节点用什么符号来表示 */
 #define CHAR_FILL ' ' /* 数字不足宽度用什么符号来填充 */
 #define CHAR_SPACE ' ' /* 不同的节点间用什么符号来分隔 */
-#define NUM_WIDTH 2  /* 数字的最大宽度，比如 12 的宽度是 2，999 的宽度是 3 */
+#define NUM_WIDTH 3  /* 数字的最大宽度，比如 12 的宽度是 2，999 的宽度是 3 */
 
     ENQUEUE(q, root);
     int h = tree_height(root);
@@ -111,7 +123,9 @@ void tree_draw(treenode *root)
     int slots = pow(2, h) - 1;
     int cur_level = 1;
     int next_level = 0;
-    char buf[1024];
+    char *buf = malloc(10 << 20);
+    if (!buf) exit(1);
+    long buflen = 10 << 20;
     int len = 0;
     int numwidth = NUM_WIDTH; /* 999 .9. 90. */
 
@@ -149,9 +163,9 @@ void tree_draw(treenode *root)
         len += left_nfill;
 
         if (n)
-            len += snprintf(buf + len, sizeof(buf), "%ld", num);
+            len += snprintf(buf + len, buflen - len, "%ld", num);
         else
-            len += snprintf(buf + len, sizeof(buf), "%c", CHAR_NULL);
+            len += snprintf(buf + len, buflen - len, "%c", CHAR_NULL);
 
         // 数字右边填充空格
         for (int i = 0; i < right_nfill; i++)
@@ -179,6 +193,7 @@ void tree_draw(treenode *root)
     }
     printf("---------------------------------------------------------------\n");
     queue_release(&q);
+    free(buf);
 }
 
 void bst_test(void)
@@ -1305,6 +1320,10 @@ int randWithRange(int lo, int hi)
 
 void printArray(int *array, int size)
 {
+    if (!array || size <= 0) {
+        printf("null\n");
+        return;
+    }
     printf("size=%d\n", size);
     for (int i = 0; i < size; i++)
         printf("%-4d", array[i]);
@@ -1351,6 +1370,7 @@ static long __normal_hash(long key)
 {
     return key;
 }
+
 int arrayHasDup(int *arr, int size)
 {
     if (!arr || size <= 1)
@@ -1366,6 +1386,45 @@ int arrayHasDup(int *arr, int size)
     }
     ht_release(&h);
     return has_dup;
+}
+
+int *arrayNoDupWithRange(int size, int lo, int hi)
+{
+    if (hi - lo < size) {
+        printf("hi - lo = %d must greater or equal than size=%d\n", hi - lo, size);
+        return NULL;
+    }
+    int *arr = malloc(sizeof(int) * (hi - lo));
+    for (int i = lo; i < hi; i++)
+        arr[i - lo] = i; 
+    shuffle(arr, hi - lo);
+    int *res = malloc(sizeof(int) * size);
+    memcpy(res, arr, sizeof(int) * size);
+    free(arr);
+    return res;
+}
+
+int *arrayNoDup(int size)
+{
+    int *arr = NULL;
+    while (1) {
+        arr = arrayWithRange(size, -size, size);
+        if (!arrayHasDup(arr, size))
+            break;
+        free(arr);
+    }
+    return arr;
+}
+
+void shuffle(int *arr, int size)
+{
+    if (!arr || size <= 0)
+        return;
+
+    for (int i = 0; i < size; i++) {
+        int r = randWithRange(0, size - i);
+        swap(arr + i, arr + r);
+    }
 }
 
 int *arrayWithSize(int size)
