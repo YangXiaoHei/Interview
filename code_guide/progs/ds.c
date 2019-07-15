@@ -893,6 +893,35 @@ long stack_pop(stack *s)
     free(todel);
     return tmp;
 }
+void stack_print_r(stack *s)
+{
+    if (!s) {
+        printf("null\n");
+        return;
+    }
+
+    if (stack_empty(s)) {
+        printf("empty\n");
+        return;
+    }
+
+    stack *r = stack_create();
+    while (!stack_empty(s)) 
+        stack_push(r, stack_pop(s));
+
+    printf("\n-----------------------------\n");
+    printf("stack size = %ld\n", r->size);
+    for (stknode *cur = r->top; cur; cur = cur->next)
+        printf("%-3ld", cur->val);
+    printf("<- top");
+    printf("\n");
+    printf("-----------------------------\n");
+
+    while (!stack_empty(r))
+        stack_push(s, stack_pop(r));
+
+    stack_release(&r);
+}
 
 void stack_print(stack *s)
 {

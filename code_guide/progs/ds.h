@@ -120,6 +120,7 @@ int stack_size(stack *s);
 long stack_pop(stack *s);
 long stack_peek(stack *s);
 void stack_print(stack *s);
+void stack_print_r(stack *s);
 void stack_print_s(stack *s);
 void stack_release(stack **s);
 /**********************************/
