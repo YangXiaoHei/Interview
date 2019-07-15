@@ -454,6 +454,20 @@ long ht_get(ht *h, long key)
             return cur->val;
     return 0;
 }
+
+int ht_contain(ht *h, long key)
+{
+    if (!h || ht_empty(h))
+        return 0;
+    
+    unsigned long idx = h->hash(key);
+    idx %= h->bucket;
+    for (htnode *cur = h->slot[idx]; cur; cur = cur->next)
+        if (cur->key == key)
+            return 1;
+    return 0;
+}
+
 int ht_empty(ht *h)
 {
     return !h || h->size <= 0;
@@ -826,6 +840,15 @@ stack *stack_create(void)
     return s;
 }
 
+void stack_clear(stack *s)
+{
+    if (!s)
+        return;
+
+    while (!stack_empty(s))
+        stack_pop(s);
+}
+
 void stack_push(stack *s, long val)
 {
     if (!s)
@@ -883,7 +906,7 @@ void stack_print(stack *s)
         return;
     }
 
-    printf("-----------------------------\n");
+    printf("\n-----------------------------\n");
     printf("stack size = %ld\n", s->size);
     printf("top -> ");
     for (stknode *cur = s->top; cur; cur = cur->next)

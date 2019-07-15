@@ -52,6 +52,7 @@ typedef struct ht {
 ht *ht_create(long (*hash)(long));
 void ht_insert(ht *h, long key, long val);
 long ht_get(ht *h, long key);
+int ht_contain(ht *h, long key);
 void ht_remove(ht *h, long key);
 int ht_empty(ht *h);
 void ht_print(ht *h);
@@ -114,6 +115,7 @@ stknode *stknode_create(long val);
 stack *stack_create(void);
 void stack_push(stack *s, long val);
 int stack_empty(stack *s);
+void stack_clear(stack *s);
 int stack_size(stack *s);
 long stack_pop(stack *s);
 long stack_peek(stack *s);
