@@ -123,7 +123,7 @@ void tree_draw(treenode *root)
     int slots = pow(2, h) - 1;
     int cur_level = 1;
     int next_level = 0;
-    char *buf = malloc(10 << 20);
+    char *buf = (char *)malloc(10 << 20);
     if (!buf) exit(1);
     long buflen = 10 << 20;
     int len = 0;
@@ -208,7 +208,7 @@ void bst_test(void)
 
 treenode *treenode_create(long val)
 {
-    treenode *n = malloc(sizeof(treenode));
+    treenode *n = (treenode *)malloc(sizeof(treenode));
     if (!n) exit(1);
     n->height = 0;
     n->size = 1;
@@ -353,11 +353,11 @@ static void ht_resize(ht *h, int shrink)
     }
 
     h->size = 0;
-    htnode **new = malloc(sizeof(htnode *) * h->bucket);
+    htnode **newbucket = (htnode **)malloc(sizeof(htnode *) * h->bucket);
     for (int i = 0; i < h->bucket; i++)
-        new[i] = NULL;
+        newbucket[i] = NULL;
     htnode **old = h->slot;
-    h->slot = new;
+    h->slot = newbucket;
 
     htnode *head = NULL;;
     for (int i = 0; i < old_bucket; i++) {
@@ -375,7 +375,7 @@ static void ht_resize(ht *h, int shrink)
 
 htnode *htnode_create(long key, long val)
 {
-    htnode *n = malloc(sizeof(htnode));
+    htnode *n = (htnode *)malloc(sizeof(htnode));
     if (!n) exit(1);
     n->key = key;
     n->val = val;
@@ -385,11 +385,11 @@ htnode *htnode_create(long key, long val)
 
 ht *ht_create(long (*hash)(long))
 {
-    ht *h = malloc(sizeof(ht));
+    ht *h = (ht *)malloc(sizeof(ht));
     if (!h) exit(1);
     h->size = 0;
     h->bucket = HT_MIN_BUCKET;
-    h->slot = malloc(sizeof(htnode *) * h->bucket);
+    h->slot = (htnode **)malloc(sizeof(htnode *) * h->bucket);
     for (int i = 0; i < h->bucket; i++)
         h->slot[i] = NULL;
     h->hash = hash;
@@ -549,7 +549,7 @@ void ht_release(ht **hh)
 
 deque *deque_create(void)
 {
-    deque *d = malloc(sizeof(deque));
+    deque *d = (deque *)malloc(sizeof(deque));
     if (!d) exit(1);
     d->size = 0;
     d->header = d->tailer = NULL;
@@ -743,7 +743,7 @@ void deque_release(deque **dd)
 
 deque_node *deque_node_create(long val)
 {
-    deque_node *n = malloc(sizeof(deque_node));
+    deque_node *n = (deque_node *)malloc(sizeof(deque_node));
     if (!n) exit(1);
     n->val = val;
     n->next = NULL;
@@ -753,7 +753,7 @@ deque_node *deque_node_create(long val)
 
 queue *queue_create(void)
 {
-    queue *q = malloc(sizeof(queue));
+    queue *q = (queue *)malloc(sizeof(queue));
     if (!q) exit(1);
     q->size = 0;
     q->header = q->tailer = NULL;
@@ -839,7 +839,7 @@ static void queue_test(void)
 
 stknode *stknode_create(long val)
 {
-    stknode *n = malloc(sizeof(stknode));
+    stknode *n = (stknode *)malloc(sizeof(stknode));
     if (!n) exit(1);
     n->val = val;
     n->next = NULL;
@@ -848,7 +848,7 @@ stknode *stknode_create(long val)
 
 stack *stack_create(void)
 {
-    stack *s = malloc(sizeof(stack));
+    stack *s = (stack *)malloc(sizeof(stack));
     if (!s) exit(1);
     s->size = 0;
     s->top = NULL;
@@ -999,7 +999,7 @@ static void stack_test(void)
 
 lnode *lnode_create(long val)
 {
-    lnode *n = malloc(sizeof(lnode));
+    lnode *n = (lnode *)malloc(sizeof(lnode));
     if (!n) exit(1);
     n->next = NULL;
     n->val = val;
@@ -1138,7 +1138,7 @@ void list_release(lnode **head)
 
 dlnode *dlnode_create(long val)
 {
-    dlnode *n = malloc(sizeof(dlnode));
+    dlnode *n = (dlnode *)malloc(sizeof(dlnode));
     if (!n) exit(1);
     n->next = n->prev = NULL;
     n->val = val;
@@ -1332,14 +1332,14 @@ void printArray(int *array, int size)
 
 int *copyArray(int *arr, int size)
 {
-    int *copy = malloc(sizeof(int) * size);
+    int *copy = (int *)malloc(sizeof(int) * size);
     memcpy(copy, arr, sizeof(int) * size);
     return copy;
 }
 
 int *array(int size)
 {
-    int *array = malloc(sizeof(int) * size);
+    int *array = (int *)malloc(sizeof(int) * size);
     if (!array) {
         printf("memory alloc fail!\n");
         exit(1);
@@ -1354,7 +1354,7 @@ int *arrayWithRange(int size, int lo, int hi)
     struct timeval tv;
     gettimeofday(&tv, NULL);
     srand(tv.tv_usec);
-    int *array = malloc(sizeof(int) * size);
+    int *array = (int *)malloc(sizeof(int) * size);
     if (!array) {
         printf("memory alloc fail!\n");
         exit(1);
@@ -1394,11 +1394,11 @@ int *arrayNoDupWithRange(int size, int lo, int hi)
         printf("hi - lo = %d must greater or equal than size=%d\n", hi - lo, size);
         return NULL;
     }
-    int *arr = malloc(sizeof(int) * (hi - lo));
+    int *arr = (int *)malloc(sizeof(int) * (hi - lo));
     for (int i = lo; i < hi; i++)
         arr[i - lo] = i; 
     shuffle(arr, hi - lo);
-    int *res = malloc(sizeof(int) * size);
+    int *res = (int *)malloc(sizeof(int) * size);
     memcpy(res, arr, sizeof(int) * size);
     free(arr);
     return res;
