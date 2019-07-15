@@ -20,8 +20,8 @@ int longest_sequence_of_sum(int *arr, int size, int key)
         sum += arr[i];
         if (ht_contain(h, sum - key)) {
             int idx = ht_get(h, sum - key);
-            if (i - idx + 1 > len) {
-                len = i - idx + 1;
+            if (i - idx > len) {
+                len = i - idx;
 
                 stack_clear(s);
                 for (int k = idx + 1; k <= i; k++)
@@ -32,7 +32,7 @@ int longest_sequence_of_sum(int *arr, int size, int key)
             ht_insert(h, sum, i);
     }
     printf("sequence : ");
-    stack_print(s);
+    stack_print_r(s);
     return len;
 }
 
