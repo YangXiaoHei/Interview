@@ -15,18 +15,23 @@ int main(int argc, char *argv[])
     reader >> j;
     reader.close();
 
-    cout << "将题目做过的次数清零..." << endl;
+    int count = 0;
     for (auto it = j.begin(); it != j.end(); it++) {
         int size = it.value().size();
         for (int i = 0; i < size; i++) {
             json &entry = it.value()[i];
-            entry["times"] = 0;
-            entry["last_time"] = 0;
+            if (entry["times"].get<int>() > 0) {
+                count++;
+                cout << "清除复习次数 succ! -> [" << entry["desc"] << "]" << endl; 
+                entry["times"] = 0;
+                entry["last_time"] = 0;
+            }
         }
     }
+    if (count) 
+        cout << "清理了 " << count << " 道题的复习次数" << endl;
 
     ofstream writer(FILE_NAME);
     writer << setw(4) << j;
     writer.close();
-    cout << "执行完毕" << endl;
 }
