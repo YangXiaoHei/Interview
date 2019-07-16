@@ -31,6 +31,7 @@ void tree_level_print(treenode *root)
             next_level = 0;
         }
     }
+    queue_release(&q);
 }
 
 int main(int argc, char *argv[])
