@@ -7,6 +7,9 @@
 using namespace std;
 using namespace nlohmann;
 
+int total_num = 5; // 题目数量限制
+int total_cost = 120; // 复习时间限制
+
 #define FILE_NAME "alg.json"
 
 string get_last_expr(long lasttime)
@@ -88,7 +91,7 @@ string get_time_fmt(void)
     int hour = tmbuf->tm_hour;
     int min = tmbuf->tm_min;
     char buf[100];
-    snprintf(buf, sizeof(buf), "%04d/%02d/%02d/ %02d:%02d", year, mon, day, hour, min);
+    snprintf(buf, sizeof(buf), "%04d-%02d-%02d %02d:%02d", year, mon, day, hour, min);
     return string(buf);
 }
 
@@ -109,20 +112,8 @@ void handle_selected(json &to_modify, const string &module, const vector<entry> 
     writer.close();
 }
 
-int main(int argc, char *argv[])
+void scheme_random_module(json &jsn_content, string &selected_module, vector<entry> &result)
 {
-    srand((unsigned)time(NULL));
-
-    // 总耗时
-    int total_cost = 120;
-    int total_num = 5;
-
-    // 读取 json 配置
-    ifstream reader(FILE_NAME);
-    json jsn_content;
-    reader >> jsn_content;
-    reader.close();
-
     cout << endl;
 
     // 挑选一个主题
@@ -133,19 +124,21 @@ int main(int argc, char *argv[])
         if (i++ == module_idx)
             break;
     cout << "\t" << get_time_fmt() << " 复习主题 -> 【 " << module_it.key() << " 】" << endl;
+    selected_module = module_it.key();
     if (!module_it.value().is_array()) {
         cout << "must be array!" << endl;
-        return -1;
+        exit(1);
     }
 
     // 将该主题中所有题目按照挑选次数放入 map
     map<int, vector<entry>> times_map;
     for (int i = 0; i < module_it.value().size(); i++) {
-        string desc = module_it.value()[i]["desc"];
-        int diff = module_it.value()[i]["diff"];
-        int times = module_it.value()[i]["times"];
-        int cost_time = module_it.value()[i]["cost_time"];
-        long last_time = module_it.value()[i]["last_time"];
+        const json &jsn_entry = module_it.value()[i];
+        string desc = jsn_entry["desc"];
+        int diff = jsn_entry["diff"];
+        int times = jsn_entry["times"];
+        int cost_time = jsn_entry["cost_time"];
+        long last_time = jsn_entry["last_time"];
         entry e(desc, diff, times, cost_time, last_time);
 
         if (times_map.count(times)) 
@@ -157,8 +150,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    // 挑选一批题目，总耗时不得超过 total_time, 最多 5 道题
-    vector<entry> result;
+    // 挑选一批题目，总耗时不得超过 total_time, 最多 total_num 道题
     int tmpcost = 0;
     for (auto it = times_map.begin(); it != times_map.end(); it++) {
         shuffle_vec(it->second);
@@ -179,9 +171,24 @@ finish:
     int qi = 0;
     for (auto it : result)
         it.output(++qi);
+    cout << endl;
+}
+
+int main(int argc, char *argv[])
+{
+    srand((unsigned)time(NULL));
+
+    // 读取 json 配置
+    ifstream reader(FILE_NAME);
+    json jsn_content;
+    reader >> jsn_content;
+    reader.close();
+
+    // 随机选主题策略
+    vector<entry> result;
+    string select_module;
+    scheme_random_module(jsn_content, select_module, result);
 
     // 更新已选题目做过的次数和本次复习的时间
-    handle_selected(jsn_content, module_it.key(), result);
-
-    cout << endl;
+    handle_selected(jsn_content, select_module, result);
 }

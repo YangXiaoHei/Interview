@@ -1,0 +1,33 @@
+{
+    "二叉树" : 
+    [
+        {
+            "desc" : "找到二叉树中符合二叉树搜索条件的最大拓扑结构",
+            "cost_time" : 30,
+            "diff" : 3,
+            "last_time" : 0,
+            "times" : 0
+        },
+        {
+            "desc" : "二叉树按层打印，需要换行",
+            "cost_time" : 15,
+            "diff" : 1,
+            "last_time" : 0,
+            "times" : 0
+        },
+        {
+            "desc" : "二叉树按层以 zigzag 方式打印，需要换行 - 双栈方法",
+            "cost_time" : 15,
+            "diff" : 1,
+            "last_time" : 0,
+            "times" : 0
+        },
+        {
+            "desc" : "二叉树按层以 zigzag 方式打印，需要换行 - 双端队列方法",
+            "cost_time" : 30,
+            "diff" : 2,
+            "last_time" : 0,
+            "times" : 0
+        }
+    ]
+}
