@@ -111,12 +111,6 @@ void handle_selected(json &to_modify, const string &module, const vector<entry> 
 
 int main(int argc, char *argv[])
 {
-    /*
-     * long lasttime = 1563269497;
-     * cout << get_last_expr(lasttime) << endl;
-     * return 0;
-     */
-
     srand((unsigned)time(NULL));
 
     // 总耗时
@@ -186,7 +180,7 @@ finish:
     for (auto it : result)
         it.output(++qi);
 
-    // 更新已选题目做过的次数
+    // 更新已选题目做过的次数和本次复习的时间
     handle_selected(jsn_content, module_it.key(), result);
 
     cout << endl;
