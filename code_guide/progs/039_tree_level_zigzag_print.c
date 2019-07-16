@@ -38,6 +38,8 @@ void tree_level_zigzag_print(treenode *root)
             printf("\n");
         }
     }
+    stack_release(&fleft);
+    stack_release(&fright);
 }
 
 int main(int argc, char *argv[])
