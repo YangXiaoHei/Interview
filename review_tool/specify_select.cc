@@ -11,6 +11,7 @@ int total_num = 5; // 题目数量限制
 int total_cost = 120; // 复习时间限制
 
 #define FILE_NAME "alg.json"
+#define BK_NAME "alg.bk.json"
 
 string get_last_expr(long lasttime)
 {
@@ -189,6 +190,12 @@ int main(int argc, char *argv[])
     reader >> jsn_content;
     reader.close();
 
+    // 备份
+    ofstream writer(BK_NAME);
+    writer << jsn_content;
+    writer.close();
+
+    // 手动选一个主题
     vector<string> all_module;
     for (auto it = jsn_content.begin(); it != jsn_content.end(); it++) 
         all_module.push_back(it.key());
