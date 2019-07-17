@@ -110,7 +110,7 @@ void tree_draw(treenode *root)
 
     queue *q = queue_create();
 
-#define ENQUEUE(q, x) queue_enqueue(q, (long)x)
+#define ENQUEUE(q, x) queue_enqueue(q, (long)(x))
 #define DEQUEUE(q)  ((treenode *)queue_dequeue(q))
 
 #define CHAR_NULL ' ' /* null 节点用什么符号来表示 */
@@ -136,19 +136,14 @@ void tree_draw(treenode *root)
     int cur_height = 1;
     while (cur_height <= h) {
         treenode *n = DEQUEUE(q);
-        if (n) {
-            ENQUEUE(q, n->left);
-            ENQUEUE(q, n->right);
-        } else {
-            ENQUEUE(q, NULL);
-            ENQUEUE(q, NULL);
-        }
+        ENQUEUE(q, !n ? NULL : n->left);
+        ENQUEUE(q, !n ? NULL : n->right);
         next_level += 2;
 
         int nslot = slots / pow(2, cur_height); 
         len = 0;
 
-        long num = n ? n->val : get_width_num(numwidth);
+        long num = n ? n->val : 0;
         int width = n ? get_num_width(num) : 1;
         int left_nfill = (numwidth - width) / 2;
         int right_nfill = numwidth - width - left_nfill;
