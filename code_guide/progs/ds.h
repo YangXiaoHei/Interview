@@ -123,6 +123,7 @@ long stack_peek(stack *s);
 void stack_print(stack *s);
 void stack_print_r(stack *s);
 void stack_print_s(stack *s);
+void stack_print_funptr(stack *s, void(*printfun)(long));
 void stack_release(stack **s);
 /**********************************/
 

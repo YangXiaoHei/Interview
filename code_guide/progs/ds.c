@@ -58,6 +58,7 @@ void bst_insert(treenode **root, long val)
         parent->left = n;
     else
         parent->right = n;
+    n->parent = parent;
 }
 
 void bst_remove(treenode **root, long val)
@@ -214,6 +215,7 @@ treenode *treenode_create(long val)
     n->size = 1;
     n->val = val;
     n->left = n->right = NULL;
+    n->parent = NULL;
     return n;
 }
 
@@ -938,6 +940,27 @@ void stack_print_r(stack *s)
     stack_release(&r);
 }
 
+void stack_print_funptr(stack *s, void(*printfun)(long val))
+{
+    if (!s) {
+        printf("null\n");
+        return;
+    }
+
+    if (stack_empty(s)) {
+        printf("empty\n");
+        return;
+    }
+
+    printf("\n-----------------------------\n");
+    printf("stack size = %ld\n", s->size);
+    printf("top -> ");
+    for (stknode *cur = s->top; cur; cur = cur->next)
+        if (printfun)
+            printfun(cur->val);
+    printf("\n");
+    printf("-----------------------------\n");
+}
 void stack_print(stack *s)
 {
     if (!s) {
