@@ -25,8 +25,8 @@
             "cost_time": 15,
             "desc": "二叉树先序遍历 - 非递归 - 时间 O(n), 空间 O(1)",
             "diff": 2,
-            "last_time": 0,
-            "times": 0
+            "last_time": 1563347876,
+            "times": 1
         },
         {
             "cost_time": 15,
@@ -60,8 +60,8 @@
             "cost_time": 40,
             "desc": "直观的打印二叉树",
             "diff": 3,
-            "last_time": 0,
-            "times": 0
+            "last_time": 1563347876,
+            "times": 1
         },
         {
             "cost_time": 30,
@@ -113,11 +113,11 @@
             "times": 0
         },
         {
-            "cost_time": 30,
+            "cost_time": 15,
             "desc": "给定一个二叉树节点，找到它在中序遍历中的下一个节点",
             "diff": 2,
-            "last_time": 0,
-            "times": 0
+            "last_time": 1563347876,
+            "times": 1
         },
         {
             "cost_time": 20,
@@ -137,8 +137,8 @@
             "cost_time": 20,
             "desc": "树中两个节点的最低公共祖先 - 二叉搜索树",
             "diff": 2,
-            "last_time": 0,
-            "times": 0
+            "last_time": 1563347876,
+            "times": 1
         },
         {
             "cost_time": 50,
@@ -183,11 +183,11 @@
             "times": 1
         },
         {
-            "cost_time": 15,
+            "cost_time": 10,
             "desc": "二叉树按层以 zigzag 方式打印，需要换行 - 双栈方法",
             "diff": 1,
-            "last_time": 0,
-            "times": 0
+            "last_time": 1563347876,
+            "times": 1
         },
         {
             "cost_time": 15,
