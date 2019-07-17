@@ -72,7 +72,7 @@ struct entry {
 void shuffle_vec(vector<entry> &vec)
 {
     for (int i = 0; i < vec.size(); i++) {
-        int r = rand() % (vec.size() - i); 
+        int r = i + rand() % (vec.size() - i); 
         entry t = vec[i];
         vec[i] = vec[r];
         vec[r] = t; 

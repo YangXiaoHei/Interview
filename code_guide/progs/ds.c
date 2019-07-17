@@ -1445,7 +1445,7 @@ void shuffle(int *arr, int size)
         return;
 
     for (int i = 0; i < size; i++) {
-        int r = randWithRange(0, size - i);
+        int r = i + randWithRange(0, size - i);
         swap(arr + i, arr + r);
     }
 }
