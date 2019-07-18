@@ -50,6 +50,7 @@ struct entry {
     int diff;
     int cost_time;
     long last_time;
+    string id;
     string get_diff_desc() {
         string s;
         for (int i = 0; i < diff; i++)
@@ -57,7 +58,7 @@ struct entry {
         return s;
     }
     void output(int i = 0) {
-        cout << "\t第 " << i << "道题" << endl; 
+        cout << "\t第 " << i << "道题" << "[" << id << "]" << endl; 
         cout << "\t\t" << "题目描述 : " << desc << endl;
         cout << "\t\t" << "难度 : " << get_diff_desc() << endl; 
         if (last_time <= 0)
@@ -67,7 +68,7 @@ struct entry {
         cout << "\t\t" << "预计耗时 :" << cost_time << " 分钟" << endl;
         cout << endl;
     }
-    entry(const string &s, int d, int t, int c, long l) : desc(s), diff(d), times(t), cost_time(c), last_time(l) {}
+    entry(const string &s, int d, int t, int c, long l, const string &i) : desc(s), diff(d), times(t), cost_time(c), last_time(l), id(i) {}
 };
 
 void shuffle_vec(vector<entry> &vec)

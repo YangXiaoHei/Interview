@@ -12,6 +12,19 @@ using namespace nlohmann;
 #define FILE_NAME "alg.json"
 #define DEBUG_FILE "alg.debug.json"
 
+void refresh_id(json &raw_jsn)
+{
+    int idx = 1;
+    for (auto it = raw_jsn.begin(); it != raw_jsn.end(); it++) {
+        string key = it.key();
+        int size = it.value().size();
+        for (int i = 0; i < size; i++) {
+            json &entry = it.value()[i];
+            entry["id"] = to_string(idx++);
+        }
+    }
+}
+
 int main(int argc, char *argv[])
 {
     // 原有内容
@@ -59,24 +72,36 @@ int main(int argc, char *argv[])
         int size = it.value().size();
         for (int i = 0; i < size; i++) {
             json &new_entry = it.value()[i];
+
+            // 格式校验
             if (!new_entry.count("desc") ||
-                !new_entry.count("times") || 
-                !new_entry.count("last_time") ||
                 !new_entry.count("diff") ||
                 !new_entry.count("cost_time")) {
                 cout << "format is invalid! ignore.. [" << new_entry << "]" << endl;
                 continue;
             }
 
+            // 排重
             string desc = new_entry["desc"];
             if (exclude_dup.count(key) && exclude_dup[key].count(desc)) {
                 cout << "already exist! ignored.. [" << desc << "]" << endl;
                 continue;
             }
+
+            // 内部添加字段
+            if (!new_entry.count("times"))
+                new_entry["times"] = 0;
+
+            if (!new_entry.count("last_time"))
+                new_entry["last_time"] = 0;
+
             raw_jsn[key].push_back(new_entry);
             cout << "add succ! " << desc << endl;
         }
     }
+
+    // 刷新序号
+    refresh_id(raw_jsn);
     
     ofstream writer(FILE_NAME);
     writer << setw(4) << raw_jsn;

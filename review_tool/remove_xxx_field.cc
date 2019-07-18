@@ -8,8 +8,8 @@ using namespace nlohmann;
 
 #define FILE_NAME "alg.json"
 
-#define FIELD "id"
-#define DEFAULT_VALUE ""
+#define FIELD "last_time"
+#define DEFAULT_VALUE 0
 
 int main(int argc, char *argv[])
 {
@@ -22,12 +22,12 @@ int main(int argc, char *argv[])
         int size = it.value().size();
         for (int i = 0; i < size; i++) {
             json &entry = it.value()[i];
-            if (entry.count(FIELD)) {
-                cout << "❌ " << FIELD << " already exist! " << "[" << entry["desc"] << "]" << endl;
+            if (!entry.count(FIELD)) {
+                cout << "❌ " << FIELD << " not exist, ignored... " << "[" << entry["desc"] << "]" << endl;
                 continue;
             }
-            entry[FIELD] = DEFAULT_VALUE;
-            cout << FIELD << " add succ! " << "[" << entry["desc"] << "]" << endl;
+            entry.erase(FIELD);
+            cout << FIELD << " remove succ! " << "[" << entry["desc"] << "]" << endl;
         }
     }
 
