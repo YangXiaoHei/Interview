@@ -117,6 +117,8 @@ stack *stack_create(void);
 void stack_push(stack *s, long val);
 int stack_empty(stack *s);
 void stack_clear(stack *s);
+void stack_copy(stack *dst, stack *src);
+long stack_pop_bottom(stack *s);
 int stack_size(stack *s);
 long stack_pop(stack *s);
 long stack_peek(stack *s);

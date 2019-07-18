@@ -861,6 +861,23 @@ void stack_clear(stack *s)
         stack_pop(s);
 }
 
+void stack_copy(stack *dst, stack *src)
+{
+    stack_clear(dst);
+    stknode *last = NULL;
+    for (stknode *n = src->top; n; n = n->next) {
+        stknode *newn = stknode_create(n->val);
+        if (!last) {
+            dst->top = newn;
+            last = newn;
+        } else {
+            last->next = newn;
+            last = newn;
+        }
+    }
+    dst->size = src->size;
+}
+
 void stack_push(stack *s, long val)
 {
     if (!s)
@@ -891,6 +908,32 @@ long stack_peek(stack *s)
     if (stack_empty(s))
         return 0;
     return s->top->val;
+}
+
+long stack_pop_bottom(stack *s)
+{
+    if (stack_empty(s))
+        return 0;
+
+    stknode *prev = NULL;
+    for (stknode *cur = s->top; cur->next; cur = cur->next)
+        prev = cur;
+
+    if (!prev) {
+        stknode *tofree = s->top;
+        long v = tofree->val;
+        free(tofree);
+        s->size = 0;
+        s->top = NULL;
+        return v;
+    }
+
+    stknode *tofree = prev->next;
+    long v = tofree->val;
+    prev->next = NULL;
+    free(tofree);
+    s->size--;
+    return v;
 }
 
 long stack_pop(stack *s)
