@@ -58,7 +58,7 @@ struct entry {
         return s;
     }
     void output(int i = 0) {
-        cout << "\t第 " << i << "道题" << "[" << id << "]" << endl; 
+        cout << "\t第 " << i << " 道题 " << " (" << id << ")" << endl; 
         cout << "\t\t" << "题目描述 : " << desc << endl;
         cout << "\t\t" << "难度 : " << get_diff_desc() << endl; 
         if (last_time <= 0)
@@ -146,7 +146,8 @@ void scheme_specify_module(json &jsn_content, const string &selected_module, vec
         int times = jsn_entry["times"];
         int cost_time = jsn_entry["cost_time"];
         long last_time = jsn_entry["last_time"];
-        entry e(desc, diff, times, cost_time, last_time);
+        string id = jsn_entry["id"];
+        entry e(desc, diff, times, cost_time, last_time, id);
 
         if (times_map.count(times)) 
             times_map.find(times)->second.push_back(e);

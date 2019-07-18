@@ -58,7 +58,7 @@ struct entry {
         return s;
     }
     void output(int i = 0) {
-        cout << "\t第 " << i << "道题" << "[" << id << "]"<< endl; 
+        cout << "\t第 " << i << " 道题 " << "(" << id << ")"<< endl; 
         cout << "\t\t" << "题目描述 : " << desc << endl;
         cout << "\t\t" << "难度 : " << get_diff_desc() << endl; 
         if (last_time <= 0)
