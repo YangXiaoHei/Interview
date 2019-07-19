@@ -45,8 +45,8 @@
             "desc": "二叉树后序遍历 - 非递归 - 时间 O(n), 空间 O(1)",
             "diff": 2,
             "id": "6",
-            "last_time": 0,
-            "times": 0
+            "last_time": 1563517100,
+            "times": 1
         },
         {
             "cost_time": 20,
@@ -73,12 +73,12 @@
             "times": 1
         },
         {
-            "cost_time": 30,
+            "cost_time": 20,
             "desc": "二叉树序列化和反序列化 - 先序遍历 - 递归实现",
             "diff": 2,
             "id": "10",
-            "last_time": 0,
-            "times": 0
+            "last_time": 1563517100,
+            "times": 1
         },
         {
             "cost_time": 30,
@@ -89,20 +89,12 @@
             "times": 1
         },
         {
-            "cost_time": 40,
-            "desc": "二叉树序列化和反序列化 - 先序遍历 - 非递归实现, 空间 O(1)",
-            "diff": 3,
-            "id": "12",
-            "last_time": 0,
-            "times": 0
-        },
-        {
             "cost_time": 20,
             "desc": "二叉树序列化和反序列化 - 层次遍历",
             "diff": 2,
             "id": "13",
-            "last_time": 0,
-            "times": 0
+            "last_time": 1563517100,
+            "times": 1
         },
         {
             "cost_time": 50,
@@ -141,8 +133,8 @@
             "desc": "判断二叉树是否是对称结构",
             "diff": 1,
             "id": "18",
-            "last_time": 0,
-            "times": 0
+            "last_time": 1563517100,
+            "times": 1
         },
         {
             "cost_time": 20,
