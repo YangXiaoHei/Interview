@@ -22,6 +22,7 @@ void refresh_id(json &raw_jsn)
             entry["id"] = to_string(idx++);
         }
     }
+    cout << "refresh idx finished! total_question is " << idx << endl;
 }
 
 int main(int argc, char *argv[])
@@ -102,8 +103,12 @@ int main(int argc, char *argv[])
             if (!new_entry.count("last_time"))
                 new_entry["last_time"] = 0;
 
+            long cur_time = (long)time(NULL);
+            if (!new_entry.count("init_time"))
+                new_entry["init_time"] = cur_time;
+
             raw_jsn[key].push_back(new_entry);
-            cout << "add succ! " << desc << endl;
+            cout << "add succ! " << desc << " init_time = " << cur_time << endl;
         }
     }
 

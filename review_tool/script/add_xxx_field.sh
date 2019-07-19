@@ -10,9 +10,9 @@ data_path=../data
 
 input_file="${data_path}/${topic}.json"
 
-if [ ! $# -eq 2 ]
+if [ ! $# -eq 3 ]
 then
-    echo "usage : field type"
+    echo "usage : field type default_value"
     exit 1
 fi
 
@@ -20,5 +20,6 @@ fi
 
 field=$1
 type=$2
+default_value=$3
 
-./${bin_path}/add_xxx_field ${input_file} ${field} ${type}
+./${bin_path}/add_xxx_field ${input_file} ${field} ${type} ${default_value}

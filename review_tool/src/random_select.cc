@@ -48,6 +48,7 @@ struct entry {
     int diff;
     int cost_time;
     long last_time;
+    long init_time;
     string id;
     string get_diff_desc() {
         string s;
@@ -66,7 +67,7 @@ struct entry {
         cout << "\t\t" << "预计耗时 :" << cost_time << " 分钟" << endl;
         cout << endl;
     }
-    entry(const string &s, int d, int t, int c, long l, const string &i) : desc(s), diff(d), times(t), cost_time(c), last_time(l), id(i) {}
+    entry(const string &s, int d, int t, int c, long l, const string &i, long itime) : desc(s), diff(d), times(t), cost_time(c), last_time(l), id(i), init_time(itime) {}
 };
 
 void shuffle_vec(vector<entry> &vec)
@@ -112,6 +113,11 @@ void handle_selected(json &to_modify, const string &module, const vector<entry> 
     writer.close();
 }
 
+bool entry_comparator(const entry &a, const entry &b)
+{
+    return a.last_time < b.last_time;
+}
+
 void scheme_random_module(json &jsn_content, string &selected_module, vector<entry> &result)
 {
     if (jsn_content.empty()) {
@@ -144,8 +150,9 @@ void scheme_random_module(json &jsn_content, string &selected_module, vector<ent
         int times = jsn_entry["times"];
         int cost_time = jsn_entry["cost_time"];
         long last_time = jsn_entry["last_time"];
+        long init_time = jsn_entry["init_time"];
         string id = jsn_entry["id"];
-        entry e(desc, diff, times, cost_time, last_time, id);
+        entry e(desc, diff, times, cost_time, last_time, id, init_time);
 
         if (times_map.count(times)) 
             times_map.find(times)->second.push_back(e);
@@ -156,18 +163,26 @@ void scheme_random_module(json &jsn_content, string &selected_module, vector<ent
         }
     }
 
+    long cur_time = (long)time(NULL);
+
     // 挑选一批题目，总耗时不得超过 total_time, 最多 total_num 道题
     int tmpcost = 0;
     for (auto it = times_map.begin(); it != times_map.end(); it++) {
-        shuffle_vec(it->second);
+        sort(it->second.begin(), it->second.end(), entry_comparator);
         for (int i = 0; i < it->second.size(); i++) {
             const entry &e = it->second[i];
+
+            // 防止新做的题，刚加进去，就被选出来复习...
+            if (e.last_time <= 0 && cur_time - e.init_time < 8 * 60 * 60)
+                continue;
+
             tmpcost += e.cost_time;
             result.push_back(e);
             if (tmpcost >= total_cost || result.size() >= total_num)
                 goto finish;
         } 
     }
+    shuffle_vec(result);
 
     // 打印所选的题目
 finish:
