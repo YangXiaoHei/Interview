@@ -9,9 +9,7 @@ using namespace nlohmann;
 
 int total_num = 5; // 题目数量限制
 int total_cost = 120; // 复习时间限制
-
-#define FILE_NAME "alg.json"
-#define BK_NAME "alg.bk.json"
+string file_name, bk_file;
 
 string get_last_expr(long lasttime)
 {
@@ -58,7 +56,7 @@ struct entry {
         return s;
     }
     void output(int i = 0) {
-        cout << "\t第 " << i << " 道题 " << " (" << id << ")" << endl; 
+        cout << "\t第 " << i << " 道题 " << "(" << id << ")"<< endl; 
         cout << "\t\t" << "题目描述 : " << desc << endl;
         cout << "\t\t" << "难度 : " << get_diff_desc() << endl; 
         if (last_time <= 0)
@@ -109,29 +107,29 @@ void handle_selected(json &to_modify, const string &module, const vector<entry> 
         }
     }
 
-    ofstream writer(FILE_NAME);
+    ofstream writer(file_name);
     writer << setw(4) << to_modify;
     writer.close();
 }
 
-void scheme_specify_module(json &jsn_content, const string &selected_module, vector<entry> &result)
+void scheme_random_module(json &jsn_content, string &selected_module, vector<entry> &result)
 {
-    cout << endl;
-
-    // 找到挑选好的主题
-    auto module_it = jsn_content.begin();
-    int i = 0;
-    for (; module_it != jsn_content.end(); ++module_it)
-        if (module_it.key() == selected_module)
-            break;
-
-    // 选择的主题不存在?
-    if (module_it == jsn_content.end()) {
-        cout << selected_module << " is not existed!" << endl;
+    if (jsn_content.empty()) {
+        cout << "empty module!" << endl;
         exit(1);
     }
 
+    cout << endl;
+
+    // 挑选一个主题
+    int module_idx = rand() % jsn_content.size();
+    auto module_it = jsn_content.begin();
+    int i = 0;
+    for (; module_it != jsn_content.end(); ++module_it)
+        if (i++ == module_idx)
+            break;
     cout << "\t" << get_time_fmt() << " 复习主题 -> 【 " << module_it.key() << " 】" << endl;
+    selected_module = module_it.key();
     if (!module_it.value().is_array()) {
         cout << "must be array!" << endl;
         exit(1);
@@ -184,36 +182,33 @@ finish:
 
 int main(int argc, char *argv[])
 {
+    if (argc != 5) {
+        printf("usage : %s file_name bk_file total_num total_cost\n", argv[0]);
+        exit(1);
+    }
+
+    file_name = argv[1];
+    bk_file = argv[2];
+    total_num = atoi(argv[3]);
+    total_cost = atoi(argv[4]);
+
     srand((unsigned)time(NULL));
 
     // 读取 json 配置
-    ifstream reader(FILE_NAME);
+    ifstream reader(file_name);
     json jsn_content;
     reader >> jsn_content;
     reader.close();
 
     // 备份
-    ofstream writer(BK_NAME);
-    writer << jsn_content;
+    ofstream writer(bk_file);
+    writer << setw(4) << jsn_content;
     writer.close();
 
-    // 手动选一个主题
-    vector<string> all_module;
-    for (auto it = jsn_content.begin(); it != jsn_content.end(); it++) 
-        all_module.push_back(it.key());
-
-    for (int i = 0; i < all_module.size(); i++) 
-        cout << "\t\t" <<  i << " -- " << all_module[i] << endl;
-    cout << endl;
-    cout << "\t选择主题 -> ";
-    unsigned idx = 0;
-    while (cin >> idx && idx >= all_module.size()) 
-        cout << "\t序号无效！请重新选择" << endl;
-    string select_module = all_module[idx];
-
-    // 指定一个主题
+    // 随机选主题策略
     vector<entry> result;
-    scheme_specify_module(jsn_content, select_module, result);
+    string select_module;
+    scheme_random_module(jsn_content, select_module, result);
 
     // 更新已选题目做过的次数和本次复习的时间
     handle_selected(jsn_content, select_module, result);

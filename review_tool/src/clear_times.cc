@@ -6,12 +6,19 @@
 using namespace nlohmann;
 using namespace std;
 
-#define FILE_NAME "alg.json"
+string file_name;
 
 int main(int argc, char *argv[])
 {
+    if (argc != 2) {
+        printf("usage : %s file_name\n", argv[0]);
+        exit(1);
+    }
+
+    file_name = argv[1];
+
     json j;
-    ifstream reader(FILE_NAME);
+    ifstream reader(file_name);
     reader >> j;
     reader.close();
 
@@ -31,7 +38,7 @@ int main(int argc, char *argv[])
     if (count) 
         cout << "清理了 " << count << " 道题的复习次数" << endl;
 
-    ofstream writer(FILE_NAME);
+    ofstream writer(file_name);
     writer << setw(4) << j;
     writer.close();
 }

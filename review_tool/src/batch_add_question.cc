@@ -8,9 +8,8 @@
 using namespace std;
 using namespace nlohmann;
 
-#define ADD_FILE "alg.add.json"
-#define FILE_NAME "alg.json"
-#define DEBUG_FILE "alg.debug.json"
+string file_name;
+string add_file;
 
 void refresh_id(json &raw_jsn)
 {
@@ -27,15 +26,23 @@ void refresh_id(json &raw_jsn)
 
 int main(int argc, char *argv[])
 {
+    if (argc != 3) {
+        printf("usage : %s file_name add_file\n", argv[0]);
+        exit(1);
+    }
+
+    file_name = argv[1];
+    add_file = argv[2];
+
     // 原有内容
     json raw_jsn;
-    ifstream raw_reader(FILE_NAME);
+    ifstream raw_reader(file_name);
     raw_reader >> raw_jsn;
     raw_reader.close();
 
     // 待合并的新内容
     json new_jsn;
-    ifstream new_reader(ADD_FILE);
+    ifstream new_reader(add_file);
     new_reader >> new_jsn;
     new_reader.close();
 
@@ -103,7 +110,7 @@ int main(int argc, char *argv[])
     // 刷新序号
     refresh_id(raw_jsn);
     
-    ofstream writer(FILE_NAME);
+    ofstream writer(file_name);
     writer << setw(4) << raw_jsn;
     writer.close();
 }
