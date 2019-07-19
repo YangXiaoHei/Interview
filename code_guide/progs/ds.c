@@ -4,6 +4,34 @@
 #define HT_EXPAND_BOUND 7
 #define HT_SHRINK_BOUND 3
 
+void in_traverse_funptr(treenode *root, void(*trav)(long))
+{
+    if (!root)
+        return;
+
+    in_traverse_funptr(root->left, trav);
+    trav(root->val);
+    in_traverse_funptr(root->right, trav);
+}
+void pre_traverse_funptr(treenode *root, void(*trav)(long))
+{
+    if (!root)
+        return;
+
+    trav(root->val);
+    pre_traverse_funptr(root->left, trav);
+    pre_traverse_funptr(root->right, trav);
+}
+void post_traverse_funptr(treenode *root, void(*trav)(long))
+{
+    if (!root)
+        return;
+
+    post_traverse_funptr(root->left, trav);
+    post_traverse_funptr(root->right, trav);
+    trav(root->val);
+}
+
 treenode *bst_create_with_arr(int *arr, int size)
 {
     if (size <= 0 || !arr)
