@@ -2,24 +2,19 @@
     "二叉树" : 
     [
         {
-            "desc" : "找到二叉搜索树中两个错误的节点",
-            "cost_time" : 15,
+            "desc" : "二叉搜索树第 k 大节点",
+            "cost_time" : 10,
             "diff" : 1
         },
         {
-            "desc" : "t1 树是否包含 t2 树的完整拓扑结构",
-            "cost_time" : 20,
-            "diff" : 2
+            "desc" : "判断数组是否是二叉搜索树的后序遍历",
+            "cost_time" : 10,
+            "diff" : 1
         },
         {
-            "desc" : "t1 树是否有与 t2 树拓扑结构完全相同的子树",
-            "cost_time" : 20,
-            "diff" : 2
-        },
-        {
-            "desc" : "判断二叉树是否是平衡二叉树",
-            "cost_time" : 20,
-            "diff" : 2
+            "desc" : "实现 avl",
+            "cost_time" : 60,
+            "diff" : 3
         }
     ]
 }
