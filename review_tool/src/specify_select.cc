@@ -203,7 +203,7 @@ int main(int argc, char *argv[])
 
     // 备份
     ofstream writer(bk_file);
-    writer << jsn_content;
+    writer << setw(4) << jsn_content;
     writer.close();
 
     // 手动选一个主题
