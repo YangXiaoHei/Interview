@@ -22,7 +22,7 @@ void refresh_id(json &raw_jsn)
             entry["id"] = to_string(idx++);
         }
     }
-    cout << "refresh idx finished! total_question is " << idx << endl;
+    cout << "refresh idx finished! total_question is " << idx - 1 << endl;
 }
 
 int main(int argc, char *argv[])
