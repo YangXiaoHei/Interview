@@ -513,7 +513,7 @@ int ht_empty(ht *h)
     return !h || h->size <= 0;
 }
 
-void ht_print_funptr(ht *h, void (*print_ptr)(htnode *))
+void ht_print_funptr(ht *h, void (*print_ptr)(long key, long value))
 {
     if (!h) {
         printf("null\n");
@@ -527,7 +527,7 @@ void ht_print_funptr(ht *h, void (*print_ptr)(htnode *))
             continue;
         }
         for (htnode *cur = h->slot[i]; cur; cur = cur->next)
-            print_ptr(cur);
+            print_ptr(cur->key, cur->val);
         printf("\n");
     }
     printf("--------------------------\n");

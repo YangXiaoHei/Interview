@@ -60,7 +60,7 @@ int ht_contain(ht *h, long key);
 void ht_remove(ht *h, long key);
 int ht_empty(ht *h);
 void ht_print(ht *h);
-void ht_print_funptr(ht *h, void (*print)(htnode *));
+void ht_print_funptr(ht *h, void (*print)(long, long));
 void ht_release(ht **h);
 
 /*********** deque ****************/
