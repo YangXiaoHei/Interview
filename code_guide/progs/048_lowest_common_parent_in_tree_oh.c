@@ -59,18 +59,27 @@ void set_map(treenode *root, ht *h)
     set_map(root->right, h);
 }
 
-void print_fun(htnode *n)
+void print_fun(long key, long value)
 {
-    treenode *tn = (treenode *)n->key;
-    treenode *tn1 = (treenode *)n->val;
+    treenode *tn = (treenode *)key;
+    treenode *tn1 = (treenode *)value;
+    printf("{ ");
+    if (tn)
+        printf("%ld ", tn->val);
+    else
+        printf("null ");
 
-    printf("{%ld %ld}", tn->val, tn1->val);
+    if (tn1)
+        printf("%ld ", tn1->val);
+    else
+        printf("null ");
+    printf("}");
 }
 
-void print_fun2(htnode *n)
+void print_fun2(long key, long value)
 {
-    treenode *tn = (treenode *)n->key;
-    printf("{%ld %ld}", tn->val, n->val);
+    treenode *tn = (treenode *)key;
+    printf("{%ld %ld}", tn->val, value);
 }
 
 treenode* lowest_common_parent(treenode *root, treenode *n1, treenode *n2)
@@ -81,14 +90,14 @@ treenode* lowest_common_parent(treenode *root, treenode *n1, treenode *n2)
     HT_INSERT(h, root, NULL);
     set_map(root, h); 
 
-    /* ht_print_funptr(h, print_fun); */
+    ht_print_funptr(h, print_fun);
 
     ht *path = ht_create(hash);
     while (HT_CONTAIN(h, n1)) {
         HT_INSERT(path, n1, 0);
         n1 = HT_GET(h, n1);
     }
-    /* ht_print_funptr(path, print_fun2); */
+    ht_print_funptr(path, print_fun2);
 
     while (!HT_CONTAIN(path, n2))
         n2 = HT_GET(h, n2);
