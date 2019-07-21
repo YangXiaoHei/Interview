@@ -30,6 +30,8 @@ void post_print(treenode *root);
 int tree_size(treenode *root);
 int tree_height(treenode *root);
 void tree_draw(treenode *root);
+void tree_release(treenode **root);
+treenode* tree_clone(treenode *root);
 
 treenode* bst_create(int size);
 treenode* bst_create_with_arr(int *arr, int size);

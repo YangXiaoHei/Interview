@@ -89,9 +89,36 @@ void bst_insert(treenode **root, long val)
     n->parent = parent;
 }
 
+treenode *tree_clone(treenode *root)
+{
+    if (!root)
+        return NULL;
+
+    treenode *copy = treenode_create(root->val);
+    copy->left = tree_clone(root->left);
+    copy->right = tree_clone(root->right);
+    return copy;
+}
+
 void bst_remove(treenode **root, long val)
 {
     
+}
+
+static void _tree_release(treenode *root)
+{
+    if (!root)
+        return;
+
+    _tree_release(root->left);
+    _tree_release(root->right);
+    free(root);
+}
+
+void tree_release(treenode **root)
+{
+    _tree_release(*root);
+    *root = NULL;
 }
 
 int tree_size(treenode *root)
