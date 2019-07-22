@@ -182,10 +182,10 @@ void scheme_random_module(json &jsn_content, string &selected_module, vector<ent
                 goto finish;
         } 
     }
-    shuffle_vec(result);
 
     // 打印所选的题目
 finish:
+    shuffle_vec(result);
     cout << "\t预计耗时 : " << tmpcost << endl;
     cout << "\t题目数量: " << result.size() << endl;
     cout << endl;
