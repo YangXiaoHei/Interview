@@ -451,12 +451,59 @@
             "times": 0
         }
     ],
+    "动态规划和递归": [
+        {
+            "cost_time": 5,
+            "desc": "快速幂 - 非递归",
+            "diff": 2,
+            "id": "51",
+            "init_time": 1563811179,
+            "last_time": 0,
+            "times": 0
+        },
+        {
+            "cost_time": 20,
+            "desc": "矩阵相乘",
+            "diff": 2,
+            "id": "52",
+            "init_time": 1563811179,
+            "last_time": 0,
+            "times": 0
+        },
+        {
+            "cost_time": 10,
+            "desc": "斐波那契数列第 n 项 - 傻逼递归",
+            "diff": 1,
+            "id": "53",
+            "init_time": 1563811179,
+            "last_time": 0,
+            "times": 0
+        },
+        {
+            "cost_time": 10,
+            "desc": "斐波那契数列第 n 项 - O(N)",
+            "diff": 2,
+            "id": "54",
+            "init_time": 1563811179,
+            "last_time": 0,
+            "times": 0
+        },
+        {
+            "cost_time": 30,
+            "desc": "斐波那契数列第 n 项 - O(logN) - 矩阵相乘 + 快速幂",
+            "diff": 4,
+            "id": "55",
+            "init_time": 1563811179,
+            "last_time": 0,
+            "times": 0
+        }
+    ],
     "字符串": [
         {
             "cost_time": 20,
             "desc": "大数相加",
             "diff": 1,
-            "id": "51",
+            "id": "56",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -465,7 +512,7 @@
             "cost_time": 30,
             "desc": "012345678910111213...这样的数字字符串的第 n 位是什么?",
             "diff": 2,
-            "id": "52",
+            "id": "57",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -474,7 +521,7 @@
             "cost_time": 20,
             "desc": "在字符串 A 中删除所有在字符串 B 中存在的字符",
             "diff": 1,
-            "id": "53",
+            "id": "58",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -483,7 +530,7 @@
             "cost_time": 20,
             "desc": "删除字符串 A 中所有重复字符",
             "diff": 1,
-            "id": "54",
+            "id": "59",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -492,7 +539,7 @@
             "cost_time": 20,
             "desc": "在字符串中找出第一个只出现 1 次的字符",
             "diff": 1,
-            "id": "55",
+            "id": "60",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -501,7 +548,7 @@
             "cost_time": 30,
             "desc": "在字符流中找出第一个只出现 1 次的字符",
             "diff": 2,
-            "id": "56",
+            "id": "61",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -510,7 +557,7 @@
             "cost_time": 20,
             "desc": "判断两个字符串是否是 anagram",
             "diff": 1,
-            "id": "57",
+            "id": "62",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -519,7 +566,7 @@
             "cost_time": 20,
             "desc": "翻转英文句子中单词的顺序，但单词内字符顺序不能发生改变",
             "diff": 1,
-            "id": "58",
+            "id": "63",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -528,7 +575,7 @@
             "cost_time": 30,
             "desc": "字符串转 int",
             "diff": 1,
-            "id": "59",
+            "id": "64",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -537,7 +584,7 @@
             "cost_time": 20,
             "desc": "左旋转字符串",
             "diff": 1,
-            "id": "60",
+            "id": "65",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -548,7 +595,7 @@
             "cost_time": 20,
             "desc": "找到数组中累加和为指定值的最长序列, 元素皆为正数",
             "diff": 1,
-            "id": "61",
+            "id": "66",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -557,7 +604,7 @@
             "cost_time": 40,
             "desc": "找到数组中累加和为指定值的最长序列, 元素可正可负",
             "diff": 2,
-            "id": "62",
+            "id": "67",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -566,7 +613,7 @@
             "cost_time": 15,
             "desc": "将数组循环右移 k 位的结果",
             "diff": 1,
-            "id": "63",
+            "id": "68",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -575,7 +622,7 @@
             "cost_time": 30,
             "desc": "在二维有序数组中的查找给定值",
             "diff": 1,
-            "id": "64",
+            "id": "69",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -584,7 +631,7 @@
             "cost_time": 50,
             "desc": "顺时针打印矩阵",
             "diff": 1,
-            "id": "65",
+            "id": "70",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -593,7 +640,7 @@
             "cost_time": 40,
             "desc": "找出数组中超过一半的元素",
             "diff": 1,
-            "id": "66",
+            "id": "71",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -602,7 +649,7 @@
             "cost_time": 30,
             "desc": "找到数组中连续子序列的最大和，元素可正可负",
             "diff": 2,
-            "id": "67",
+            "id": "72",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -611,7 +658,7 @@
             "cost_time": 40,
             "desc": "调整数组使得数组中所有元素组成的字符串所表示的数值最小",
             "diff": 2,
-            "id": "68",
+            "id": "73",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -620,7 +667,7 @@
             "cost_time": 30,
             "desc": "不修改数组的情况下, 找到数组中一个重复的元素，元素范围 1 ~ n, 个数 n+1",
             "diff": 2,
-            "id": "69",
+            "id": "74",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -629,7 +676,7 @@
             "cost_time": 30,
             "desc": "找到数组中一个重复元素, 元素范围 0 ~ n, 个数 n+1",
             "diff": 2,
-            "id": "70",
+            "id": "75",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -638,7 +685,7 @@
             "cost_time": 20,
             "desc": "整数数组中除了两个数字外，其余数字都出现了两次，找到这两个只出现一次的数字",
             "diff": 1,
-            "id": "71",
+            "id": "76",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -647,7 +694,7 @@
             "cost_time": 20,
             "desc": "数组中除了一个数字只出现一次外，其他数字都出现了三次，找出只出现一次的那个数字",
             "diff": 1,
-            "id": "72",
+            "id": "77",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -656,7 +703,7 @@
             "cost_time": 30,
             "desc": "在自然数 {1,2,3,4...} 序列中打印出所有和为 s 的连续正数序列",
             "diff": 1,
-            "id": "73",
+            "id": "78",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -665,7 +712,7 @@
             "cost_time": 30,
             "desc": "找出数组中逆序对的数量",
             "diff": 1,
-            "id": "74",
+            "id": "79",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -674,7 +721,7 @@
             "cost_time": 15,
             "desc": "调整数组使得奇数都在左边，偶数都在右边",
             "diff": 1,
-            "id": "75",
+            "id": "80",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -683,7 +730,7 @@
             "cost_time": 20,
             "desc": "已排序数组中, 找出值和下标相等的元素",
             "diff": 1,
-            "id": "76",
+            "id": "81",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -692,7 +739,7 @@
             "cost_time": 30,
             "desc": "数组个数 n-1, 范围 0 ~ n-1 中有且只有一个元素不在数组中，找出这个缺失元素。比如 0 1 2 4 5，缺失 3",
             "diff": 1,
-            "id": "77",
+            "id": "82",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -701,7 +748,7 @@
             "cost_time": 20,
             "desc": "给定值 k, 在一个已排序数组中，统计 k 出现了多少次",
             "diff": 1,
-            "id": "78",
+            "id": "83",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -712,7 +759,7 @@
             "cost_time": 50,
             "desc": "实现有 get_min 接口的栈，要求: get_min 方法时间复杂度是 O(1)",
             "diff": 1,
-            "id": "79",
+            "id": "84",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -721,7 +768,7 @@
             "cost_time": 50,
             "desc": "实现有 get_max 接口的栈，要求: get_max 方法时间复杂度是 O(1)",
             "diff": 1,
-            "id": "80",
+            "id": "85",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -730,7 +777,7 @@
             "cost_time": 50,
             "desc": "实现有 get_min 接口的队列，要求: get_min 方法时间复杂度是 O(1)",
             "diff": 1,
-            "id": "81",
+            "id": "86",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -739,7 +786,7 @@
             "cost_time": 50,
             "desc": "实现有 get_max 接口的队列，要求: get_max 方法时间复杂度是 O(1)",
             "diff": 1,
-            "id": "82",
+            "id": "87",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -748,7 +795,7 @@
             "cost_time": 40,
             "desc": "用两个栈实现队列",
             "diff": 1,
-            "id": "83",
+            "id": "88",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -757,7 +804,7 @@
             "cost_time": 40,
             "desc": "用两个队列实现栈",
             "diff": 1,
-            "id": "84",
+            "id": "89",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -766,7 +813,7 @@
             "cost_time": 25,
             "desc": "仅使用栈操作和递归翻转一个栈",
             "diff": 2,
-            "id": "85",
+            "id": "90",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -775,7 +822,7 @@
             "cost_time": 30,
             "desc": "使用另一个辅助栈来完成对栈的排序，让元素从栈顶到栈底部升序排列",
             "diff": 2,
-            "id": "86",
+            "id": "91",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -784,7 +831,7 @@
             "cost_time": 30,
             "desc": "滑动窗口的最大值",
             "diff": 1,
-            "id": "87",
+            "id": "92",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -793,7 +840,7 @@
             "cost_time": 30,
             "desc": "用数组构建一棵 max_tree, 该树的每个父节点都是它所在子树中的最大值",
             "diff": 2,
-            "id": "88",
+            "id": "93",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -802,7 +849,7 @@
             "cost_time": 40,
             "desc": "求 01 矩阵中, 由 1 所围成的最大矩阵面积",
             "diff": 1,
-            "id": "89",
+            "id": "94",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -811,7 +858,7 @@
             "cost_time": 40,
             "desc": "最大值减去最小值小于或等于 num 的子数组数量",
             "diff": 3,
-            "id": "90",
+            "id": "95",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -820,7 +867,7 @@
             "cost_time": 30,
             "desc": "给定一个压栈序列, 和一个弹出序列, 判断弹出序列是否合法",
             "diff": 1,
-            "id": "91",
+            "id": "96",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -831,7 +878,7 @@
             "cost_time": 25,
             "desc": "打印两条有序链表中节点值相同的公共部分 (不要理解成相交链表的公共部分)",
             "diff": 1,
-            "id": "92",
+            "id": "97",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -840,7 +887,7 @@
             "cost_time": 20,
             "desc": "单链表删除倒数第 k 个节点",
             "diff": 1,
-            "id": "93",
+            "id": "98",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -849,7 +896,7 @@
             "cost_time": 20,
             "desc": "双向链表删除倒数第 k 个节点",
             "diff": 1,
-            "id": "94",
+            "id": "99",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -858,7 +905,7 @@
             "cost_time": 20,
             "desc": "删除链表的中间节点",
             "diff": 1,
-            "id": "95",
+            "id": "100",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -867,7 +914,7 @@
             "cost_time": 25,
             "desc": "删除链表的 a/b 处的节点",
             "diff": 2,
-            "id": "96",
+            "id": "101",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -876,7 +923,7 @@
             "cost_time": 20,
             "desc": "反转单向链表",
             "diff": 1,
-            "id": "97",
+            "id": "102",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -885,7 +932,7 @@
             "cost_time": 20,
             "desc": "反转双向链表",
             "diff": 1,
-            "id": "98",
+            "id": "103",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -894,7 +941,7 @@
             "cost_time": 30,
             "desc": "反转部分单向链表",
             "diff": 2,
-            "id": "99",
+            "id": "104",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -903,7 +950,7 @@
             "cost_time": 30,
             "desc": "环形单链表约瑟夫问题",
             "diff": 1,
-            "id": "100",
+            "id": "105",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -912,7 +959,7 @@
             "cost_time": 20,
             "desc": "约瑟夫问题套公式解法",
             "diff": 3,
-            "id": "101",
+            "id": "106",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -921,7 +968,7 @@
             "cost_time": 30,
             "desc": "判断链表是否是回文结构",
             "diff": 1,
-            "id": "102",
+            "id": "107",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -930,7 +977,7 @@
             "cost_time": 30,
             "desc": "将单向链表按某值划分为左边小, 中间相等, 右边大的形式",
             "diff": 1,
-            "id": "103",
+            "id": "108",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -939,7 +986,7 @@
             "cost_time": 30,
             "desc": "复制含有随机指针节点的链表",
             "diff": 1,
-            "id": "104",
+            "id": "109",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -948,7 +995,7 @@
             "cost_time": 30,
             "desc": "两个单链表生成相加链表 (链表节点值的范围是 0 ~ 9)",
             "diff": 1,
-            "id": "105",
+            "id": "110",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -957,7 +1004,7 @@
             "cost_time": 20,
             "desc": "判断两条无环单链表是否相交",
             "diff": 1,
-            "id": "106",
+            "id": "111",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -966,7 +1013,7 @@
             "cost_time": 40,
             "desc": "判断链表是否有环, 若有，求出入口节点和环中节点数",
             "diff": 1,
-            "id": "107",
+            "id": "112",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -975,7 +1022,7 @@
             "cost_time": 20,
             "desc": "判断两条有环单链表是否相交",
             "diff": 1,
-            "id": "108",
+            "id": "113",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -984,7 +1031,7 @@
             "cost_time": 50,
             "desc": "将单链表每 k 个节点之间逆序, 不够 k 个的区间不逆序",
             "diff": 2,
-            "id": "109",
+            "id": "114",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -993,7 +1040,7 @@
             "cost_time": 30,
             "desc": "删除无序单链表中重复出现的节点",
             "diff": 1,
-            "id": "110",
+            "id": "115",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -1002,7 +1049,7 @@
             "cost_time": 30,
             "desc": "单向链表中, 删除指定值的所有节点",
             "diff": 1,
-            "id": "111",
+            "id": "116",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -1011,7 +1058,7 @@
             "cost_time": 30,
             "desc": "搜索二叉树转换成双向链表",
             "diff": 1,
-            "id": "112",
+            "id": "117",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -1020,7 +1067,7 @@
             "cost_time": 40,
             "desc": "单链表的选择排序",
             "diff": 1,
-            "id": "113",
+            "id": "118",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -1029,7 +1076,7 @@
             "cost_time": 30,
             "desc": "O(1) 删除单链表指定节点",
             "diff": 1,
-            "id": "114",
+            "id": "119",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -1038,7 +1085,7 @@
             "cost_time": 40,
             "desc": "向有序环形链表中插入新节点",
             "diff": 1,
-            "id": "115",
+            "id": "120",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -1047,7 +1094,7 @@
             "cost_time": 20,
             "desc": "合并两个有序的单链表",
             "diff": 1,
-            "id": "116",
+            "id": "121",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
@@ -1056,7 +1103,7 @@
             "cost_time": 50,
             "desc": "按照 L1->R1->L2->R2..的方式重新组合单链表",
             "diff": 1,
-            "id": "117",
+            "id": "122",
             "init_time": 1563532733,
             "last_time": 0,
             "times": 0
