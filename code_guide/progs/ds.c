@@ -43,6 +43,51 @@ treenode *bst_create_with_arr(int *arr, int size)
     return root;
 }
 
+treenode *cbt_create(int size)
+{
+    if (size <= 0)
+        return NULL;
+
+    int *arr = NULL;
+    while (1) {
+        arr = arrayWithRange(size, 0, size * 2);
+        if (!arrayHasDup(arr, size)) 
+            break;
+        free(arr);
+    }
+    treenode *head = cbt_create_with_arr(arr, size);
+    free(arr);
+    return head;
+}
+
+treenode *cbt_create_with_arr(int *arr, int size)
+{
+    queue *q = queue_create();
+#define ENQUEUE(q, x) queue_enqueue(q, (long)(x))
+#define DEQUEUE(q) ((treenode *)queue_dequeue(q))
+#define N(x) treenode_create(x)
+    int i = 0;
+    treenode *head = N(arr[i++]);
+    ENQUEUE(q, head);
+    size--;
+    while (size) {
+        treenode *cur = DEQUEUE(q);
+        cur->left = N(arr[i++]);
+        if (--size <= 0)
+            break;
+        cur->right = N(arr[i++]);
+        if (--size <= 0)
+            break;
+        ENQUEUE(q, cur->left);
+        ENQUEUE(q, cur->right);
+    }
+    queue_release(&q);
+    return head;
+#undef ENQUEUE
+#undef DEQUEUE
+#undef N
+}
+
 treenode* bst_create(int size)
 {
     if (size <= 0)

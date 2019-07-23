@@ -35,6 +35,8 @@ treenode* tree_clone(treenode *root);
 
 treenode* bst_create(int size);
 treenode* bst_create_with_arr(int *arr, int size);
+treenode* cbt_create(int size);
+treenode* cbt_create_with_arr(int *arr, int size);
 void bst_insert(treenode **root, long val);
 void bst_remove(treenode **root, long val);
 int get_num_width(int num);
