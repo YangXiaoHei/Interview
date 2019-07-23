@@ -1678,7 +1678,7 @@ long *matrix_gen(int r, int c)
     if (!arr) exit(1);
     for (int i = 0; i < r; i++)
         for (int j = 0; j < c; j++)
-            arr[i * c + j] = randWithRange(0, 6);
+            arr[i * c + j] = randWithRange(0, 100);
     return arr;
 }
 
