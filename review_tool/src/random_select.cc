@@ -49,6 +49,7 @@ struct entry {
     int cost_time;
     long last_time;
     long init_time;
+    int tmp_ignore;
     string id;
     string get_diff_desc() {
         string s;
@@ -67,7 +68,7 @@ struct entry {
         cout << "\t\t" << "预计耗时 :" << cost_time << " 分钟" << endl;
         cout << endl;
     }
-    entry(const string &s, int d, int t, int c, long l, const string &i, long itime) : desc(s), diff(d), times(t), cost_time(c), last_time(l), id(i), init_time(itime) {}
+    entry(const string &s, int d, int t, int c, long l, const string &i, long itime, int ignore) : desc(s), diff(d), times(t), cost_time(c), last_time(l), id(i), init_time(itime), tmp_ignore(ignore) {}
 };
 
 void shuffle_vec(vector<entry> &vec)
@@ -151,8 +152,9 @@ void scheme_random_module(json &jsn_content, string &selected_module, vector<ent
         int cost_time = jsn_entry["cost_time"];
         long last_time = jsn_entry["last_time"];
         long init_time = jsn_entry["init_time"];
+        int tmp_ignore = jsn_entry["tmp_ignore"];
         string id = jsn_entry["id"];
-        entry e(desc, diff, times, cost_time, last_time, id, init_time);
+        entry e(desc, diff, times, cost_time, last_time, id, init_time, tmp_ignore);
 
         if (times_map.count(times)) 
             times_map.find(times)->second.push_back(e);
@@ -171,6 +173,10 @@ void scheme_random_module(json &jsn_content, string &selected_module, vector<ent
         sort(it->second.begin(), it->second.end(), entry_comparator);
         for (int i = 0; i < it->second.size(); i++) {
             const entry &e = it->second[i];
+
+            // 忽略被置上这个位的题
+            if (e.tmp_ignore)
+                continue;
 
             // 防止新做的题，刚加进去，就被选出来复习...
             if (e.last_time <= 0 && cur_time - e.init_time < 8 * 60 * 60)
