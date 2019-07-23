@@ -9,6 +9,24 @@
 #include <time.h>
 #include <math.h>
 
+#ifdef BENCHMARK
+#error "what a fuck!"
+#endif
+
+#define BENCHMARK(...)\
+do {\
+    long __beg = getCurTime();\
+    __VA_ARGS__\
+    long __end = getCurTime();\
+    long __diff = __end - __beg;\
+    if (__diff < 1000)\
+        printf("total cost %ld us\n", __diff);\
+    else if (__diff < 1000 * 1000)\
+        printf("total cost %.3f ms\n", __diff / 1000.0);\
+    else\
+        printf("total cost %.3f s\n", __diff * 1.0 / (1000 * 1000));\
+} while (0)\
+
 typedef struct treenode {
     long val;
     int size;

@@ -120,6 +120,11 @@ bool entry_comparator(const entry &a, const entry &b)
     return a.last_time < b.last_time;
 }
 
+bool entry_diff_comparator(const entry &a, const entry &b)
+{
+    return a.diff < b.diff;
+}
+
 void scheme_specify_module(json &jsn_content, const string &selected_module, vector<entry> &result)
 {
     cout << endl;
@@ -193,7 +198,7 @@ void scheme_specify_module(json &jsn_content, const string &selected_module, vec
 
     // 打印所选的题目
 finish:
-    shuffle_vec(result);
+    sort(result.begin(), result.end(), entry_diff_comparator);
     cout << "\t预计耗时 : " << tmpcost << endl;
     cout << "\t题目数量: " << result.size() << endl;
     cout << endl;
