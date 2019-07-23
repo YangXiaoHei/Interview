@@ -107,6 +107,9 @@ int main(int argc, char *argv[])
             if (!new_entry.count("init_time"))
                 new_entry["init_time"] = cur_time;
 
+            if (!new_entry.count("tmp_ignore"))
+                new_entry["tmp_ignore"] = 0;
+
             raw_jsn[key].push_back(new_entry);
             cout << "add succ! " << desc << " init_time = " << cur_time << endl;
         }

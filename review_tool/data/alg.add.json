@@ -1,29 +1,14 @@
 {
-    "动态规划和递归" : 
+    "优秀代码阅读" : 
     [
         {
-            "desc" : "快速幂 - 非递归",
-            "cost_time" : 5,
-            "diff" : 2
+            "desc" : "阅读 linux 红黑树",
+            "cost_time" : 120,
+            "diff" : 5
         },
         {
-            "desc" : "矩阵相乘",
-            "cost_time" : 20,
-            "diff" : 2
-        },
-        {
-            "desc" : "斐波那契数列第 n 项 - 傻逼递归",
-            "cost_time" : 10,
-            "diff" : 1
-        },
-        {
-            "desc" : "斐波那契数列第 n 项 - O(N)",
-            "cost_time" : 10,
-            "diff" : 2
-        },
-        {
-            "desc" : "斐波那契数列第 n 项 - O(logN) - 矩阵相乘 + 快速幂",
-            "cost_time" : 30,
+            "desc" : "阅读 skywind avl 实现",
+            "cost_time" : 120,
             "diff" : 4
         }
     ]
