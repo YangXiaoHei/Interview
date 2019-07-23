@@ -187,6 +187,8 @@ void dlist_print_back(dlnode *head);
 void dlist_release(dlnode **head);
 /**********************************/
 
+
+
 void sort(int *arr, int size);
 int is_sorted(int *arr, int size);
 void swap(int *a, int *b);
@@ -202,5 +204,10 @@ int *arrayNoDup(int size);
 int *arrayNoDupWithRange(int size, int lo, int hi);
 int arrayHasDup(int *arr, int size);
 void shuffle(int *arr, int size);
+
+void matrix_print(long *A, int Ar, int Ac);
+void matrix_clr(long *A, int Ar, int Ac);
+void matrix_mul(long *A, int Ar, int Ac, long *B, int Br, int Bc, long *C, int Cr, int Cc);
+long *matrix_gen(int r, int c);
 
 #endif

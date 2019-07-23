@@ -1,42 +1,5 @@
 #include "ds.h"
 
-void matrix_print(long *A, int Ar, int Ac)
-{
-    for (int i = 0; i < Ar; i++) {
-        for (int j = 0; j < Ac; j++) 
-            printf("%3ld", A[i * Ac + j]);
-        printf("\n");
-    }
-    printf("\n");
-}
-
-void matrix_clr(long *A, int Ar, int Ac)
-{
-    memset(A, 0, sizeof(long) * (Ar * Ac));
-}
-
-void matrix_mul(long *A, int Ar, int Ac, long *B, int Br, int Bc, long *C, int Cr, int Cc)
-{
-    matrix_clr(C, Cr, Cc);
-    if (Cr != Ar || Cc != Bc)
-        return;    
-
-    for (int i = 0; i < Ar; i++)
-        for (int j = 0; j < Bc; j++)
-            for (int k = 0; k < Ac; k++)
-                C[i * Cc + j] += A[i * Ac + k] * B[k * Bc + j];
-}
-
-long *matrix_gen(int r, int c)
-{
-    long *arr = malloc(sizeof(long) * (r * c));
-    if (!arr) exit(1);
-    for (int i = 0; i < r; i++)
-        for (int j = 0; j < c; j++)
-            arr[i * c + j] = randWithRange(0, 6);
-    return arr;
-}
-
 void matrix_test(void)
 {
     long *A = matrix_gen(2, 4);
