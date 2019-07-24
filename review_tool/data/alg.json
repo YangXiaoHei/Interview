@@ -466,28 +466,28 @@
             "diff": 3,
             "id": "47",
             "init_time": 1563721051,
-            "last_time": 0,
-            "times": 0,
+            "last_time": 1563949756,
+            "times": 1,
             "tmp_ignore": 0
         },
         {
-            "cost_time": 40,
+            "cost_time": 50,
             "desc": "用二叉树先序和中序遍历数组生成后序遍历数组",
             "diff": 3,
             "id": "48",
             "init_time": 1563721051,
-            "last_time": 0,
-            "times": 0,
+            "last_time": 1563949756,
+            "times": 1,
             "tmp_ignore": 0
         },
         {
-            "cost_time": 30,
+            "cost_time": 40,
             "desc": "计算 1 ~ n 的序列可以形成多少种形态的搜索二叉树",
             "diff": 2,
             "id": "49",
             "init_time": 1563721051,
-            "last_time": 0,
-            "times": 0,
+            "last_time": 1563949756,
+            "times": 1,
             "tmp_ignore": 0
         },
         {
