@@ -49,6 +49,8 @@ int tree_size(treenode *root);
 int tree_height(treenode *root);
 void tree_draw(treenode *root);
 void tree_release(treenode **root);
+treenode *tree_kth_node(treenode *root, int k);
+void tree_random_twonodes(treenode *root, treenode **n1, treenode **n2);
 treenode* tree_clone(treenode *root);
 
 treenode* bst_create(int size);

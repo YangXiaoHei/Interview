@@ -107,6 +107,46 @@ treenode* bst_create(int size)
     return root;
 }
 
+treenode *tree_kth_node(treenode *root, int k)
+{
+    if (k < 0 || !root)
+        return NULL;
+
+    treenode *target = NULL;
+    stack *s = stack_create();
+#define PUSH(s, x) stack_push(s, (long)(x))
+#define POP(s) ((treenode *)stack_pop(s))
+    while (!stack_empty(s) || root) {
+        if (root) {
+            PUSH(s, root);
+            root = root->left;
+        } else {
+            root = POP(s);
+            if (k-- <= 0) {
+                target = root;
+                break;
+            }
+            root = root->right;
+        }
+    }
+    stack_release(&s);
+    return target;
+}
+
+void tree_random_twonodes(treenode *root, treenode **n1, treenode **n2)
+{
+    if (!root)
+        return;
+
+    int size = tree_size(root);
+    int k = randWithRange(0, size);
+    int m = randWithRange(0, size);
+    if (n1)
+        *n1 = tree_kth_node(root, k);
+    if (n2)
+        *n2 = tree_kth_node(root, m);
+}
+
 void bst_insert(treenode **root, long val)
 {
     treenode *n = treenode_create(val);
