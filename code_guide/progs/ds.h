@@ -52,6 +52,9 @@ void tree_release(treenode **root);
 treenode *tree_kth_node(treenode *root, int k);
 void tree_random_twonodes(treenode *root, treenode **n1, treenode **n2);
 treenode* tree_clone(treenode *root);
+long *to_pre_arr(treenode *root);
+long *to_in_arr(treenode *root);
+long *to_post_arr(treenode *root);
 
 treenode* bst_create(int size);
 treenode* bst_create_with_arr(int *arr, int size);
@@ -198,6 +201,7 @@ long getCurTime(void);
 void parseArray(int *arr, int *len, char *str);
 int randWithRange(int lo, int hi);
 void printArray(int *array, int size);
+void printArrayL(long *array, int size);
 int *copyArray(int *arr, int size);
 int *array(int size);
 int *arrayWithRange(int size, int lo, int hi);
