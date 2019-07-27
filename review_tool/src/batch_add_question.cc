@@ -111,7 +111,7 @@ int main(int argc, char *argv[])
                 new_entry["tmp_ignore"] = 0;
 
             raw_jsn[key].push_back(new_entry);
-            cout << "add succ! " << desc << " init_time = " << cur_time << endl;
+            cout << "add succ! " << desc << " init_time = " << new_entry["init_time"] << endl;
         }
     }
 
