@@ -216,4 +216,10 @@ void matrix_clr(long *A, int Ar, int Ac);
 void matrix_mul(long *A, int Ar, int Ac, long *B, int Br, int Bc, long *C, int Cr, int Cc);
 long *matrix_gen(int r, int c);
 
+
+void matrix_print_(int *A, int Ar, int Ac);
+void matrix_clr_(int *A, int Ar, int Ac);
+void matrix_mul_(int *A, int Ar, int Ac, int *B, int Br, int Bc, int *C, int Cr, int Cc);
+int *matrix_gen_(int r, int c);
+
 #endif

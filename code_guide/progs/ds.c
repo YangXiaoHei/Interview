@@ -1766,11 +1766,48 @@ void ht_test(void)
     printf("remove all elem finished, each remove cost %.3f us\n", (end - beg) * 1.0 / size); 
 }
 
+void matrix_print_(int *A, int Ar, int Ac)
+{
+    for (int i = 0; i < Ar; i++) {
+        for (int j = 0; j < Ac; j++)
+            printf("%-3d", A[i * Ac + j]);
+        printf("\n");
+    }
+    printf("\n");
+
+}
+void matrix_clr_(int *A, int Ar, int Ac)
+{
+    memset(A, 0, sizeof(int) * (Ar * Ac));
+}
+
+void matrix_mul_(int *A, int Ar, int Ac, int *B, int Br, int Bc, int *C, int Cr, int Cc)
+{
+    matrix_clr_(C, Cr, Cc);
+    if (Cr != Ar || Cc != Bc)
+        return;
+
+    for (int i = 0; i < Ar; i++)
+        for (int j = 0; j < Bc; j++)
+            for (int k = 0; k < Ac; k++)
+                C[i * Cc + j] += A[i * Ac + k] * B[k * Bc + j];
+
+}
+int *matrix_gen_(int r, int c)
+{
+    int *arr = malloc(sizeof(int) * (r * c));
+    if (!arr) exit(1);
+    for (int i = 0; i < r; i++)
+        for (int j = 0; j < c; j++)
+            arr[i * c + j] = randWithRange(0, 100);
+    return arr;
+}
+
 void matrix_print(long *A, int Ar, int Ac)
 {
     for (int i = 0; i < Ar; i++) {
         for (int j = 0; j < Ac; j++)
-            printf("%3ld", A[i * Ac + j]);
+            printf("%-3ld", A[i * Ac + j]);
         printf("\n");
     }
     printf("\n");
