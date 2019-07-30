@@ -3,7 +3,32 @@
     [
         {
             "desc" : "汉诺塔问题求解步骤",
+            "cost_time" : 20,
+            "diff" : 2
+        },
+        {
+            "desc" : "最长公共子序列",
             "cost_time" : 30,
+            "diff" : 3
+        },
+        {
+            "desc" : "最长公共子串 - dp - 空间 O(NM)",
+            "cost_time" : 30,
+            "diff" : 3
+        },
+        {
+            "desc" : "最长公共子串 - dp - 空间 O(1)",
+            "cost_time" : 40,
+            "diff" : 4
+        },
+        {
+            "desc" : "字符串最小编辑代价 - dp - 空间 O(NM)",
+            "cost_time" : 30,
+            "diff" : 3
+        },
+        {
+            "desc" : "字符串最小编辑代价 - dp - 空间 O(N or M)",
+            "cost_time" : 40,
             "diff" : 4
         }
     ],
