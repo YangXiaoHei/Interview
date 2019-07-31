@@ -5,6 +5,16 @@
             "desc" : "汉诺塔问题求解步骤",
             "cost_time" : 20,
             "diff" : 2
+        },
+        {
+            "desc" : "判断 aim 是否是 str1 和 str2 交错而成的字符串 - dp - 非压缩空间",
+            "cost_time" : 40,
+            "diff" : 3
+        },
+        {
+            "desc" : "判断 aim 是否是 str1 和 str2 交错而成的字符串 - dp - 压缩空间",
+            "cost_time" : 40,
+            "diff" : 4
         }
     ],
     "基础算法" : 
