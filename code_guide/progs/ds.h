@@ -55,6 +55,9 @@ treenode* tree_clone(treenode *root);
 long *to_pre_arr(treenode *root);
 long *to_in_arr(treenode *root);
 long *to_post_arr(treenode *root);
+int *to_pre_arr_(treenode *root);
+int *to_in_arr_(treenode *root);
+int *to_post_arr_(treenode *root);
 
 treenode* bst_create(int size);
 treenode* bst_create_with_arr(int *arr, int size);

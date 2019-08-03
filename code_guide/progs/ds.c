@@ -3,6 +3,75 @@
 #define HT_MIN_BUCKET 5
 #define HT_EXPAND_BOUND 7
 #define HT_SHRINK_BOUND 3
+int *to_pre_arr_(treenode *root)
+{
+    int size = tree_size(root);
+    int *pre = (int *)malloc(sizeof(int) * size);
+    int pre_size = 0;
+
+    stack *s1 = stack_create();
+#define PUSH(s, x) stack_push(s, (long)(x))
+#define POP(s) ((treenode *)stack_pop(s))
+    PUSH(s1, root);
+    while (!stack_empty(s1)) {
+        root = POP(s1);
+        while (root) {
+            pre[pre_size++] = root->val;
+            if (root->right)
+                PUSH(s1, root->right);
+            root = root->left;
+        }
+    }
+    stack_release(&s1);
+    return pre;
+}
+
+int *to_in_arr_(treenode *root)
+{
+    int size = tree_size(root);
+    int *in = (int *)malloc(sizeof(int) * size);
+    int in_size = 0;
+
+    stack *s1 = stack_create();
+
+#define PUSH(s, x) stack_push(s, (long)(x))
+#define POP(s) ((treenode *)stack_pop(s))
+    while (!stack_empty(s1) || root) {
+        if (root) {
+            PUSH(s1, root);
+            root = root->left;
+        } else {
+            root = POP(s1);
+            in[in_size++] = root->val;
+            root = root->right;
+        }
+    }
+    stack_release(&s1);
+    return in;
+}
+
+int *to_post_arr_(treenode *root)
+{
+    int size = tree_size(root);
+    int *post = (int *)malloc(sizeof(int) * size);
+    int post_size = size - 1;
+
+    stack *s1 = stack_create();
+
+#define PUSH(s, x) stack_push(s, (long)(x))
+#define POP(s) ((treenode *)stack_pop(s))
+    PUSH(s1, root);
+    while (!stack_empty(s1)) {
+        root = POP(s1);
+        post[post_size--] = root->val;
+        if (root->left)
+            PUSH(s1, root->left);
+        if (root->right)
+            PUSH(s1, root->right);
+    }
+    stack_release(&s1);
+    return post;
+}
 
 long *to_pre_arr(treenode *root)
 {
