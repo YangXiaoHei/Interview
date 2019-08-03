@@ -7,7 +7,7 @@
 long *to_pre_arr(treenode *root)
 {
     int size = tree_size(root);
-    long *pre = malloc(sizeof(long) * size);
+    long *pre = (long *)malloc(sizeof(long) * size);
     int pre_size = 0;
 
     stack *s1 = stack_create();
@@ -30,7 +30,7 @@ long *to_pre_arr(treenode *root)
 long *to_in_arr(treenode *root)
 {
     int size = tree_size(root);
-    long *in = malloc(sizeof(long) * size);
+    long *in = (long *)malloc(sizeof(long) * size);
     int in_size = 0;
 
     stack *s1 = stack_create();
@@ -54,7 +54,7 @@ long *to_in_arr(treenode *root)
 long *to_post_arr(treenode *root)
 {
     int size = tree_size(root);
-    long *post = malloc(sizeof(long) * size);
+    long *post = (long *)malloc(sizeof(long) * size);
     int post_size = size - 1;
 
     stack *s1 = stack_create();
@@ -1795,7 +1795,7 @@ void matrix_mul_(int *A, int Ar, int Ac, int *B, int Br, int Bc, int *C, int Cr,
 }
 int *matrix_gen_(int r, int c)
 {
-    int *arr = malloc(sizeof(int) * (r * c));
+    int *arr = (int *)malloc(sizeof(int) * (r * c));
     if (!arr) exit(1);
     for (int i = 0; i < r; i++)
         for (int j = 0; j < c; j++)
@@ -1832,7 +1832,7 @@ void matrix_mul(long *A, int Ar, int Ac, long *B, int Br, int Bc, long *C, int C
 
 long *matrix_gen(int r, int c)
 {
-    long *arr = malloc(sizeof(long) * (r * c));
+    long *arr = (long *)malloc(sizeof(long) * (r * c));
     if (!arr) exit(1);
     for (int i = 0; i < r; i++)
         for (int j = 0; j < c; j++)
