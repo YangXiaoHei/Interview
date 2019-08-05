@@ -18,8 +18,10 @@ int is_same_topo(treenode *n1, treenode *n2)
 
 treenode *rebuild_by_pre_post(long *pre, long *post, int size, ht *h, int pi, int ps, int si, int ss)
 {
-    if (pi > ps)
+    if (pi > ps) {
+        printf("pre[%d]=%ld > pre[%d]=%ld\n", pi, pre[pi], ps, pre[ps]);
         return NULL;
+    }
     treenode *n = treenode_create(post[ss--]);
     if (pi == ps)
         return n;
