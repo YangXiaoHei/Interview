@@ -5,11 +5,6 @@
 #define HT_GET_N(h, k) ((treenode *)ht_get(h, (long)(k)))
 #define HT_CONTAIN(h, k) ht_contain(h, (long)k)
 
-long hash(long k)
-{
-    return k;
-}
-
 void set_right(treenode *left, treenode *right, treenode *root, ht *h)
 {
     if (!right)
@@ -71,7 +66,7 @@ void init_all_subcptable(treenode *root, ht *h)
     if (!root)
         return;
 
-    ht *subh = ht_create(hash);
+    ht *subh = ht_create();
     HT_INSERT(h, root, subh);
     init_all_subcptable(root->left, h);
     init_all_subcptable(root->right, h);
@@ -99,7 +94,7 @@ treenode *query(ht *h, treenode *n1, treenode *n2)
 
 int main(int argc, char *argv[])
 {
-    ht *h = ht_create(hash);
+    ht *h = ht_create();
     treenode *root = bst_create(8);
     tree_draw(root);
     treenode *n1 = NULL, *n2 = NULL;

@@ -15,14 +15,9 @@ void set_subtree_record(treenode *);
 void set_left(treenode *, treenode *, treenode *);
 void set_right(treenode *, treenode *, treenode *);
 
-long normal_hash(long key)
-{
-    return key;
-}
-
 void create_record(treenode *root)
 {
-    record = ht_create(normal_hash);
+    record = ht_create();
     init_treenode_record(root);
     set_record(root);
 }
@@ -33,7 +28,7 @@ void init_treenode_record(treenode *root)
     if (!root)
         return;
 
-    ht *node_ht = ht_create(normal_hash);
+    ht *node_ht = ht_create();
     HT_INSERT(record, root, node_ht);
     init_treenode_record(root->left);
     init_treenode_record(root->right);

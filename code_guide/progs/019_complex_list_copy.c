@@ -62,14 +62,9 @@ void clist_print(cnode *list)
     printf("\n");
 }
 
-long normal_hash(long val)
-{
-    return val;
-}
-
 cnode *copy_complex_list(cnode *list)
 {
-    ht *h = ht_create(normal_hash);
+    ht *h = ht_create();
 
 #define HT_INSERT(h, x, v) ht_insert(h, (long)x, (long)v);
 #define HT_GET(h, x) ((cnode *)ht_get(h, (long)x))

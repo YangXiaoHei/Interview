@@ -5,14 +5,12 @@
 #define HT_GET_H(h, k) ((ht *)ht_get(h, (long)(k)))
 #define HT_GET_N(h, k) ((treenode *)ht_get(h, (long)(k)))
 
-long hash(long key) { return key; }
-
 void init_map(treenode *root, ht *h)
 {
     if (!root)
         return;
 
-    HT_INSERT(h, root, ht_create(hash));
+    HT_INSERT(h, root, ht_create());
     init_map(root->left, h);
     init_map(root->right, h);
 }
@@ -81,7 +79,7 @@ int main(int argc, char *argv[])
     tree_draw(root);
 
     // 初始化记录项
-    ht *h = ht_create(hash);
+    ht *h = ht_create();
     init_map(root, h);
     init(root, h);
 

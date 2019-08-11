@@ -81,9 +81,14 @@ typedef struct ht {
     int bucket;
     htnode **slot;
     long (*hash)(long);
+    int (*eq)(long, long);
 } ht;
 
-ht *ht_create(long (*hash)(long));
+static inline long _hash(long key) { return key; }
+static inline int _eq(long key1, long key2) { return key1 == key2; }
+
+ht *ht_create_(long (*hash)(long), int(*eq)(long, long));
+ht *ht_create(void);
 void ht_insert(ht *h, long key, long val);
 long ht_get(ht *h, long key);
 int ht_contain(ht *h, long key);

@@ -35,14 +35,9 @@ void path_of_sum_in_tree(treenode *root, ht *h, int k, int *len, int level, int 
     POP(s); 
 }
 
-long normal_hash(long key)
-{
-    return key;
-}
-
 void find_path(treenode *root, int k)
 {
-    ht *h = ht_create(normal_hash);
+    ht *h = ht_create();
     stack *s = stack_create();
     stack *path = stack_create();
     ht_insert(h, 0, -1);

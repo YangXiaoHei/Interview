@@ -22,15 +22,10 @@ void longest_path_of_sum_in_tree_core(treenode *root, ht *h, int *len, int level
         ht_remove(h, sum);
 }
 
-long normal_hash(long key)
-{
-    return key;
-}
-
 int longest_path_of_sum_in_tree(treenode *root, int k)
 {
     int len = 0;
-    ht *h = ht_create(normal_hash);
+    ht *h = ht_create();
     ht_insert(h, 0, -1);
     longest_path_of_sum_in_tree_core(root, h, &len, 0, 0, k);
     ht_release(&h);

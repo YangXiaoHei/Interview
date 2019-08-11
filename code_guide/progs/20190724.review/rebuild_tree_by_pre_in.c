@@ -17,7 +17,7 @@ treenode *rebuild_by_pre_in(long *pre, long *in, int size, ht *h, int *pre_idx, 
 
 treenode *rebuild(long *pre, long *in, int size)
 {
-    ht *h = ht_create(hash);
+    ht *h = ht_create();
     for (int i = 0; i < size; i++)
         ht_insert(h, in[i], i);
     int pre_idx = 0;

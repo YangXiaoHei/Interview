@@ -1,7 +1,5 @@
 #include "ds.h"
 
-long hash(long k) { return k; }
-
 int is_same_topo(treenode *n1, treenode *n2)
 {
     if (!n1 && !n2)
@@ -37,7 +35,7 @@ treenode *rebuild(long *pre, long *post, int size)
     if (!pre || !post || size <= 0)
         return NULL;
 
-    ht *h = ht_create(hash);
+    ht *h = ht_create();
     for (int i = 0; i < size; i++)
         ht_insert(h, post[i], i);
     treenode *root = rebuild_by_pre_post(pre, post, size, h, 0, size - 1, 0, size - 1);

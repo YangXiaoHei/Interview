@@ -4,8 +4,6 @@
 #define HT_CONTAIN(h, k) ht_contain(h, (long)(k))
 #define HT_GET(h, k) ((treenode *)ht_get(h, (long)(k)))
 
-long hash(long key) { return key; }
-
 void init_map(treenode *root, ht *h)
 {
     if (!root)
@@ -29,7 +27,7 @@ treenode *query(treenode *root, treenode *n1, treenode *n2, ht *h)
     if (n1 == n2)
         return n1;
 
-    ht *path = ht_create(hash);
+    ht *path = ht_create();
     HT_INSERT(h, root, NULL);
     while (HT_CONTAIN(h, n1)) {
         HT_INSERT(path, n1, 0);
@@ -49,7 +47,7 @@ int main(int argc, char *argv[])
     tree_draw(root);
 
     // 初始化记录项
-    ht *h = ht_create(hash);
+    ht *h = ht_create();
     init_map(root, h);
 
     treenode *n1, *n2;

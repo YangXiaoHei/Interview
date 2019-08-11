@@ -1,15 +1,10 @@
 #include "ds.h"
 
-long normal_hash(long key)
-{
-    return key;
-}
-
 int longest_sequence_of_sum(int *arr, int size, int key)
 {
     if (!arr || size <= 0)
         return 0;
-    ht *h = ht_create(normal_hash);    
+    ht *h = ht_create();    
     ht_insert(h, 0, -1);
 
     stack *s = stack_create();

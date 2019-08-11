@@ -2,8 +2,6 @@
 
 int len = 0;
 
-long hash(long key) { return key; }
-
 void max_sum_path(treenode *root, ht *h, int key, int sum, int level)
 {
     if (!root)
@@ -28,7 +26,7 @@ void max_sum_path(treenode *root, ht *h, int key, int sum, int level)
 
 int sum_path(treenode *root, int key)
 {
-    ht *h = ht_create(hash);
+    ht *h = ht_create();
     ht_insert(h, 0, -1);
     max_sum_path(root, h, key, 0, 0);
     ht_release(&h);

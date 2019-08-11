@@ -2,8 +2,6 @@
 
 int max(int a, int b) { return a > b ? a : b; }
 
-long hash(long key) { return key; }
-
 int merge(ht *h, int l, int r)
 {
     l = l - ht_get(h, l) + 1;
@@ -20,7 +18,7 @@ int longest_consecutive(int *arr, int size)
     if (!arr || size <= 0)
         return 0;
 
-    ht *h = ht_create(hash);
+    ht *h = ht_create();
     int maxv = 0;
     for (int i = 0; i < size; i++) {
         if (ht_contain(h, arr[i]))

@@ -1,10 +1,5 @@
 #include "ds.h"
 
-long normal_hash(long key)
-{
-    return key;
-}
-
 void remove_dup(lnode *list)
 {
     if (!list)
@@ -13,7 +8,7 @@ void remove_dup(lnode *list)
     if (!list->next)
         return;
 
-    ht *h = ht_create(normal_hash);
+    ht *h = ht_create();
 
     lnode *prev = list, *cur = list->next;
     ht_insert(h, prev->val, 1);

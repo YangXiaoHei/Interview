@@ -1,10 +1,5 @@
 #include "ds.h"
 
-long normal_hash(long key)
-{
-    return key;
-}
-
 void __hanson_print(long v)
 {
     treenode *n = (treenode *)v;
@@ -23,7 +18,7 @@ void path_of_sum_in_tree(treenode *root, int k)
 #define PEEK(s) ((treenode *)stack_peek(s))
 #define POP_BOTTOM(s) ((treenode *)stack_pop_bottom(s))
 
-    ht *h = ht_create(normal_hash);
+    ht *h = ht_create();
     ht_insert(h, 0, -1);
     long sum = 0;
     int len = 0;

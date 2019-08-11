@@ -1,7 +1,5 @@
 #include "ds.h"
 
-long hash(long key) { return key; }
-
 treenode *rebuild_core(int *pre, int *post, int pi, int ps, int si, int ss, ht *h)
 {
     if (pi > ps)
@@ -22,7 +20,7 @@ treenode *rebuild(int *pre, int *post, int size)
     if (!pre || !post || size <= 0)
         return NULL;
 
-    ht *h = ht_create(hash);
+    ht *h = ht_create();
     for (int i = 0; i < size; i++)
         ht_insert(h, post[i], i);
     treenode *root = rebuild_core(pre, post, 0, size - 1, 0, size - 1, h);

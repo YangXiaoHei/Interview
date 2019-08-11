@@ -1,7 +1,5 @@
 #include "ds.h"
 
-long hash(long k) { return k; }
-
 void gen_post_arr(long *pre, long *in, long *post, ht *h, int *post_idx, int ps, int pe, int is, int ie)
 {
     if (ps > pe)
@@ -18,7 +16,7 @@ void gen_arr(long *pre, long *in, long *post, int size)
     if (!pre || !in || !post || size <= 0)
         return;
 
-    ht *h = ht_create(hash);
+    ht *h = ht_create();
     for (int i = 0; i < size; i++)
         ht_insert(h, in[i], i);
 

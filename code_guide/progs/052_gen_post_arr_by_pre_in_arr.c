@@ -24,15 +24,10 @@ void gen_arr(int *pre, int *in, int *post, int *post_idx, int ps, int pe, int is
     gen_arr(pre, in, post, post_idx, ps + 1, ps + i - is, is, i - 1, h);
 }
 
-long hash(long key)
-{
-    return key;
-}
-
 void gen_post_arr(int *pre, int *in, int size, int *post)
 {
     int post_idx = size - 1;
-    ht *h = ht_create(hash);
+    ht *h = ht_create();
     for (int i = 0; i < size; i++)
         ht_insert(h, in[i], i);
     gen_arr(pre, in, post, &post_idx, 0, size - 1, 0, size - 1, h);

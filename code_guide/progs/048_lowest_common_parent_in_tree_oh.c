@@ -35,11 +35,6 @@ void gen_two_treenode(treenode *root, int size, treenode **n1, treenode **n2)
     *n2 = get_kth_node(root, m);
 }
 
-long hash(long key)
-{
-    return key;
-}
-
 #define HT_INSERT(h, k, v) ht_insert(h, (long)(k), (long)(v))
 #define HT_CONTAIN(h, k) ht_contain(h, (long)(k))
 #define HT_GET(h, k) ((treenode *)ht_get(h, (long)k))
@@ -86,13 +81,13 @@ treenode* lowest_common_parent(treenode *root, treenode *n1, treenode *n2)
 {
     if (!root || !n1 || !n2)
         return NULL;
-    ht *h = ht_create(hash);
+    ht *h = ht_create();
     HT_INSERT(h, root, NULL);
     set_map(root, h); 
 
     ht_print_funptr(h, print_fun);
 
-    ht *path = ht_create(hash);
+    ht *path = ht_create();
     while (HT_CONTAIN(h, n1)) {
         HT_INSERT(path, n1, 0);
         n1 = HT_GET(h, n1);

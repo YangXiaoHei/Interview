@@ -1,6 +1,5 @@
 #include "ds.h"
 
-long hash(long k) { return k; }
 #define HT_INSERT(h, k, v) ht_insert(h, (long)(k), (long)(v))
 #define HT_CONTAIN(h, k) ht_contain(h, (long)(k))
 #define HT_GET(h, k) ((treenode *)ht_get(h, (long)(k)))
@@ -28,11 +27,11 @@ treenode *lowest_common_parent(treenode *root, treenode *n1 ,treenode *n2)
     if (n1 == n2)
         return n1;
 
-    ht *h = ht_create(hash);
+    ht *h = ht_create();
     HT_INSERT(h, root, NULL);
     init_ptable(root, h);
 
-    ht *path = ht_create(hash);
+    ht *path = ht_create();
     while (HT_CONTAIN(h, n1)) {
         HT_INSERT(path, n1, 0);
         n1 = HT_GET(h, n1);

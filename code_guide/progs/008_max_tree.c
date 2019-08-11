@@ -16,8 +16,8 @@ void pop_and_set_map(stack *s, ht *h)
 
 void max_tree(int *arr, int size, treenode **root)
 {
-    ht *lmap = ht_create(normal_hash); 
-    ht *rmap = ht_create(normal_hash); 
+    ht *lmap = ht_create(); 
+    ht *rmap = ht_create(); 
     stack *s = stack_create();
 
     for (int i = 0; i < size; i++) {
@@ -42,7 +42,7 @@ void max_tree(int *arr, int size, treenode **root)
 #define HT_INSERT(h, x, v) ht_insert(h, (long)x, (long)v)
 #define HT_GET(h, x) ((treenode *)ht_get(h, (long)x))
 
-    ht *node_map = ht_create(normal_hash);
+    ht *node_map = ht_create();
     for (int i = 0; i < size; i++)
         HT_INSERT(node_map, arr[i], treenode_create(arr[i]));
 
@@ -74,7 +74,7 @@ void max_tree(int *arr, int size, treenode **root)
 
 int has_duplicate(int *arr, int size) 
 {
-    ht *h = ht_create(normal_hash);
+    ht *h = ht_create();
     for (int i = 0; i < size; i++) {
         if (ht_get(h, arr[i]) > 0)
             return 1;

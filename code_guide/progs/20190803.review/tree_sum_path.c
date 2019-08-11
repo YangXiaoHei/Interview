@@ -1,7 +1,5 @@
 #include "ds.h"
 
-long hash(long key) { return key; }
-
 void sum_path_core(treenode *root, ht *h, int key, int sum, int level, int *find, int *pathlen)
 {
     if (!root)
@@ -33,7 +31,7 @@ int sum_path(treenode *root, int key)
     if (!root)
         return 0;
 
-    ht *h = ht_create(hash);
+    ht *h = ht_create();
     ht_insert(h, 0, -1);
     int find = 0; 
     int pathlen = 0;

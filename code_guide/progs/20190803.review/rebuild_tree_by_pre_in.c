@@ -1,7 +1,5 @@
 #include "ds.h"
 
-long hash(long key) { return key; }
-
 treenode *rebuild_core(int *pre, int *in, ht* h, int *pre_idx, int is, int ie)
 {
     if (is > ie)
@@ -17,7 +15,7 @@ treenode *rebuild_core(int *pre, int *in, ht* h, int *pre_idx, int is, int ie)
 
 treenode *rebuild(int *pre, int *in, int size)
 {
-    ht *h = ht_create(hash);
+    ht *h = ht_create();
     for (int i = 0; i < size; i++)
         ht_insert(h, in[i], i);
     int pre_idx = 0;

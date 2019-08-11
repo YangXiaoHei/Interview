@@ -659,7 +659,21 @@ htnode *htnode_create(long key, long val)
     return n;
 }
 
-ht *ht_create(long (*hash)(long))
+ht *ht_create(void)
+{
+    ht *h = (ht *)malloc(sizeof(ht));
+    if (!h) exit(1);
+    h->size = 0;
+    h->bucket = HT_MIN_BUCKET;
+    h->slot = (htnode **)malloc(sizeof(htnode *) * h->bucket);
+    for (int i = 0; i < h->bucket; i++)
+        h->slot[i] = NULL;
+    h->hash = _hash;
+    h->eq = _eq;
+    return h;
+}
+
+ht *ht_create_(long (*hash)(long), int(*eq)(long, long))
 {
     ht *h = (ht *)malloc(sizeof(ht));
     if (!h) exit(1);
@@ -669,6 +683,7 @@ ht *ht_create(long (*hash)(long))
     for (int i = 0; i < h->bucket; i++)
         h->slot[i] = NULL;
     h->hash = hash;
+    h->eq = eq;
     return h;
 }
 
@@ -688,7 +703,7 @@ void ht_insert(ht *h, long key, long val)
     }
 
     for (htnode *cur = head; cur; cur = cur->next) {
-        if (cur->key == key)  {
+        if (h->eq(cur->key, key))  {
             cur->val = val;
             return;
         }
@@ -710,7 +725,7 @@ void ht_remove(ht *h, long key)
     idx %= h->bucket;
     int find = 0;
     for (htnode *cur = h->slot[idx]; cur; cur = cur->next) {
-        if (cur->key == key) {
+        if (h->eq(cur->key, key)) {
             find = 1;
             if (cur->prev) {
                 cur->prev->next = cur->next;
@@ -741,7 +756,7 @@ long ht_get(ht *h, long key)
     unsigned long idx = h->hash(key);
     idx %= h->bucket;
     for (htnode *cur = h->slot[idx]; cur; cur = cur->next)
-        if (cur->key == key)
+        if (h->eq(cur->key, key))
             return cur->val;
     return 0;
 }
@@ -754,7 +769,7 @@ int ht_contain(ht *h, long key)
     unsigned long idx = h->hash(key);
     idx %= h->bucket;
     for (htnode *cur = h->slot[idx]; cur; cur = cur->next)
-        if (cur->key == key)
+        if (h->eq(cur->key, key))
             return 1;
     return 0;
 }
@@ -1727,7 +1742,7 @@ int arrayHasDup(int *arr, int size)
     if (!arr || size <= 1)
         return 0;
     int has_dup = 0;
-    ht *h = ht_create(__normal_hash);
+    ht *h = ht_create();
     for (int i = 0; i < size; i++) {
         if (ht_get(h, arr[i])) {
             has_dup = 1;
@@ -1806,7 +1821,7 @@ long ht_hash(long key)
 void ht_test(void)
 {
     setbuf(stdout, NULL);
-    ht *h = ht_create(ht_hash);
+    ht *h = ht_create();
 
     int size = 10000000;
     int lo = 1, hi = 10000000;
