@@ -1,0 +1,65 @@
+dst 7 6 5 4 3 2 1 -> a
+src 7 6 5 4 3 2 1 -> aux
+
+    src 7 6 5 4 -> a
+    dst 7 6 5 4 -> aux
+
+        dst 7 6 -> a
+        src 7 6 -> aux
+
+        merge -> 
+        dst 6 7 -> a
+        src 7 6 -> aux
+
+        dst 5 4 -> a
+        src 5 4 -> aux
+        
+        merge ->
+        dst 4 5 -> a
+        src 5 4 -> aux
+
+    merge -> 
+    开始时
+    src 6 7 4 5 -> a
+    dst 7 6 5 4 -> aux
+    执行后
+    src 6 7 4 5 -> a
+    dst 4 5 6 7 -> aux
+
+    src  3 2 1 -> a
+    dst  3 2 1 -> aux
+
+        dst 3 2 -> a
+        src 3 2 -> aux
+
+        merge ->
+        dst 2 3 -> a
+        src 3 2 -> aux
+
+        dst  1 -> a
+        src  1 -> aux
+        返回, 没有 merge
+
+    merge ->
+    开始时
+    src 2 3 1 -> a
+    dst 3 2 1 -> aux
+    执行后
+    src 2 3 1 -> a
+    dst 1 2 3 -> aux
+
+merge -> 
+开始时
+src 4 5 6 7 1 2 3  -> aux
+dst 6 7 4 5 3 2 1 -> a
+执行后
+src 4 5 6 7 1 2 3 -> aux
+dst 1 2 3 4 5 6 7 -> a
+
+
+
+    
+
+
+
+
