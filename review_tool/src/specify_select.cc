@@ -11,6 +11,34 @@ int total_num = 5; // 题目数量限制
 int total_cost = 120; // 复习时间限制
 string file_name, bk_file;
 
+string get_time_fmt(void)
+{
+    struct tm *tmbuf;
+    time_t cur = time(NULL);
+    tmbuf = localtime(&cur);
+    string s;
+    int year = tmbuf->tm_year + 1900;
+    int mon = tmbuf->tm_mon + 1;
+    int day = tmbuf->tm_mday;
+    int hour = tmbuf->tm_hour;
+    int min = tmbuf->tm_min;
+    char buf[100];
+    snprintf(buf, sizeof(buf), "%04d-%02d-%02d %02d:%02d", year, mon, day, hour, min);
+    return string(buf);
+}
+string get_time_fmt(long time)
+{
+    struct tm *tmbuf;
+    time_t cur = time;
+    tmbuf = localtime(&cur);
+    string s;
+    int year = tmbuf->tm_year + 1900;
+    int mon = tmbuf->tm_mon + 1;
+    int day = tmbuf->tm_mday;
+    char buf[100];
+    snprintf(buf, sizeof(buf), "%04d%02d%02d.review", year, mon, day);
+    return string(buf);
+}
 
 string get_last_expr(long lasttime)
 {
@@ -20,27 +48,41 @@ string get_last_expr(long lasttime)
     if (diff <= 0)
         return "oh my god!";
 
-    if (diff < 60) 
-        return to_string(diff) + " 秒前";
+    string tmp;
+    if (diff < 60) {
+        tmp = to_string(diff) + " 秒前";
+        goto end;
+    }
 
     diff /= 60;
-    if (diff < 60)
-        return to_string(diff) + " 分钟前";
+    if (diff < 60) {
+        tmp = to_string(diff) + " 分钟前";
+        goto end;
+    }
 
     diff /= 60;
-    if (diff < 24)
-        return to_string(diff) + " 小时前";
+    if (diff < 24) {
+        tmp = to_string(diff) + " 小时前";
+        goto end;
+    }
 
     diff /= 24;
-    if (diff < 30)
-        return to_string(diff) + " 天前";
+    if (diff < 30) {
+        tmp = to_string(diff) + " 天前";
+        goto end;
+    }
 
     diff /= 30;
-    if (diff < 12)
-        return to_string(diff) + " 月前";
+    if (diff < 12) {
+        tmp = to_string(diff) + " 月前";
+        goto end;
+    }
 
     diff /= 12;
-    return to_string(diff) + " 年前";
+    tmp = to_string(diff) + " 年前 ";
+end:
+    tmp += "  -> " + get_time_fmt(lasttime);
+    return tmp;
 }
 
 struct entry {
@@ -80,22 +122,6 @@ void shuffle_vec(vector<entry> &vec)
         vec[i] = vec[r];
         vec[r] = t; 
     }
-}
-
-string get_time_fmt(void)
-{
-    struct tm *tmbuf;
-    time_t cur = time(NULL);
-    tmbuf = localtime(&cur);
-    string s;
-    int year = tmbuf->tm_year + 1900;
-    int mon = tmbuf->tm_mon + 1;
-    int day = tmbuf->tm_mday;
-    int hour = tmbuf->tm_hour;
-    int min = tmbuf->tm_min;
-    char buf[100];
-    snprintf(buf, sizeof(buf), "%04d-%02d-%02d %02d:%02d", year, mon, day, hour, min);
-    return string(buf);
 }
 
 void handle_selected(json &to_modify, const string &module, const vector<entry> &selected)
@@ -208,6 +234,20 @@ finish:
     cout << endl;
 }
 
+wstring s2w(const string& s)
+{
+    string strLocale = setlocale(LC_ALL, "");
+    const char* chSrc = s.c_str();
+    size_t nDestSize = mbstowcs(NULL, chSrc, 0) + 1;
+    wchar_t* wchDest = new wchar_t[nDestSize];
+    wmemset(wchDest, 0, nDestSize);
+    mbstowcs(wchDest, chSrc, nDestSize);
+    wstring wstrResult = wchDest;
+    delete[]wchDest;
+    setlocale(LC_ALL, strLocale.c_str());
+    return wstrResult;
+}
+
 int main(int argc, char *argv[])
 {
     if (argc != 5) {
@@ -228,36 +268,86 @@ int main(int argc, char *argv[])
     reader >> jsn_content;
     reader.close();
 
-    // 备份
-    ofstream writer(bk_file);
-    writer << setw(4) << jsn_content;
-    writer.close();
-
-    // 手动选一个主题
+    // 展示目前复习数据的信息
     vector<string> all_module;
-    for (auto it = jsn_content.begin(); it != jsn_content.end(); it++) 
+    vector<string> all_module_desc;
+    map<int, int> statisc;
+    char buf[1024];
+    int longest = 0;
+    for (auto it = jsn_content.begin(); it != jsn_content.end(); it++) {
+        if (s2w(it.key()).size() > longest) {
+            longest = s2w(it.key()).size();
+        }
+    }
+    longest += 4;
+
+    for (auto it = jsn_content.begin(); it != jsn_content.end(); it++) {
+        string brief; 
+        // 该模块的题目数量
+        int total_qnum = it.value().size();
+        snprintf(buf, sizeof(buf), "%-3d", total_qnum);
+        string total_qnum_str(buf);
+
+        // 模块名对齐
+        string align_name(it.key());
+        align_name += string(longest - s2w(align_name).size(), ' ');
+
+        // 统计当前每道题的复习情况
+        brief += align_name + "\t共 " + string(buf) + " 道题";
+        for (int i = 0; i < it.value().size(); i++) {
+            int times = it.value()[i]["times"];    
+            if (statisc.count(times))
+                statisc[times]++;
+            else
+                statisc[times] = 1;
+        }
+
+        if (statisc.size() == 1 && statisc.count(0)) {
+            brief += "\t未复习过";
+        } else {
+            for (auto sit = statisc.begin(); sit != statisc.end(); sit++) {
+                snprintf(buf, sizeof(buf), "%.0f%%", (sit->second * 1.0 / total_qnum) * 100);
+                brief += "\t" + to_string(sit->first) + " " + string(buf);
+            }
+        }
+        statisc.clear();
+        all_module_desc.push_back(brief);
         all_module.push_back(it.key());
+    }
 
     if (all_module.empty()) {
         cout << "empty module!" << endl;
         exit(1);
     }
 
-    for (int i = 0; i < all_module.size(); i++) 
-        cout << "\t\t" <<  i << " -- " << all_module[i] << endl;
-    cout << endl;
-    cout << "\t选择主题 -> ";
+    // 打印复习题目导航
+    for (int i = 0; i < all_module_desc.size(); i++) 
+        cout << "\t\t" <<  i << " -- " << all_module_desc[i] << endl;
+
+    cout << "\n\t选择主题 -> ";
     unsigned idx = 0;
     while (cin >> idx && idx >= all_module.size()) 
         cout << "\t序号无效！请重新选择" << endl;
-    string select_module = all_module[idx];
+    
+    // 如果 ctrl + d
+    if (cin.eof()) {
+        cout << "bye bye ~" << endl;
+        exit(1);
+    }
 
+    // 如果索引无效
     if (idx >= all_module.size()) {
         cout << "bye bye ~" << endl;
         exit(1);
     }
 
+    // 备份
+    ofstream writer(bk_file);
+    writer << setw(4) << jsn_content;
+    writer.close();
+
     // 指定一个主题
+    string select_module = all_module[idx];
     vector<entry> result;
     scheme_specify_module(jsn_content, select_module, result);
 

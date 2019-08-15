@@ -12,8 +12,6 @@ c++ -std=c++11 ${src_path}/batch_add_question.cc -o ${bin_path}/batch_add_questi
 echo "batch_add succ!"
 c++ -std=c++11 ${src_path}/clear_times.cc -o ${bin_path}/clear_times 
 echo "clear_times succ!"
-c++ -std=c++11 ${src_path}/random_select.cc -o ${bin_path}/random_select 
-echo "random_select succ!"
 c++ -std=c++11 ${src_path}/remove_xxx_field.cc -o ${bin_path}/remove_xxx_field 
 echo "remove_xxx_field succ!"
 c++ -std=c++11 ${src_path}/specify_select.cc -o ${bin_path}/specify_select 
