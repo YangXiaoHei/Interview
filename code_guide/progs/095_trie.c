@@ -1,22 +1,19 @@
 #include "ds.h"
 
-#define HT_INSERT(h, k, v) ht_insert(h, (long)(k), (long)(v))
-#define HT_CONTAIN(h, k) ht_contain(h, (long)(k))
-#define HT_GET(h, k) ((trienode *)ht_get(h, (long)(k)))
-#define HT_REMOVE(h, k) ht_remove(h, (long)(k))
-
-struct trienode {
+typedef struct trienode {
     int path;
     int end;
-    ht *map;
-};
+    struct trienode *parent;
+    struct trienode *map[256];
+} trienode;
 
 trienode *trienode_create()
 {
     trienode *n = malloc(sizeof(struct trienode));
     if (!n) exit(1);
     n->path = n->end = 0;
-    n->map = ht_create();
+    n->parent = NULL;
+    memset(n->map, 0, sizeof(trienode *) * 256);
     return n;
 }
 
@@ -25,7 +22,6 @@ void trienode_release(trienode **n)
     if (!n || !*n)
         return;
 
-    ht_release(&n->map);
     free(*n);
     *n = NULL;
 }
@@ -35,11 +31,14 @@ void trie_insert(trienode *root, const char *str)
     if (!root || !str || !*str)
         return;
 
-    tridenode *n = root;
+    trienode *n = root;
     for (char *p = (char *)str; *p; p++) {
-        if (!HT_CONTAIN(n->map, *p))
-            HT_INSERT(n->map, *p, trienode_create());
-        n = HT_GET(n->map, *p);
+        if (!n->map[*p]) {
+            trienode *newn = trienode_create();
+            n->map[*p] = newn; 
+            newn->parent = n;
+        }
+        n = n->map[*p];
         n->path++;
     }
     n->end++;
@@ -52,9 +51,9 @@ int trie_find(trienode *root, const char *str)
 
     trienode *n = root;
     for (char *p = (char *)str; *p; p++) {
-        if (!HT_CONTAIN(n->map, *p))
+        if (!n->map[*p])
             return 0;
-        n = HT_GET(n->map, *p);
+        n = n->map[*p];
     }
     return n->end;
 }
@@ -65,10 +64,10 @@ int trie_prefix(trienode *root, const char *prefix)
         return 0;
 
     trienode *n = root;
-    for (char *p = (char *)root; *p; p++) {
-        if (!HT_CONTAIN(n->map, *p))
+    for (char *p = (char *)prefix; *p; p++) {
+        if (!n->map[*p])
             return 0;
-        n = HT_GET(n->map, *p);
+        n = n->map[*p];
     }
     return n->path;
 }
@@ -81,21 +80,50 @@ void trie_remove(trienode *root, const char *str)
     if (!trie_find(root, str))
         return;
 
-    trienode *prev = root;
-    trienode *cur = HT_GET(root->map, *str);
-    trienode *next = NULL;
-    for (char *p = (char *)str + 1; *p; p++) {
-        next = HT_GET(cur->map, *p); 
-        if (--cur->path == 0) {
-            HT_REMOVE(prev->map, p[-1]);
-            trienode_release(&cur);
-        }
-        prev = cur;
-        cur = next;
+    int len = 0;
+    trienode *cur = root;
+    for (char *p = (char *)str; *p; p++, len++) {
+        cur->map[*p]->path--;
+        cur = cur->map[*p];
     }
+    cur->end--;
+
+    trienode *prev = NULL;
+    int del = 0;
+    while (cur != root && cur->path == 0) {
+        del = 1;
+        prev = cur->parent; 
+        free(cur);
+        cur = prev;
+        len--;
+    }
+    if (del) 
+        cur->map[str[len]] = NULL;
 }
 
 int main(int argc, char *argv[])
 {
+    trienode *root = trienode_create();
+    trie_insert(root, "1234");
+    trie_insert(root, "123");
+    trie_insert(root, "12");
+    trie_insert(root, "1");
 
+    printf("prefix of 1234 : %d\n", trie_prefix(root, "1234"));
+    printf("prefix of 123 : %d\n", trie_prefix(root, "123"));
+    printf("prefix of 12 : %d\n", trie_prefix(root, "12"));
+    printf("prefix of 1 : %d\n", trie_prefix(root, "1"));
+
+    printf("before remove 1, find 1 : %d\n", trie_find(root, "1"));
+    trie_remove(root, "1");
+    printf("after remove 1, find 1 : %d\n", trie_find(root, "1"));
+
+    printf("before remove 123, find 123 : %d\n", trie_find(root, "123"));
+    trie_remove(root, "123");
+    printf("after remove 123, find 123 : %d\n", trie_find(root, "123"));
+
+    printf("prefix of 1234 : %d\n", trie_prefix(root, "1234"));
+    printf("prefix of 123 : %d\n", trie_prefix(root, "123"));
+    printf("prefix of 12 : %d\n", trie_prefix(root, "12"));
+    printf("prefix of 1 : %d\n", trie_prefix(root, "1"));
 }
