@@ -37,8 +37,8 @@
     "字符串" : 
     [
         {
-            "desc" : "str1 包含 str2 所有字符的最小长度子串",
-            "cost_time" : 30,
+            "desc" : "实现 trie 树, insert delete find prefix 接口",
+            "cost_time" : 50,
             "diff" : 3
         }
     ]
