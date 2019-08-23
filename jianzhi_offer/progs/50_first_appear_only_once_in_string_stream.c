@@ -9,6 +9,7 @@ char appear_only_once(char c)
         cnt[c] = -1;
     else if (cnt[c] == 0)
        cnt[c] = loc;
+
     loc++;
     int min_idx = (1L << 31) - 1;
     int minc = 0;
