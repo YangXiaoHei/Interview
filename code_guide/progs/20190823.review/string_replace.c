@@ -3,7 +3,7 @@
 char *replace(const char *str, const char *from, const char *to)
 {
     if (!str || !*str || !from || !*from || !to)
-        return (char *)str;
+        return (char *)str; // dont care
 
     int len = strlen(str), flen = strlen(from), tlen = 0;
     char *buf = malloc(len + 1);
@@ -26,18 +26,13 @@ char *replace(const char *str, const char *from, const char *to)
 
     // 没有匹配, 不需要做任何替换
     if (!cnt) 
-        return (char *)str;
+        return (char *)str; // dont care
 
     tlen = strlen(to);
     int reslen = 0;
     char *res = NULL;
-    if (flen > tlen) {
-        reslen = len - cnt * (flen - tlen);
-        res = malloc(reslen + 1);
-    } else {
-        reslen = len + cnt * (tlen - flen);
-        res = malloc(reslen + 1);
-    }
+    reslen = len + cnt * (tlen - flen);
+    res = malloc(reslen + 1);
     int k = 0;
     for (int i = 0; i < len;) {
         if (buf[i]) {
