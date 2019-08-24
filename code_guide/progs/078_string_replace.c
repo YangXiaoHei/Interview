@@ -2,23 +2,21 @@
 
 char * replace(const char *str, const char *from, const char *to, char *buf, int buflen)
 {
-    int match = 0;
     int len = strlen(str);
     int flen = strlen(from);
     int tlen = strlen(to);
     int count = 0;
     snprintf(buf, buflen, "%s", str);
-    for (int i = 0; i < len; i++) {
-        if (buf[i] == from[match]) {
-            if (++match == flen) {
-                count++;
-                int j = i;
-                while (match--) 
-                    buf[j--] = 0;
-                match = 0;
-            }
+    for (int i = 0; i < len; ) {
+        if (strncmp(buf + i, from, flen) == 0) {
+            count++;
+            char *p = buf + i + flen - 1;
+            int j = flen;
+            while (j--)
+                *p-- = 0;
+            i += flen;
         } else
-            match = 0;
+            i++;
     } 
 
     // 不会有任何替换发生
@@ -73,4 +71,5 @@ int main(int argc, char *argv[])
     printf("%s\n", replace("123456123456123", "123456123456123", "", buf, size));
     printf("%s\n", replace("123456123456123", "123456123456123", "666", buf, size));
     printf("%s\n", replace("123456123456123", "666", "999", buf, size));
+    printf("%s\n", replace("aaab", "aab", "999", buf, size));
 }
