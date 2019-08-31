@@ -6,16 +6,16 @@
 using namespace nlohmann;
 using namespace std;
 
-string file_name;
 
 int main(int argc, char *argv[])
 {
-    if (argc != 2) {
-        printf("usage : %s file_name\n", argv[0]);
+    if (argc != 3) {
+        printf("usage : %s file_name module_name\n", argv[0]);
         exit(1);
     }
 
-    file_name = argv[1];
+    string file_name = argv[1];
+    string module = argv[2];
 
     json j;
     ifstream reader(file_name);
@@ -24,19 +24,23 @@ int main(int argc, char *argv[])
 
     int count = 0;
     for (auto it = j.begin(); it != j.end(); it++) {
-        int size = it.value().size();
-        for (int i = 0; i < size; i++) {
-            json &entry = it.value()[i];
-            if (entry["times"].get<int>() > 0) {
-                count++;
-                cout << "清除复习次数 succ! -> [" << entry["desc"] << "]" << endl; 
-                entry["times"] = 0;
-                entry["last_time"] = 0;
+        if (it.key() == module) {
+            int size = it.value().size();
+            for (int i = 0; i < size; i++) {
+                json &entry = it.value()[i];
+                if (entry["times"].get<int>() > 0) {
+                    count++;
+                    cout << "清除复习次数 succ! -> [" << entry["desc"] << "]" << endl; 
+                    entry["times"] = 0;
+                    entry["last_time"] = 0;
+                }
             }
         }
     }
     if (count) 
-        cout << "清理了 " << count << " 道题的复习次数" << endl;
+        cout << "\n\n --> 清理了 " << "[" << module <<  "] 共 "<< count << " 道题的复习次数" << endl;
+    else
+        cout << "[" << module << "]" << " 中没有复习过的题, 不需清理" << endl;
 
     ofstream writer(file_name);
     writer << setw(4) << j;
