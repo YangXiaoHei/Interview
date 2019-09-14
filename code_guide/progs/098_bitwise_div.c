@@ -3,6 +3,9 @@
 #ifndef INT_MIN
 #define INT_MIN (-2147483647-1)
 #endif
+#ifndef INT_MAX
+#define INT_MAX 2147483647
+#endif
 
 int add(int a, int b)
 {
@@ -64,6 +67,8 @@ int xdiv(int a, int b)
         return 0;
 
     if (a == INT_MIN) {
+        if (b == -1)
+            return INT_MAX;
         int rest = xdiv_core(add(a, 1), b);
         return add(rest, xdiv_core(sub(a, mul(rest, b)), b));
     }
@@ -73,6 +78,18 @@ int xdiv(int a, int b)
 
 int main()
 {
+    {
+        int a = -2147483647-1, b = 2;
+        printf("%d %d\n", xdiv(a, b), a / b);
+    }
+    {
+        int a = -2147483647-1, b = 1;
+        printf("%d %d\n", xdiv(a, b), a / b);
+    }
+    {
+        int a = -2147483647-1, b = -1;
+        printf("%d\n", xdiv(a, b));
+    }
     int a = INT_MIN;
     for (int b = 1; b < 10000; b++)  {
         if (a / b != xdiv(a, b)) {
@@ -85,7 +102,6 @@ int main()
         for (int j = -1000; j <= 1000; j++) {
             if (j == 0)
                 continue;
-            printf("i=%d j=%d\n", i, j);
             if (i / j != xdiv(i, j)) {
                 printf("error i=%d j=%d\n", i, j);
                 return -1;
