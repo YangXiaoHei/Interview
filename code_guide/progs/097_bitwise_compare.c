@@ -2,13 +2,14 @@
 
 int big(int a, int b)
 {
-    if ((a >> 31) ^ (b >> 31)) {
-        return a >> 31 ? b : a;
-    } else {
-        int t = a - b;
-        t >>= 31;
-        return (~t & a) | (t & b);
-    }
+    int sa = a >> 31;
+    int sb = b >> 31;
+    if (sa ^ sb) 
+        return (~sa & a) | (~sb & b); 
+
+    int t = a - b;
+    t >>= 31;
+    return (~t & a) | (t & b);
 }
 
 int main()
