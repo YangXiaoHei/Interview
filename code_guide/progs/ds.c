@@ -3,6 +3,124 @@
 #define HT_MIN_BUCKET 5
 #define HT_EXPAND_BOUND 7
 #define HT_SHRINK_BOUND 3
+
+/***************************** heap ************************************/
+static void heap_sink(heap *h, int k)
+{
+    long t = h->keys[k];
+    while (k * 2 <= h->size) {
+        int j = k * 2;
+        if (j < h->size && h->cmp(h->keys[j], h->keys[j + 1]) > 0) j++;
+        if (h->cmp(t, h->keys[j]) <= 0) break;
+        h->keys[k] = h->keys[j];
+        k = j;
+    }    
+    h->keys[k] = t;
+}
+
+static void heap_swim(heap *h, int k)
+{
+    long t = h->keys[k];
+    while (k > 1 && h->cmp(t, h->keys[k / 2]) < 0) {
+        h->keys[k] = h->keys[k / 2];
+        k /= 2;
+    }
+    h->keys[k] = t;
+}
+
+static void heap_resize(heap *h, int size)
+{
+    long *oldk = h->keys;    
+    long *newk = malloc(sizeof(*h->keys) * size);
+    memcpy(newk + 1, oldk + 1, sizeof(*h->keys) * h->size);
+    free(oldk);
+    h->keys = newk;
+}
+
+static int __heap_cmp(long a, long b)
+{
+    if (a == b) return 0;
+    return a > b ? 1 : -1;
+}
+
+heap *heap_create_(int (*cmp)(long, long))
+{
+    heap *h = malloc(sizeof(heap));
+    h->size = 0;
+    h->cap = 8;    
+    h->keys = malloc(sizeof(*h->keys) * h->cap);
+    h->cmp = cmp;
+    return h;
+}
+
+heap *heap_create()
+{
+    return heap_create_(__heap_cmp);
+}
+
+long heap_pop(heap *h)
+{
+    if (!h) {
+        fprintf(stderr, "null h\n");
+        exit(1);
+    }
+        
+    long t = h->keys[1];
+    h->keys[1] = h->keys[h->size];
+    h->size--;
+    heap_sink(h, 1);
+    return t;
+}
+
+int heap_empty(heap *h)
+{
+    if (!h) {
+        fprintf(stderr, "null h\n");
+        exit(1);
+    }
+    return h->size <= 0;
+}
+
+long heap_peek(heap *h)
+{
+    if (!h) {
+        fprintf(stderr, "null h\n");
+        exit(1);
+    }
+    if (heap_empty(h))
+       return 0; 
+
+    return h->keys[1];
+}
+
+void heap_insert(heap *h, long key)
+{
+    if (!h) {
+        fprintf(stderr, "null h\n");
+        exit(1);
+    }
+    
+    if (h->size == h->cap)
+        heap_resize(h, h->size * 2);
+
+    h->keys[++h->size] = key;
+    heap_swim(h, h->size);
+}
+
+void heap_release(heap **h)
+{
+    if (!h || !*h)
+        return;
+
+    heap *hh = *h;
+    free(hh->keys);
+    free(hh);
+    *h = NULL;
+}
+/******************************************************************************/
+
+
+/***************************** binary tree ************************************/
 int *to_pre_arr_(treenode *root)
 {
     int size = tree_size(root);
@@ -363,23 +481,6 @@ int tree_height(treenode *root)
     return 1 + (left > right ? left : right); 
 }
 
-int get_num_width(int num)
-{
-    int sign = num < 0;
-    int width = 1;
-    while (num /= 10)
-        width++;
-    return width + sign;
-}
-
-int get_width_num(int w)
-{
-    int i = 0;
-    while (w--)
-        i = i * 10 + 9;
-    return i;
-}
-
 void tree_draw(treenode *root)
 {
     if (!root) {
@@ -555,7 +656,28 @@ void post_print(treenode *root)
     post_traverse(root);
     printf("\n");
 }
+/******************************************************************************/
 
+/********************************** math **************************************/
+int get_num_width(int num)
+{
+    int sign = num < 0;
+    int width = 1;
+    while (num /= 10)
+        width++;
+    return width + sign;
+}
+
+int get_width_num(int w)
+{
+    int i = 0;
+    while (w--)
+        i = i * 10 + 9;
+    return i;
+}
+/******************************************************************************/
+
+/********************************** hash table ********************************/
 static int ht_is_prime(long num)
 {
     if (num <= 3) 
@@ -837,7 +959,10 @@ void ht_release(ht **hh)
     free(h->slot);
     *hh = NULL;
 }
+/******************************************************************************/
 
+
+/********************************* deque **************************************/
 deque *deque_create(void)
 {
     deque *d = (deque *)malloc(sizeof(deque));
@@ -1041,7 +1166,9 @@ deque_node *deque_node_create(long val)
     n->prev = NULL;
     return n;
 }
+/******************************************************************************/
 
+/********************************* queue **************************************/
 queue *queue_create(void)
 {
     queue *q = (queue *)malloc(sizeof(queue));
@@ -1127,6 +1254,10 @@ static void queue_test(void)
         printf("%-3ld", queue_dequeue(q));
     printf("\n");
 }
+
+/******************************************************************************/
+
+/********************************* stack **************************************/
 
 stknode *stknode_create(long val)
 {
@@ -1351,6 +1482,9 @@ static void stack_test(void)
     }
     printf("\n");
 }
+/******************************************************************************/
+
+/********************************* list ***************************************/
 
 lnode *lnode_create(long val)
 {
@@ -1490,6 +1624,9 @@ void list_release(lnode **head)
     free(sentinel);
     *head = NULL;
 }
+/******************************************************************************/
+
+/********************************* dual list **********************************/
 
 dlnode *dlnode_create(long val)
 {
@@ -1590,6 +1727,9 @@ void dlist_release(dlnode **head)
     }
     *head = NULL;
 }
+/******************************************************************************/
+
+/********************************* basic algorithm ****************************/
 
 static void sort_core(int *arr, int size, int lo, int hi)
 {
@@ -1632,6 +1772,9 @@ int is_sorted(int *arr, int size)
             return 0;
     return 1;
 }
+/******************************************************************************/
+
+/********************************* tool **************************************/
 
 void swap(int *a, int *b)
 {

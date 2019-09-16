@@ -27,6 +27,21 @@ do {\
         printf("total cost %.3f s\n", __diff * 1.0 / (1000 * 1000));\
 } while (0)\
 
+typedef struct heap {
+    long *keys;
+    int size;
+    int cap;
+    int (*cmp)(long, long);
+} heap;
+
+heap *heap_create_(int (*cmp)(long, long));
+heap *heap_create();
+long heap_pop(heap *h);
+int heap_empty(heap *h);
+long heap_peek(heap *h);
+void heap_insert(heap *h, long key);
+void heap_release(heap **h);
+
 typedef struct treenode {
     long val;
     int size;
