@@ -781,6 +781,31 @@ htnode *htnode_create(long key, long val)
     return n;
 }
 
+void ht_clear(ht *h)
+{
+    if (!h)
+        return;
+   
+    for (int i = 0; i < h->bucket; i++) {
+        htnode *n = h->slot[i];
+        if (!n)
+            continue;
+        while (1) {
+            if (!n->next) {
+                free(n);
+                break;
+            }
+            free((n = n->next)->prev);
+        }
+    }     
+    h->size = 0;
+    free(h->slot);
+    h->bucket = HT_MIN_BUCKET;
+    h->slot = (htnode **)malloc(sizeof(htnode *) * h->bucket);
+    for (int i = 0; i < h->bucket; i++)
+        h->slot[i] = NULL;
+}
+
 ht *ht_create(void)
 {
     ht *h = (ht *)malloc(sizeof(ht));
