@@ -2,6 +2,22 @@
 
 int res = 0;
 
+int check(int *arr, int size)
+{
+    if (!arr || size <= 0)
+        return -1;
+
+    int res2 = 0;
+    for (int i = 0; i < size; i++) {
+        for (int j = i - 1; j >= 0; j--) {
+            if (arr[j] <= arr[i]) {
+                res2 += arr[j];
+            }
+        }
+    }
+    return res2;
+}
+
 void merge(int *arr, int *aux, int size, int lo, int mid, int hi)
 {
     for (int k = lo; k <= hi; k++)
@@ -44,7 +60,11 @@ int min_sum(int *arr, int size)
 
 int main()
 {
-    int arr[] = { 1, 3, 5, 2, 4, 6 };
-    int size = sizeof(arr) / sizeof(arr[0]);
-    printf("%d\n", min_sum(arr, size));
+    int size = 10;
+    int *arr = arrayWithRange(size, -10, 10);
+    if (check(arr, size) != min_sum(arr, size)) {
+        printf("what a fuck!\n");
+    } else {
+        printf("ok!\n");
+    }
 }
