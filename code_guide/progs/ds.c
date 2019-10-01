@@ -53,6 +53,15 @@ heap *heap_create_(int (*cmp)(long, long))
     return h;
 }
 
+void heap_print_funptr(heap *h, void(*funptr)(long))
+{
+    printf("---- heap_print -------\n");
+    printf("heap_size=%d heap_cap=%d\n", h->size, h->cap);
+    for (int i = 1; i <= h->size; i++) 
+        funptr(h->keys[i]);
+    printf("\n");
+}
+
 heap *heap_create()
 {
     return heap_create_(__heap_cmp);

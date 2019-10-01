@@ -40,6 +40,7 @@ long heap_pop(heap *h);
 int heap_empty(heap *h);
 long heap_peek(heap *h);
 void heap_insert(heap *h, long key);
+void heap_print_funptr(heap *h, void(*funptr)(long));
 void heap_release(heap **h);
 
 typedef struct treenode {
