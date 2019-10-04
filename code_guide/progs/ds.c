@@ -829,6 +829,12 @@ ht *ht_create(void)
     return h;
 }
 
+int ht_size(ht *h)
+{
+    if (!h) return 0;
+    return h->size;
+}
+
 ht *ht_create_(long (*hash)(long), int(*eq)(long, long))
 {
     ht *h = (ht *)malloc(sizeof(ht));
