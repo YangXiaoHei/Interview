@@ -2,6 +2,8 @@
 
 int tail_one(int n)
 {
+    if (n < 1)
+        return -1;
     int res = 0;
     while (n) {
         n /= 2;
