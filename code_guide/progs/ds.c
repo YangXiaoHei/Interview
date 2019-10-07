@@ -1676,21 +1676,76 @@ dlnode *dlnode_create(long val)
     n->val = val;
     return n;
 }
-void dlist_insert(dlnode **head, long val)
+
+dlnode* dlist_insert(dlnode **head, long val)
 {
     if (!head)
-        return;
+        return NULL;
 
     dlnode *n = dlnode_create(val);
     if (!*head) {
         *head = n;
-        return;
+        return n;
     }
     dlnode *last = *head;
     while (last->next)
         last = last->next;
     last->next = n;
     n->prev = last;
+    return n;
+}
+
+void dlist_move_to_tail(dlnode **headptr, dlnode *target)
+{
+    if (!headptr || !*headptr || !target)
+        return;
+
+    if (!(*headptr)->next)
+        return;
+
+    dlnode *head = *headptr;
+    dlnode *last = head;
+    while (last->next)
+        last = last->next;
+
+    if (target == last)
+        return;
+
+    if (head == target) {
+        dlnode *next = head->next;
+
+        last->next = target;
+        target->prev = last;
+
+        target->next = NULL;
+        next->prev = NULL; 
+        *headptr = next;
+    } else {
+        target->prev->next = target->next;
+        target->next->prev = target->prev;
+
+        last->next = target;
+        target->prev = last;
+
+        target->next = NULL;
+    }
+}
+
+void dlist_remove_head(dlnode **headptr)
+{
+    if (!headptr || !*headptr)
+        return;
+
+    dlnode *head = *headptr;
+    if (!head->next) {
+        free(head);
+        *headptr = NULL;
+        return;
+    }
+
+    head->next->prev = NULL;
+    *headptr = head->next;
+    free(head);
 }
 
 dlnode *dlist_create(int size)
@@ -1734,7 +1789,7 @@ void dlist_print_front(dlnode *head)
     }
 
     for (dlnode *cur = head; cur; cur = cur->next)
-        printf("%-3ld", cur->val);
+        printf("%-4ld", cur->val);
     printf("\n");
 }
 
@@ -1748,7 +1803,7 @@ void dlist_print_back(dlnode *head)
     while (tail->next)
        tail = tail->next;
    for (dlnode *cur = tail; cur; cur = cur->prev)
-        printf("%-3ld", cur->val);
+        printf("%-4ld", cur->val);
     printf("\n");
 }
 

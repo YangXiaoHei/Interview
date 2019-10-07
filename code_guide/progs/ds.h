@@ -210,7 +210,9 @@ typedef struct dlnode {
 } dlnode;
 
 dlnode *dlnode_create(long val);
-void dlist_insert(dlnode **head, long val);
+dlnode* dlist_insert(dlnode **head, long val);
+void dlist_remove_head(dlnode **head);
+void dlist_move_to_tail(dlnode **head, dlnode *target);
 dlnode *dlist_create(int size);
 dlnode *dlist_create_with_arr(int *arr, int size);
 void dlist_print_front(dlnode *head);
