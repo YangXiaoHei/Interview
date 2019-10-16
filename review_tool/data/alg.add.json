@@ -23,54 +23,93 @@
     ],
      "数组与矩阵" : 
     [
+        
+    ],
+     "其他" : 
+    [
         {
-            "desc" : "子矩阵的最大累加和问题, 元素有正有负",
+            "desc" : "从 5 随机到 7 随机及其扩展",
             "cost_time" : 30,
-            "diff" : 3
-        },
-        {
-            "desc" : "在数组中找到一个局部最小的位置",
-            "cost_time" : 20,
             "diff" : 2
         },
         {
-            "desc" : "数组中子数组的最大累乘积",
-            "cost_time" : 30,
-            "diff" : 3
-        },
-        {
-            "desc" : "打印 N 个数组整体最大的 top K",
-            "cost_time" : 60,
+            "desc" : "求两个数最大公约数 - 迭代",
+            "cost_time" : 10,
             "diff" : 1
         },
         {
-            "desc" : "边界都是 1 的最大正方形的大小",
+            "desc" : "求两个数最大公约数 - 递归",
+            "cost_time" : 10,
+            "diff" : 1
+        },
+        {
+            "desc" : "有关阶乘的两个问题",
             "cost_time" : 40,
             "diff" : 3
         },
         {
-            "desc" : "不包含本位置的累乘数组",
-            "cost_time" : 20,
-            "diff" : 2
-        },
-        {
-            "desc" : "数组的 partition 调整",
-            "cost_time" : 40,
-            "diff" : 2
-        },
-        {
-            "desc" : "求最短通路值",
+            "desc" : "折纸问题",
             "cost_time" : 30,
             "diff" : 2
         },
         {
-            "desc" : "数组中未出现的最小正整数",
+            "desc" : "蓄水池问题",
+            "cost_time" : 30,
+            "diff" : 2
+        },
+        {
+            "desc" : "最大的 leftMax 和 rightMax 之差的绝对值",
+            "cost_time" : 30,
+            "diff" : 2
+        },
+        {
+            "desc" : "设计 LRU",
+            "cost_time" : 30,
+            "diff" : 2
+        },
+        {
+            "desc" : "设计 RandomPool",
+            "cost_time" : 30,
+            "diff" : 2
+        },
+        {
+            "desc" : "调整 [0, x) 区间上的数出现的概率",
+            "cost_time" : 30,
+            "diff" : 2
+        },
+        {
+            "desc" : "路径数组变为统计数组",
+            "cost_time" : 50,
+            "diff" : 4
+        },
+        {
+            "desc" : "正数数组的最小不可组成和",
+            "cost_time" : 30,
+            "diff" : 2
+        },
+        {
+            "desc" : "一种字符串和数字的对应关系",
             "cost_time" : 40,
             "diff" : 3
         },
         {
-            "desc" : "数组排序之后相邻数的最大差值",
+            "desc" : "1 到 n 中 1 出现的次数",
             "cost_time" : 40,
+            "diff" : 3
+        },
+        {
+            "desc" : "从 N 个数中等概率打印 M 个数",
+            "cost_time" : 10,
+            "diff" : 1
+        },
+        {
+            "desc" : "判断一个数是否是回文数",
+            "cost_time" : 20,
+            "diff" : 1
+        },
+        {
+            "desc" : "在有序旋转数组中找到最小值",
+            "cost_time" : 30,
             "diff" : 3
         }
     ]
